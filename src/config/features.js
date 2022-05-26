@@ -64,7 +64,7 @@ const featureList = {
     MenuItem_Sorting_PB: false,
     MenuItem_Sorting_GMO: false,
     VIP_CustomLevel_BUNNY: false,
-    HomePage_DisplayVIP: false,
+
     LiveGame_Sorting_SKY: false,
     Report_ShowRoundsTotal: true,
     Register_ShowSMSVerification: false,
@@ -78,7 +78,7 @@ const featureList = {
     Withdrawal_USDT_ExchangeRate: 0.151,
 
     MAX_PHONE_LENGTH: 10,
-    Deposit_UploadRequired: true,
+    Deposit_UploadRequired: false,
     Deposit_HideDepositChannel: false,
     AddCard_EWalletCustoms: false,
   },

@@ -595,12 +595,8 @@ class Header extends Component {
     this.setState({ ...this.state, isHoverMenu: false });
   };
   handleClickMenu = (path) => {
-    if (path === "vip" && !this.props.account.token) {
-      this.props.showLogin(true);
-    } else {
-      this.setState({ ...this.state, selected: path });
-      this.props.history.push("/" + i18n.language + `/${path}`);
-    }
+    this.setState({ ...this.state, selected: path });
+    this.props.history.push("/" + i18n.language + `/${path}`);
   };
 
   rightMenuImageSwitcher = (item, isHover) => {
@@ -1287,15 +1283,14 @@ class Header extends Component {
                   TopMenuPromoPNG_PB
                 )}
 
-                {config.features.HomePage_DisplayVIP &&
-                  this.RightMenuItem(
-                    "vip",
-                    TopMenuPromoPNG,
-                    "VIP",
-                    TopMenuPromoHoverPNG,
-                    null,
-                    TopMenuPromoPNG_PB
-                  )}
+                {this.RightMenuItem(
+                  "vip",
+                  TopMenuPromoPNG,
+                  "VIP",
+                  TopMenuPromoHoverPNG,
+                  null,
+                  TopMenuPromoPNG_PB
+                )}
               </RightMenuUL>
             </RightMenuContainer>
           </BottomContainer>
