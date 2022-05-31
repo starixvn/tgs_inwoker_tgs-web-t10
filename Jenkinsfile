@@ -5,10 +5,9 @@ pipeline {
 	environment {
         TAG = sh(script: "echo `date +%Y-%m%d-%H%M`", returnStdout: true).trim()
         Registry = "registry.gitlab.com/rayprosoft/turnkey-gaming-system/"
-        GitUrl = "gitlab.com/cjennhong/tgs-web.git"
-        ImageTagUrl = "https://gitlab.com/api/v4/projects/20478010/registry/repositories/2163343/tags"
+        GitUrl = "gitlab.com/inwoker/tgs/tgs-web-t10.git"
         gitlab_user_pwd = credentials('gitlab-user-pwd')
-        Image = "lobby-t1"
+        Image = "lobby-t10"
     }
 	
     stages {		    	
@@ -22,7 +21,7 @@ pipeline {
                         case ['master', 'origin/master']:
                             env.kube_ns = "prod";
                             env.k8s_config = 'stag-k8s-config';
-                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch master";
+                            //sh "git config --file=.gitmodules submodule.src/components/Wap.branch master";
                             sh "git config --file=.gitmodules submodule.src/components/App/Account.branch master";
                             sh "git submodule sync";
                             sh "git submodule update --remote";
@@ -30,13 +29,13 @@ pipeline {
                         case ['release/current', 'origin/release/current']:
                             env.kube_ns = "staging";
                             env.k8s_config = 'stag-k8s-config';
-                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch release/current";
+                            //sh "git config --file=.gitmodules submodule.src/components/Wap.branch release/current";
                             sh "git config --file=.gitmodules submodule.src/components/App/Account.branch release/current";
                             sh "git submodule sync";
                             sh "git submodule update --remote";
                             break;
                         default:
-                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch develop";
+                            //sh "git config --file=.gitmodules submodule.src/components/Wap.branch develop";
                             sh "git config --file=.gitmodules submodule.src/components/App/Account.branch develop";
                             sh "git submodule sync";
                             sh "git submodule update --remote";
@@ -59,7 +58,7 @@ pipeline {
                         envItems.each { key, value -> 
                             env."tgs_${key}" = value;
                         }
-                        componentArray = "${env.tgs_lobby_t1_components}".split(",")
+                        componentArray = "${env.tgs_lobby_t10_components}".split(",")
                     }
                 }
 
