@@ -21,24 +21,24 @@ pipeline {
                         case ['master', 'origin/master']:
                             env.kube_ns = "prod";
                             env.k8s_config = 'stag-k8s-config';
-                            //sh "git config --file=.gitmodules submodule.src/components/Wap.branch master";
-                            //sh "git config --file=.gitmodules submodule.src/components/App/Account.branch master";
-                            //sh "git submodule sync";
-                            //sh "git submodule update --remote";
+                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch master";
+                            sh "git config --file=.gitmodules submodule.src/components/App/Account.branch master";
+                            sh "git submodule sync";
+                            sh "git submodule update --remote";
                             break;
                         case ['release/current', 'origin/release/current']:
                             env.kube_ns = "staging";
                             env.k8s_config = 'stag-k8s-config';
-                            //sh "git config --file=.gitmodules submodule.src/components/Wap.branch release/current";
-                            //sh "git config --file=.gitmodules submodule.src/components/App/Account.branch release/current";
-                            //sh "git submodule sync";
-                            //sh "git submodule update --remote";
+                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch release/current";
+                            sh "git config --file=.gitmodules submodule.src/components/App/Account.branch release/current";
+                            sh "git submodule sync";
+                            sh "git submodule update --remote";
                             break;
                         default:
-                            //sh "git config --file=.gitmodules submodule.src/components/Wap.branch develop";
-                            //sh "git config --file=.gitmodules submodule.src/components/App/Account.branch develop";
-                            //sh "git submodule sync";
-                            //sh "git submodule update --remote";
+                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch develop";
+                            sh "git config --file=.gitmodules submodule.src/components/App/Account.branch develop";
+                            sh "git submodule sync";
+                            sh "git submodule update --remote";
                             env.kube_ns = "dev";
                             env.k8s_config = 'k8s-kube-config' 
                             break;
