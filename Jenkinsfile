@@ -111,11 +111,13 @@ pipeline {
                 script {			
                     withKubeConfig([credentialsId: env.k8s_config]) {
                         message += "\nComponent:"
-
-                        for (i = 0;i < componentArray.length; i++) {
-                            message += "\n    ${componentArray[i]}"
-                            sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
-                        }
+			
+						if (env.tgs_lobby_t10_components!="") {
+							for (i = 0;i < componentArray.length; i++) {
+								message += "\n    ${componentArray[i]}"
+								sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
+							}
+						}
 						if (env.tgs_lobby_t10_components_merged!="") {
 							for (i = 0;i < componentArrayMerged.length; i++) {
 								message += "\n    ${componentArrayMerged[i]}"
