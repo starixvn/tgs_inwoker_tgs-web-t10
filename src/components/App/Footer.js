@@ -7,18 +7,18 @@ import i18n from "../../utils/i18n";
 
 const Container = styled.div`
   width: 100%;
-  padding: 16px 0;
+  padding: 32px 0;
   display: ${({ hide }) => {
     return hide ? "none" : "block";
   }};
-  background-image: #fff;
+  background: #262626;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 `;
 
 const BottomContainer = styled.div`
   width: 1280px;
   margin: 0 auto;
-  color: #000;
+  color: #fff;
 `;
 const CopyRightLine1 = styled.span`
   font-size: 12px;

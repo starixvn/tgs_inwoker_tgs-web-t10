@@ -2,33 +2,24 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import Common from "../../../utils/Common";
-
 import Slider from "./Slider";
 import { withRouter } from "react-router-dom";
-
 import Marquee from "./Marquee";
-
 import {
   SHOW_MODAL,
   SHOW_LOGIN,
 } from "../../../api-services/constant/actionType";
 import { GameTypeEnum } from "../../../api-services/utils/Enum";
-
 import i18n from "../../../utils/i18n";
 import SecondSection from "./SecondSection";
 import ThirdSection from "./ThirdSection";
 import FourthSection from "./FourthSection";
 import FifthSection from "./FifthSection";
 import BGJPG from "../../../assets/images/home/section/bg.jpg";
-import Section1FishPNG from "../../../assets/images/home/section/section1-fish.png";
-import Section1LotteryPNG from "../../../assets/images/home/section/section1-lottery.png";
-import Section1ElectronPNG from "../../../assets/images/home/section/section1-electron.png";
 import TextBgPNG from "../../../assets/images/home/section/text-bg.png";
 import ScrollAnimation from "react-animate-on-scroll";
 import { Grid } from "@material-ui/core";
-
 import config from "../../../config/config";
-
 import PopupAnnouncement from "./PopupAnnouncement";
 const HomeContainer = styled.div`
   width: 100%;
@@ -36,9 +27,6 @@ const HomeContainer = styled.div`
 `;
 const SliderContainer = styled.div`
   position: relative;
-  margin-top: ${({ moveUp }) => {
-    return moveUp && "106px";
-  }};
 `;
 
 const MarqueeContainer = styled.div`
@@ -48,10 +36,7 @@ const MarqueeContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
 `;
 const SectionContainer = styled.div`
-  //background: url(${BGJPG}) no-repeat;
-  //background-position: center;
-  //background-size: cover;
-  background-color: #000000;
+  background-color: #f0f3f9;
   width: 100%;
 `;
 const FirstSection = styled.div`
@@ -61,16 +46,7 @@ const FirstSection = styled.div`
   padding-top: 110px;
   overflow: visible;
 `;
-const FirstSectionItemBg2 = styled.div`
-  background: url(${TextBgPNG}) no-repeat;
-  background-size: 283px 50px;
-  position: absolute;
-  bottom: 44px;
-  left: 13px;
-  height: 50px;
-  width: 0;
-  transition: width 300ms linear;
-`;
+
 const FirstSectionItemBg = styled(Grid)`
   position: absolute;
   bottom: 76px;
@@ -139,16 +115,6 @@ class Home extends Component {
     };
   }
 
-  componentDidMount() {
-    // let promotionId = "";
-    // let promotionChannelId = "";
-    // if (this.props.match.params) {
-    //   promotionId = this.props.match.params.promotionid || "";
-    //   promotionChannelId = this.props.match.params.promotionchannelid || "";
-    // }
-    // localStorage.setItem("promotionId", promotionId);
-    // localStorage.setItem("promotionChannelId", promotionChannelId);
-  }
   componentDidUpdate(preProps) {
     if (config.features.PopupAnnouncement) {
       if (
@@ -230,8 +196,8 @@ class Home extends Component {
       Common.closePreviousPopup();
       if (slotPageGameType.indexOf(gameType) >= 0) {
         if (
-          gameType == GameTypeEnum.SPORTS ||
-          gameType == GameTypeEnum.ESPORTS
+          gameType === GameTypeEnum.SPORTS ||
+          gameType === GameTypeEnum.ESPORTS
         ) {
           if (!this.props.token) {
             this.props.showLogin(true);
@@ -367,7 +333,9 @@ class Home extends Component {
               });
             })()}
           </FirstSection>
-          <SecondSection navigate={this.handleNavigateClick} />
+          {
+            //    <SecondSection navigate={this.handleNavigateClick} />
+          }
           <ScrollAnimation
             animateIn="fadeInLeft"
             duration={1}
@@ -397,13 +365,6 @@ class Home extends Component {
             ></FifthSection>
           </ScrollAnimation>
         </SectionContainer>
-        {/* {this.props.game.providerList.filter((e) => {
-          return e.abbreviation === "KY";
-        }).length === 0 ? (
-          <FourthSection></FourthSection>
-        ) : (
-          <ThirdSection handleJoinGameClick={this.handleJoinGameClick} />
-        )} */}
 
         {(() => {
           if (

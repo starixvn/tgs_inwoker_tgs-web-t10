@@ -1,8 +1,6 @@
-import { Grid, Container as MContainer } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
-
-import ItemPNG from "../../../assets/images/home/section/section3-item.png";
 import i18n from "../../../utils/i18n";
 
 const Container = styled(Grid)`
@@ -11,7 +9,7 @@ const Container = styled(Grid)`
 `;
 
 const ProviderTitle = styled.div`
-  color: #fff;
+  color: #107f9d;
   font-size: 2.5em;
   text-align: center;
   height: 125px;
@@ -35,15 +33,23 @@ const FifthSection = (props) => {
     <Container>
       <ProviderTitle>{i18n.t("web.footer.footerDescTitle")}</ProviderTitle>
       <ProviderContainer>
-        {props.providerList.map((item, index) => {
-          return (
-            <ProviderIMG
-              key={index}
-              provider={item.abbreviation.toLowerCase()}
-              title={item.name}
-            ></ProviderIMG>
-          );
-        })}
+        {props.providerList
+          .filter((gp) => {
+            if (gp.abbreviation.includes("TCG")) {
+              return gp.abbreviation === "TCG_SEA";
+            } else {
+              return gp;
+            }
+          })
+          .map((item, index) => {
+            return (
+              <ProviderIMG
+                key={index}
+                provider={item.abbreviation.toLowerCase()}
+                title={item.name}
+              ></ProviderIMG>
+            );
+          })}
       </ProviderContainer>
     </Container>
   );

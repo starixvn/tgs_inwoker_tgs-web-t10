@@ -11,7 +11,7 @@ const Container = styled(Grid)`
   margin-top: 175px;
   position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 
 const ItemInnerLabel = styled.div`
@@ -19,10 +19,11 @@ const ItemInnerLabel = styled.div`
   font-weight: bold;
   padding-bottom: 100px;
   margin: 0 45px;
+  color: #007797;
 `;
 
 const ItemBottomLabel = styled.div`
-  color: #bababa;
+  color: #262626;
   font-size: 30px;
 `;
 
@@ -33,7 +34,7 @@ const ItemContainer = styled.div`
   height: 280px;
   color: #ffffff;
   text-align: center;
-  padding-top: 80px;
+  padding-top: 85px;
 `;
 
 const ThirdSection = (props) => {
@@ -45,10 +46,6 @@ const ThirdSection = (props) => {
     {
       title: i18n.t("web.home.services.service2.title"),
       value: i18n.t("web.home.services.service2.value"),
-    },
-    {
-      title: i18n.t("web.home.services.service3.title"),
-      value: i18n.t("web.home.services.service3.value"),
     },
     {
       title: i18n.t("web.home.services.service4.title"),

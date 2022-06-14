@@ -22,13 +22,11 @@ const Container = styled(Grid)`
 
 const FeatureContainer = styled.div`
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 75px 25px;
 `;
 
 const FeatureBg = styled.div`
-  width: 599px;
-  height: 205px;
   background: url(${(props) => {
       return (
         process.env.PUBLIC_URL +
@@ -37,16 +35,13 @@ const FeatureBg = styled.div`
     }})
     no-repeat;
   display: flex;
+  flex-direction: column;
   align-items: center;
+
   color: #fff;
 `;
 
-const FeatureIcon = styled.img`
-  width: 72px;
-  height: 72px;
-  margin: 0 35px;
-  object-fit: contain;
-`;
+const FeatureIcon = styled.img``;
 
 const FeatureRightContainer = styled.div`
   margin-right: 34px;
@@ -64,6 +59,8 @@ const FeatureTitle = styled.div`
   }};
   font-weight: bold;
   padding-bottom: 10px;
+  color: #107f9d;
+  text-align: center;
 `;
 const FeatureDesc = styled.div`
   font-size: ${(props) => {
@@ -76,6 +73,7 @@ const FeatureDesc = styled.div`
         return "1.2em";
     }
   }};
+  color: #262626;
 `;
 
 const FourthSection = (props) => {
