@@ -1,264 +1,76 @@
 import { Grid, Container as MContainer } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
-
-import StartGamePNG from "../../../assets/images/start-game.png";
-import StartGameHoverPNG from "../../../assets/images/start-game-hover.png";
-
-import {GameEnum,GameTypeEnum} from "../../../api-services/utils/Enum";
+import DynamicFont from "react-dynamic-font";
+import ItemPNG from "../../../assets/images/home/section/section3-item.png";
 import i18n from "../../../utils/i18n";
 
-import ScrollAnimation from "react-animate-on-scroll";
-const Background = styled.div`
-  height: 580px;
-
-  z-index: 3;
-  background: url(${process.env.PUBLIC_URL +
-    "/assets/images/" +
-    i18n.language +
-    `/ky-hotgame-bg.jpg`})
-    center no-repeat;
-  padding-top: 40px;
-`;
-
 const Container = styled(Grid)`
-  color: white;
+  width: 1280px;
+  margin: 0 auto;
+  margin-top: 175px;
   position: relative;
-  height: 100%;
+  display: flex;
+  justify-content: space-between;
 `;
 
-const AGContentStartGame = styled.div`
-  position: absolute;
-  width: 167px;
-  height: 41px;
+const ItemInnerLabel = styled.div`
+  font-size: 38px;
+  font-weight: bold;
+  padding-bottom: 100px;
+  margin: 0 45px;
+`;
 
-  background: url(${StartGamePNG}) no-repeat;
-  &:hover {
-    cursor: pointer;
-    background: url(${StartGameHoverPNG}) no-repeat;
-  }
-  color: #fff;
-  font-size: 17px;
-  padding: 0px 50px 0px 5px;
+const ItemBottomLabel = styled.div`
+  color: #bababa;
+  font-size: 30px;
+`;
+
+const ItemContainer = styled.div`
+  background: url(${ItemPNG}) no-repeat;
+  background-position-x: center;
+  width: 235px;
+  height: 280px;
+  color: #ffffff;
   text-align: center;
-  line-height: 40px;
-  top: 371px;
-
-  left: 50%;
-  margin-left: 57px;
+  padding-top: 80px;
 `;
-
-const Games = styled.img`
-  height: 130px;
-  width: auto;
-
-  cursor: pointer;
-  transition: transform 150ms linear;
-  :hover {
-    transform: Scale(1.1);
-    transform-origin: center center;
-  }
-`;
-
-const GameButton = styled(Grid)`
-  width: 180px;
-  align-items: center;
-  height: 180px;
-`;
-
-const GameSection = (props) => {
-  return (
-    <GameButton item>
-      <Grid
-        container
-        alignItems="center"
-        justify="center"
-        style={{ height: "100%" }}
-      >
-        {props.children}
-      </Grid>
-    </GameButton>
-  );
-};
 
 const ThirdSection = (props) => {
-  const GetUrl = (item) => {
-    return (
-      process.env.PUBLIC_URL +
-      "/assets/images/" +
-      i18n.language +
-      `/ky-hotgame${item}.png`
-    );
-  };
+  const itemList = [
+    {
+      title: i18n.t("web.home.services.service1.title"),
+      value: i18n.t("web.home.services.service1.value"),
+    },
+    {
+      title: i18n.t("web.home.services.service2.title"),
+      value: i18n.t("web.home.services.service2.value"),
+    },
+    {
+      title: i18n.t("web.home.services.service3.title"),
+      value: i18n.t("web.home.services.service3.value"),
+    },
+    {
+      title: i18n.t("web.home.services.service4.title"),
+      value: i18n.t("web.home.services.service4.value"),
+    },
+  ];
 
   return (
-    <Background>
-      <MContainer style={{ height: "100%" }}>
-        <Grid container style={{ height: "100%", position: "relative" }}>
-          <ScrollAnimation
-            animateIn="fadeInLeft"
-            duration={1}
-            animateOnce={true}
-            style={{ overflow: "visible" }}
-          >
-            <Container>
-              <Grid
-                container
-                direction="column"
-                justify="center"
-                alignContent="center"
-                style={{ height: "100%", paddingTop: "30px" }}
-              >
-                <Grid item>
-                  <Grid
-                    container
-                    justify="center"
-                    alignItems="center"
-                    spacing="3"
-                  >
-                    <GameSection>
-                      <Games
-                        src={GetUrl(1)}
-                        onClick={() =>
-                          props.handleJoinGameClick(
-                            GameTypeEnum.QIPAILOBBY,
-                            "",
-                            GameEnum.KY,
-                            "/" +
-                              i18n.language +
-                              "/joingame/" +
-                              GameTypeEnum.QIPAILOBBY +
-                              "/" +
-                              GameEnum.KY
-                          )
-                        }
-                      />
-                    </GameSection>
-                    <GameSection>
-                      <Games
-                        src={GetUrl(2)}
-                        onClick={() =>
-                          props.handleJoinGameClick(
-                            GameTypeEnum.QIPAILOBBY,
-                            "",
-                            GameEnum.KY,
-                            "/" +
-                              i18n.language +
-                              "/joingame/" +
-                              GameTypeEnum.QIPAILOBBY +
-                              "/" +
-                              GameEnum.KY
-                          )
-                        }
-                      />
-                    </GameSection>
-                    <GameSection>
-                      <Games
-                        src={GetUrl(3)}
-                        onClick={() =>
-                          props.handleJoinGameClick(
-                            GameTypeEnum.QIPAILOBBY,
-                            "",
-                            GameEnum.KY,
-                            "/" +
-                              i18n.language +
-                              "/joingame/" +
-                              GameTypeEnum.QIPAILOBBY +
-                              "/" +
-                              GameEnum.KY
-                          )
-                        }
-                      />
-                    </GameSection>
-                  </Grid>
-                </Grid>
-                <Grid item>
-                  <Grid
-                    container
-                    justify="center"
-                    alignItems="center"
-                    spacing="3"
-                  >
-                    <GameSection>
-                      <Games
-                        src={GetUrl(4)}
-                        onClick={() =>
-                          props.handleJoinGameClick(
-                            GameTypeEnum.QIPAILOBBY,
-                            "",
-                            GameEnum.KY,
-                            "/" +
-                              i18n.language +
-                              "/joingame/" +
-                              GameTypeEnum.QIPAILOBBY +
-                              "/" +
-                              GameEnum.KY
-                          )
-                        }
-                      />
-                    </GameSection>
-                    <GameSection>
-                      <Games
-                        src={GetUrl(5)}
-                        onClick={() =>
-                          props.handleJoinGameClick(
-                            GameTypeEnum.QIPAILOBBY,
-                            "",
-                            GameEnum.KY,
-                            "/" +
-                              i18n.language +
-                              "/joingame/" +
-                              GameTypeEnum.QIPAILOBBY +
-                              "/" +
-                              GameEnum.KY
-                          )
-                        }
-                      />
-                    </GameSection>
-                    <GameSection>
-                      <Games
-                        src={GetUrl(6)}
-                        onClick={() =>
-                          props.handleJoinGameClick(
-                            GameTypeEnum.QIPAILOBBY,
-                            "",
-                            GameEnum.KY,
-                            "/" +
-                              i18n.language +
-                              "/joingame/" +
-                              GameTypeEnum.QIPAILOBBY +
-                              "/" +
-                              GameEnum.KY
-                          )
-                        }
-                      />
-                    </GameSection>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Container>
-          </ScrollAnimation>
-
-          <AGContentStartGame
-            onClick={() =>
-              props.handleJoinGameClick(
-                GameTypeEnum.QIPAILOBBY,
-                "",
-                GameEnum.KY,
-                "/" +
-                  i18n.language +
-                  "/joingame/" +
-                  GameTypeEnum.QIPAILOBBY +
-                  "/" +
-                  GameEnum.KY
-              )
-            }
-          >
-            {i18n.t("common.startGame")}
-          </AGContentStartGame>
-        </Grid>
-      </MContainer>
-    </Background>
+    <Container>
+      {itemList.map((item, index) => {
+        return (
+          <ItemContainer key={index}>
+            <ItemInnerLabel>
+              <DynamicFont content={item.value}></DynamicFont>
+            </ItemInnerLabel>
+            <ItemBottomLabel>
+              <DynamicFont content={item.title}></DynamicFont>
+            </ItemBottomLabel>
+          </ItemContainer>
+        );
+      })}
+    </Container>
   );
 };
 

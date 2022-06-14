@@ -55,8 +55,7 @@ const Main = styled.div`
   min-height: 600px;
 `;
 const EmptyHeader = styled.div`
-  height: 160px;
-  background: #000103;
+  height: 130px;
 `;
 
 class App extends Component {
@@ -383,11 +382,9 @@ class App extends Component {
                     <Route
                       exact
                       path={baseRouteUrl + "/vip"}
-                      render={(props) => (
-                        <VIP />
-                      )}
+                      render={(props) => <VIP />}
                     />
-                   
+
                     {/* <Route
                       exact
                       path={baseRouteUrl + "/registersuccess/:username"}
@@ -500,7 +497,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(
         generalAction.getPlayerPromotionList(language, 1, 99, true, "", true)
       ),
-      getWithdrawalChannel: () => dispatch(walletAction.getWithdrawalChannel()),
+    getWithdrawalChannel: () => dispatch(walletAction.getWithdrawalChannel()),
     //  getVIP: () => dispatch(generalAction.getVIP()),
   };
 };

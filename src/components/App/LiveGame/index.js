@@ -1,47 +1,30 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-
 import i18n from "../../../utils/i18n";
-
 import ScrollAnimation from "react-animate-on-scroll";
-
 import config from "../../../config/config";
 import { GameTypeEnum } from "../../../api-services/utils/Enum";
 import { SHOW_LOGIN } from "../../../api-services/constant/actionType";
 const Container = styled.div`
   width: 100%;
   height: auto;
-
   padding: 70px 0px;
   position: relative;
   min-height: ${(props) =>
     props.GamePage_SpecificBackground ? "900px" : "870px"};
-  background: url(${(props) =>
-      process.env.PUBLIC_URL +
-      "/assets/images/pcGamePage/live/background" +
-      (props.GamePage_SpecificBackground ? "-hk28" : "") +
-      ".jpg"})
+  background: url(${process.env.PUBLIC_URL +
+    "/assets/images/pcGamePage/live/background.jpg"})
     no-repeat center;
 `;
-const GirlImage = styled.div`
-  background: url(${(props) => props.img}) no-repeat;
-  width: 308px;
-  height: 172px;
-  float: right;
-  &:hover {
-    cursor: pointer;
-  }
-`;
+
 const LeftSlide = styled(ScrollAnimation)`
   display: flex;
 `;
-const RightSlide = styled(ScrollAnimation)`
-  display: flex;
-`;
+
 const ItemContainer = styled.div`
   position: absolute;
-  left: 50%;
+  left: 22%;
   transform: translateX(-50%);
   overflow: visible;
 `;
@@ -62,25 +45,69 @@ const Maintenance = styled.div`
   cursor: not-allowed;
 `;
 
-const ImageWrapper = styled.div`
-  position: relative;
+const TheSelectorContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+`;
 
-  ${({ maintenance }) => {
-    return maintenance
-      ? `
+const TheSelector = styled.div`
+  background: ${({ selected }) => {
+    return selected
+      ? "linear-gradient(101deg, rgba(252,195,111,1) 21%, rgba(252,203,119,0.7) 100%)"
+      : " linear-gradient(101deg, rgba(139,202,207,1) 21%, rgba(133,196,200,0.7) 100%)";
+  }};
+  border-radius: 12px;
+  padding: 10px 20px;
+  min-width: 200px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  transition: all 10s linear;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 3px;
 
-    ${Maintenance}{
-     
-      display: flex;
-    }
-    ${GirlImage}{
-      filter: brightness(40%) grayscale(200%);
-    }
-    
-    
-    `
-      : ``;
-  }}
+  ${({ selected }) => {
+    return (
+      !selected &&
+      ` :hover {
+      background: linear-gradient(
+        101deg,
+        rgba(252, 195, 111, 0.75) 21%,
+        rgba(252, 203, 119, 0.75) 100%
+      );
+    }`
+    );
+  }};
+`;
+
+const CustomChevron = styled.div`
+  width: 15px;
+  height: 15px;
+  background-color: #fff;
+  mask: url(${process.env.PUBLIC_URL + `/assets/images/misc/arrow-right.png`})
+    no-repeat center / contain;
+  cursor: pointer;
+  margin-right: 10px;
+  border-radius: 100px;
+`;
+
+const JoinButton = styled.div`
+  margin-top: 20px;
+  border-radius: 50px;
+  padding: 10px 30px;
+  background: linear-gradient(
+    101deg,
+    rgba(252, 215, 132, 1) 21%,
+    rgba(252, 190, 105, 1) 100%
+  );
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.75);
+  width: fit-content;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 `;
 
 class LiveGame extends Component {
@@ -102,7 +129,7 @@ class LiveGame extends Component {
       });
 
     this.state = {
-      selected: liveList[0],
+      selected: liveList[0] && liveList[0].abbreviation,
       subMenu: null,
       isSelected: false,
       hide: true,
@@ -137,7 +164,7 @@ class LiveGame extends Component {
 
       this.setState({
         ...this.state,
-        selected: liveList[0],
+        selected: liveList[0].abbreviation,
         list: liveList,
       });
     }
@@ -192,81 +219,38 @@ class LiveGame extends Component {
           config.features.GamePage_SpecificBackground
         }
       >
-        <ItemContainer style={{ marginTop: 370 }}>
+        <ItemContainer style={{ marginTop: 100 }}>
           <LeftSlide
             animateIn="fadeInLeft"
             duration={1}
             animateOnce={true}
             style={{ overflow: "visible" }}
           >
-            {this.state.list
-              .slice(0, 3)
-              .reverse()
-              .sort((a, b) => {
-                if (config.features.LiveGame_Sorting_SKY) {
-                  var sortDGFirst = ["DG"];
-                  return (
-                    sortDGFirst.indexOf(b.abbreviation) -
-                    sortDGFirst.indexOf(a.abbreviation)
-                  );
-                } else return b - a;
-              })
-              .map((item, index) => {
+            <TheSelectorContainer>
+              {this.state.list.map((item, index) => {
                 return (
-                  <ImageWrapper maintenance={item.status != 0}>
+                  <TheSelector
+                    maintenance={item.status !== 0}
+                    key={index}
+                    selected={this.state.selected === item.abbreviation}
+                    onClick={() => {
+                      this.setState({
+                        ...this.state,
+                        selected: item.abbreviation,
+                      });
+                    }}
+                  >
                     <Maintenance>{i18n.t("transfer.maintenance")}</Maintenance>
-                    <GirlImage
-                      img={
-                        process.env.PUBLIC_URL +
-                        "/assets/images/pcGamePage/live/" +
-                        item.abbreviation.toLowerCase() +
-                        (item.abbreviation.toLowerCase() === "wgfm" ||
-                        item.abbreviation.toLowerCase() === "wgvia"
-                          ? "-" + i18n.language
-                          : "") +
-                        ".png"
-                      }
-                      onClick={() => {
-                        this.handleJoinGameClick(item.abbreviation, item.type);
-                      }}
-                    />
-                  </ImageWrapper>
+                    <CustomChevron />
+                    <div> {i18n.t(`${item.abbreviation}.live`)}</div>
+                  </TheSelector>
                 );
               })}
+              <JoinButton>
+                <div>{i18n.t("common.joinGame")}</div>
+              </JoinButton>
+            </TheSelectorContainer>
           </LeftSlide>
-        </ItemContainer>
-        <ItemContainer style={{ marginTop: 560 }}>
-          <RightSlide
-            animateIn="fadeInRight"
-            duration={1}
-            animateOnce={true}
-            style={{ overflow: "visible" }}
-          >
-            {this.state.list.map((item, index) => {
-              if (index >= 3) {
-                return (
-                  <ImageWrapper maintenance={item.status != 0}>
-                    <Maintenance>{i18n.t("transfer.maintenance")}</Maintenance>
-                    <GirlImage
-                      img={
-                        process.env.PUBLIC_URL +
-                        "/assets/images/pcGamePage/live/" +
-                        item.abbreviation.toLowerCase() +
-                        (item.abbreviation.toLowerCase() === "wgfm" ||
-                        item.abbreviation.toLowerCase() === "wgvia"
-                          ? "-" + i18n.language
-                          : "") +
-                        ".png"
-                      }
-                      onClick={() => {
-                        this.handleJoinGameClick(item.abbreviation, item.type);
-                      }}
-                    />
-                  </ImageWrapper>
-                );
-              }
-            })}
-          </RightSlide>
         </ItemContainer>
       </Container>
     );

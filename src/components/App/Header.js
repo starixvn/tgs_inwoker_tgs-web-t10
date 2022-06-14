@@ -1,155 +1,156 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import styled, { keyframes, withTheme } from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import config from "../../config/config";
 import { withStyles } from "@material-ui/core/styles";
 
 import { withRouter } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
+
 import { accountAction } from "../../api-services/actions/accountAction";
 import { walletAction } from "../../api-services/actions/walletAction";
 import { SHOWING_DIALOG } from "../../api-services/constant/actionType";
 import { SHOW_LOGIN } from "../../api-services/constant/actionType";
 import { GameTypeEnum } from "../../api-services/utils/Enum";
 
+import TimerPNG from "../../assets/images/timer.png";
+import BtnAppsPNG from "../../assets/images/btn-apps.png";
 import BtnCSPNG from "../../assets/images/btn-cs.png";
-import BtnCSPNG_PB from "../../assets/images/btn-cs-pb.png";
-
+import BtnAppsHoverPNG from "../../assets/images/btn-apps-hover.png";
 import BtnCSHoverPNG from "../../assets/images/btn-cs-hover.png";
-import BtnCSHoverPNG_PB from "../../assets/images/btn-cs-hover-pb.png";
+
+import ArrowDropDownCircleOutlinedIcon from "@material-ui/icons/ArrowDropDownCircleOutlined";
 
 import { Link } from "react-router-dom";
 import GuestContainer from "./GuestContainer";
 import MemberContainer from "./MemberContainer";
 
-import TopMenuLivePNG_PB from "../../assets/images/top-menu-live-pb.png";
-import TopMenuQipaiPNG_PB from "../../assets/images/top-menu-qipai-pb.png";
-import TopMenuSportsPNG_PB from "../../assets/images/top-menu-sports-pb.png";
-import TopMenuLotteryPNG_PB from "../../assets/images/top-menu-lottery-pb.png";
-import TopMenueSportsPNG_PB from "../../assets/images/top-menu-gun-pb.png";
-import TopMenuTigerPNG_PB from "../../assets/images/top-menu-tiger-pb.png";
-import TopMenuFishPNG_PB from "../../assets/images/top-menu-fish-pb.png";
-import TopMenuPromoPNG_PB from "../../assets/images/top-menu-promo-pb.png";
-import TopMenuSlotPNG_PB from "../../assets/images/top-menu-slot-pb.png";
-
 import TopMenuLivePNG from "../../assets/images/top-menu-live.png";
 import TopMenuQipaiPNG from "../../assets/images/top-menu-qipai.png";
 import TopMenuSportsPNG from "../../assets/images/top-menu-sports.png";
 import TopMenuLotteryPNG from "../../assets/images/top-menu-lottery.png";
-import TopMenueSportsPNG from "../../assets/images/top-menu-gun.png";
+import TopMenuSlotPNG from "../../assets/images/top-menu-slot.png";
 import TopMenuTigerPNG from "../../assets/images/top-menu-tiger.png";
 import TopMenuFishPNG from "../../assets/images/top-menu-fish.png";
-import TopMenuPromoPNG from "../../assets/images/top-menu-promo.png";
-import TopMenuSlotPNG from "../../assets/images/top-menu-slot.png";
 
 import TopMenuLiveHoverPNG from "../../assets/images/top-menu-live-hover.png";
 import TopMenuQipaiHoverPNG from "../../assets/images/top-menu-qipai-hover.png";
 import TopMenuSportsHoverPNG from "../../assets/images/top-menu-sports-hover.png";
 import TopMenuLotteryHoverPNG from "../../assets/images/top-menu-lottery-hover.png";
-import TopMenueSportsHoverPNG from "../../assets/images/top-menu-gun-hover.png";
+import TopMenuSlotHoverPNG from "../../assets/images/top-menu-slot-hover.png";
 import TopMenuTigerHoverPNG from "../../assets/images/top-menu-tiger-hover.png";
 import TopMenuFishHoverPNG from "../../assets/images/top-menu-fish-hover.png";
-import TopMenuPromoHoverPNG from "../../assets/images/top-menu-promo-hover.png";
-import TopMenuSlotHoverPNG from "../../assets/images/top-menu-slot-hover.png";
+
+import HeaderHoverBackgroundJPG from "../../assets/images/header-hover-bg.jpg";
 
 import IconPhonePNG from "../../assets/images/icon-mobile.png";
-import HotGamePNG from "../../assets/images/slot-hotgame.png";
-import HotGameActivePNG from "../../assets/images/slot-hotgame-active.png";
 
 import { withSnackbar } from "notistack";
 import Common from "../../utils/Common";
 
 import i18n from "../../utils/i18n";
+
 import Slider from "react-slick";
-import LanguageChanger from "../Share/language-changer";
-import { uiAction } from "../../api-services/actions/uiAction";
-import { generalAction } from "../../api-services/actions/generalAction";
+
+import OnlineUserDisplayer from "../Share/online-user-displayer";
+import { AppHistory } from "../../history/History";
 import { GeneralService } from "../../api-services/services/GeneralService";
+import { generalAction } from "../../api-services/actions/generalAction";
+import { uiAction } from "../../api-services/actions/uiAction";
 import ErrorSwitcher from "../../utils/ErrorSwitcher";
 
 const moment = require("moment");
 
-const btnCSSwitcher = () => {
-  switch (config.theme.toLowerCase()) {
-    case "pb":
-      return `${BtnCSPNG_PB}`;
-    default:
-      return `${BtnCSPNG}`;
-  }
-};
-
-const btnCSHoverSwitcher = () => {
-  switch (config.theme.toLowerCase()) {
-    case "pb":
-      return `${BtnCSHoverPNG_PB}`;
-    default:
-      return `${BtnCSHoverPNG}`;
-  }
-};
-
 const InnerWrap = styled.div`
   margin: 0 auto;
-  max-width: 1280px;
   width: 100%;
   font-size: 14px;
 `;
 const TopContainer = styled.div`
-  height: 50px;
-  border-bottom: 1px solid #2d3e45;
+  height: 25px;
+  background-color: #fff;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
 `;
 const TimerContainer = styled.div`
-  padding-top: 15px;
-  font-family: arial;
-  float: left;
-  @media (max-width: 950px) {
+  font-family: Roboto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1280px;
+  margin: 0 auto;
+  @media (max-width: 260px) {
     display: none;
   }
 `;
 
-const TimerSpan = styled.span`
-  color: ${({ theme }) => theme.pcHeaderText};
-  float: left;
-  min-width: 100px;
-`;
-const PhoneNumberSpan = styled.span`
-  color: ${({ theme }) => theme.pcHeaderText};
-  float: left;
+const OnlinePlayerContainer = styled.div`
+  margin-left: 10px;
+  padding-left: 20px;
 `;
 
-const IconPhone = styled.div`
-  background: url(${(props) => props.img}) no-repeat;
+const TimerSpan = styled.span`
+  font-size: 16px;
+  color: #f6f6f6;
   float: left;
-  width: 20px;
-  height: 20px;
+  margin-left: 5px;
+  width: 230px;
+  word-spacing: 10px;
 `;
 const LinkContainer = styled.div`
-  color: ${({ theme }) => theme.pcHeaderText};
-  float: left;
-  padding: 0px 10px;
   @media (max-width: 950px) {
     display: none;
   }
 `;
 const CustomLink = styled(Link)`
-  color: ${({ theme }) => theme.pcHeaderText};
+  color: #000;
 
   &:hover {
-    color: ${({ theme }) => theme.pcHeaderTextHover};
+    color: ${({ theme }) => theme.primary};
     text-decoration: underline;
   }
+`;
+const CustomExternalLink = styled.a`
+  ${(props) =>
+    props.selected === true
+      ? `
+ color :${props.theme.primary};
+
+font-weight:bold;
+pointer-event:none;
+`
+      : `
+color:#000; 
+opacity: 0.75;
+&:hover {
+ cursor:pointer;
+ color:  ${props.theme.primary};
+ 
+ }
+`}
+`;
+const LinkList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`;
+const LinkListItem = styled.li`
+  display: inline;
+  color: #000;
+  font-weight: bold;
 `;
 
 const RightContainer = styled.div`
   float: right;
-  padding-top: 5px;
+  // width: 230px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 `;
 
 const BtnAppsAndCS = styled.div`
   width: 77px;
-  display: flex;
-  align-items: center;
-  word-wrap: break-word;
   height: 30px;
   margin-top: 3px;
   float: right;
@@ -161,86 +162,113 @@ const BtnAppsAndCS = styled.div`
   }
 `;
 
-const BtnCS = styled(BtnAppsAndCS)`
-  margin-right: 8px;
-
-  background-image: url(${({ theme }) => btnCSSwitcher()});
-  color: ${({ theme }) => theme.pcHeaderText};
+const BtnApps = styled(BtnAppsAndCS)`
+  background-image: url(${BtnAppsPNG});
   &:hover {
-    background-image: url(${({ theme }) => btnCSHoverSwitcher()});
-    color: ${({ theme }) => theme.pcHeaderTextHover};
+    background-image: url(${BtnAppsHoverPNG});
   }
-  padding-left: 32px;
-  line-height: 10px;
+`;
+const BtnCS = styled(BtnAppsAndCS)`
+  width: 65px;
+  height: 22px;
+  margin-top: 0;
+  margin-left: 40px;
+  background-color: ${(props) => props.theme.primary};
+  background-image: url(${BtnCSPNG});
+  color: #f6f6f6;
+  &:hover {
+    background-image: url(${BtnCSHoverPNG});
+    color: #fde73f;
+  }
+  padding-left: 29px;
+  line-height: 22px;
+  background-size: 65px 22px;
+  background-repeat: no-repeat;
+  font-weight: normal;
+  font-size: 12px;
 `;
 
 const BottomContainer = styled.div`
-  display: grid;
-  grid-template-columns: 230px auto;
-  grid-gap: 5px;
-  @media (max-width: 1279px) {
-    grid-template-columns: auto;
-  }
+  margin: 0 auto;
+  height: 104px;
+  max-width: 1280px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 const LogoContainer = styled.div`
   background-image: url("${(props) => props.img}");
   background-repeat: no-repeat;
   background-size: contain;
+  width: 160px;
+  height: 80px;
+  margin-right: 20px;
   background-position: left center;
-  width: 100%;
-  height: 90px;
-  margin-top: 10px;
   float: left;
   &:hover {
     cursor: pointer;
   }
-  @media (max-width: 1279px) {
+
+  @media (max-width: 1261px) {
     display: none;
+  }
+  @media (max-width: 1100px) {
+    display: block;
   }
 `;
 
 const RightMenuContainer = styled.div`
-  float: right;
+  float: left;
 `;
 const RightMenuUL = styled.ul`
-  display: flex;
-  align-items: stretch; /* Default */
-  justify-content: space-between;
-  width: 100%;
+  float: left;
   list-style: none;
+  width: 810px;
   padding: 0;
-  margin: 0;
-  height: 110px;
+  margin: 0 0 0 10px;
+  height: 104px;
 `;
 
 const RightMenuTextSpan = styled.span`
-  font-size: ${(props) => (i18n.language === "vi-VN" ? "15px" : "16px")};
-
+  font-size: 16px;
   margin: 0 auto;
   display: block;
-
+  color: #000;
   padding-top: 6px;
   text-align: center;
 `;
 
+const RightMenuTextContainer = styled.div`
+  display: flex;
+  position: relative;
+  justify-content: start;
+  align-items: center;
+  height: 95%;
+  z-index: 1;
+`;
 const MouseOverContainer = styled.div`
   width: 100%;
   height: 0px;
-
   position: fixed;
   left: 0;
   top: 156px;
-  z-index: 1;
+  z-index: -1;
   cursor: default;
-  transition: height 0.5s;
+  transition: height 0.8s ease;
+  @media (max-width: 1261px) {
+    top: 0px !important;
+  }
 `;
 const MouseOverBackground = styled.div`
   width: 100%;
-
-  background-color: rgba(0, 0, 0, 0.75);
-  height: 160px;
   position: absolute;
-  bottom: 30px;
+  display: flex;
+  align-items: center;
+`;
+
+const StyledSlider = styled(Slider)`
+  // force hide slider before unmount
+  opacity: 0;
 `;
 
 const RightMenuImg = styled.div`
@@ -260,75 +288,128 @@ const RightMenuImg = styled.div`
   `}
 `;
 const MouseOverInner = styled.div`
-  width: 1280px;
-  height: 161px;
+  max-width: 1280px;
+  height: 228px;
+  width: 100%;
+  justify-content: center;
   margin: 0 auto;
 `;
 
 const GameImg = styled.img`
-  height: 130px;
-
+  height: 180px;
   position: absolute;
-
+  width: auto;
   padding-bottom: 10px;
   transition: transform 0.6s;
   bottom: 0;
-  right: 0;
   transform-origin: bottom center;
-  transform: translateY(-160px) scale(1);
-  animation-duration: 200ms;
+  transform: translateY(-228px) scale(1);
+  animation-duration: 500ms;
   animation-delay: ${(props) => `${100 + props.index * 100}`}ms;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-timing-function: ease-in-out;
 `;
-const GameName = styled.div`
-  color: #fff;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: ${(props) => (i18n.language === "en-US" ? "20px" : "22px")};
-  width: 100px;
+
+const AnotherCustomButton = styled.div`
   position: absolute;
-  text-align: ${(props) => (i18n.language === "en-US" ? "left" : "right")};
+
+  right: 26px;
+  bottom: 54px;
   transition: transform 0.6s;
-  top: 30px;
-  left: ${(props) => (i18n.language === "en-US" ? "50px" : "20px")};
   transform-origin: bottom center;
-  transform: translateY(-160px) scale(1);
-  animation-duration: 200ms;
+  transform: translateY(-228px) scale(1);
+  animation-duration: 500ms;
   animation-delay: ${(props) => `${100 + props.index * 100}`}ms;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-timing-function: ease-in-out;
 `;
+
+const HeaderTitle = styled.div`
+  color: #5a6b90;
+  padding-bottom: 20px;
+  padding-left: 30px;
+  font-size: 11px;
+`;
+
+const TheTitleWrapper = styled.div`
+  width: 70px;
+  height: 50px;
+  padding-left: 15px;
+  display: flex;
+  align-items: center;
+`;
+
 const breatheAnimation = keyframes`
-
- to { transform:translateY(0px); }
-
+  from  {
+    opacity: 0;
+  }
+  to { 
+    transform:translateY(0px);
+    opacity: 1;
+  }
+`;
+const RightMenuBottomLine = styled.div`
+  height: 10px;
+  background-color: transparent;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  display: none;
 `;
 const RightMenuLI = styled.li`
   display: inline-block;
-  width: 130px;
-  height: 95%;
-  color: ${({ theme }) => theme.pcHeaderRightMenu};
-  border-bottom: solid 4px transparent;
-  @media (max-width: 925px) {
-    width: 100px;
-  }
-  @media (max-width: 770px) {
-    width: 80px;
-  }
-  @media (max-width: 650px) {
-    width: 100px;
-  }
-  &:hover {
-    border-bottom: solid 4px ${({ theme }) => theme.pcHeaderRightMenuHover};
-    color: ${({ theme }) => theme.pcHeaderRightMenuHover};
+  padding: 0 8px;
+  height: 100%;
+  text-align: left;
+  color: #f6f6f6;
+  white-space: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
 
+  &:after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 4px;
+    background: ${({ theme }) => theme.primary};
+    border-radius: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transition: all 0.5s ease;
+    transform: translate(-50%, -20px);
+  }
+
+  &:hover {
+    color: #000;
     cursor: pointer;
+    &:after {
+      content: "";
+      display: block;
+      width: 80%;
+      height: 4px;
+      background: ${({ theme }) => theme.primary};
+      border-radius: 2px;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transition: all 0.5s ease;
+    }
   }
   &:hover ${MouseOverContainer} {
-    height: 190px;
+    height: 388px;
+    width: 100%;
+    padding-top: 0px;
+    display: flex;
+    align-items: center;
+    background-image: url(${HeaderHoverBackgroundJPG});
+    box-shadow: 0px 2px 4px -6px rgb(0 0 0 / 20%),
+      0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 10px 10px 0px rgb(0 0 0 / 12%);
+  }
+  &:hover ${RightMenuBottomLine} {
+    background-color: #f0ca83;
   }
   &:hover ${RightMenuImg} {
     ${(props) => `background-image:url(${props.hoverimg});`}
@@ -336,17 +417,47 @@ const RightMenuLI = styled.li`
   &:hover ${GameImg} {
     animation-name: ${breatheAnimation};
   }
-  &:hover ${GameName} {
+  &:hover ${AnotherCustomButton} {
     animation-name: ${breatheAnimation};
   }
+  &:hover ${RightMenuTextSpan} {
+    color: ${({ theme }) => theme.primary};
+  }
+  &:hover ${MouseOverInner} {
+    .headerSubmenu .slick-prev,
+    .headerSubmenu .slick-next {
+      animation-name: ${breatheAnimation};
+    }
+  }
+  &:hover ${StyledSlider} {
+    opacity: 1;
+  }
+
   background-repeat: no-repeat;
   background-position: 15% center;
   ${(props) =>
     props.active
       ? `
-  border-bottom: solid 4px ${props.theme.pcHeaderRightMenuHover};
-  color: ${props.theme.pcHeaderRightMenuHover};
+      color: #000;
+      ${RightMenuBottomLine} {
+        background-color: #f0ca83;
+      }
+      ${RightMenuTextSpan} {
+        color:  ${props.theme.primary};
+      }
 
+      &:after {
+        content: "";
+        display: block;
+        width: 80%;
+        height: 4px;
+        background:  ${props.theme.primary};
+        border-radius: 2px;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transition: all 0.5s ease
+      }
 
   `
       : `
@@ -356,6 +467,7 @@ const RightMenuLI = styled.li`
 
 const StyledAppBar = withStyles((theme) => ({
   root: {
+    backgroundColor: "#fff",
     "& .MuiToolbar-regular": {
       margin: "0 auto",
     },
@@ -366,77 +478,6 @@ const CustomAppBar = styled(StyledAppBar)`
   display: ${({ hide }) => {
     return hide ? "none" : "block";
   }};
-  background: ${({ theme }) => theme.pcAppBar};
-`;
-
-const GameFrameWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
-const Maintenance = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-  cursor: not-allowed;
-  pointer-event: none;
-  color: white;
-
-  text-transform: capitalize;
-
-  font-weight: bold;
-  font-size: 18px;
-  user-select: none;
-  cursor: not-allowed;
-`;
-
-const GameFrame = styled.div`
-  max-width: 255px;
-  float: left;
-  min-height: 160px;
-  position: relative;
-  transition: transform 0.6s;
-  &:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-  }
-
-  ${({ maintenance }) => {
-    return maintenance
-      ? `
-      ${GameImg}{
-        filter: brightness(40%) grayscale(200%);
-      }
-
-      ${Maintenance}{
-
-        display: flex;
-      }
-
-      ${GameName}{
-        filter: brightness(40%) grayscale(200%);
-      }
-    
-    
-    
-    `
-      : ``;
-  }}
-`;
-const HotGameIcon = styled.div`
-  background: url(${HotGameActivePNG}) no-repeat;
-  background-repeat: no-repeat;
-  background-position: center;
-  margin: 3px 5px 0 0;
-  height: 19px;
-  width: 19px;
-  position: absolute;
-  top: 30px;
-  right: 0;
 `;
 
 const styles = {
@@ -471,7 +512,7 @@ const styles = {
     transform: "translate(18px, -30px)",
   },
   maxMenu: {
-    height: "110px",
+    height: "80px",
     transition: "height .3s",
   },
   minMenu: {
@@ -480,6 +521,195 @@ const styles = {
   },
 };
 
+const MenuItemList = [
+  {
+    path: "live",
+    title: "live",
+    img: TopMenuLivePNG,
+    hoverImg: TopMenuLiveHoverPNG,
+    gameType: [GameTypeEnum.LIVELOBBY],
+    sorting: 1,
+    sortingGMO: 1,
+    sortingHK28: 1,
+    sortingPB: 2,
+    sortingSKY: 1,
+    sortingWLGHK: 1,
+  },
+  {
+    path: "chess",
+    title: "chess",
+    img: TopMenuQipaiPNG,
+    hoverImg: TopMenuQipaiHoverPNG,
+    gameType: [GameTypeEnum.QIPAILOBBY],
+    sorting: 2,
+    sortingGMO: 2,
+    sortingHK28: 3,
+    sortingPB: 8,
+    sortingSKY: 2,
+    sortingWLGHK: 2,
+  },
+  {
+    path: "sports",
+    title: "sport",
+    img: TopMenuSportsPNG,
+    hoverImg: TopMenuSportsHoverPNG,
+    gameType: [GameTypeEnum.SPORTS],
+    sorting: 3,
+    sortingGMO: 5,
+    sortingHK28: 2,
+    sortingPB: 3,
+    sortingSKY: 3,
+    sortingWLGHK: 3,
+  },
+  {
+    path: "esports",
+    title: "esports",
+    img: TopMenuSportsPNG,
+    hoverImg: TopMenuSportsHoverPNG,
+    gameType: [GameTypeEnum.ESPORTS],
+    sorting: 4,
+    sortingGMO: 7,
+    sortingHK28: 2,
+    sortingPB: 4,
+    sortingSKY: 7,
+    sortingWLGHK: 4,
+  },
+  {
+    path: "lottery",
+    title: "lottery",
+    img: TopMenuLotteryPNG,
+    hoverImg: TopMenuLotteryHoverPNG,
+    gameType: [GameTypeEnum.LOTTERYLOBBY],
+    sorting: 5,
+    sortingGMO: 6,
+    sortingHK28: 7,
+    sortingPB: 7,
+    sortingSKY: 8,
+    sortingWLGHK: 6,
+  },
+  {
+    path: `slots`,
+    title: `slot`,
+    img: TopMenuTigerPNG,
+    hoverImg: TopMenuTigerHoverPNG,
+    gameType: [GameTypeEnum.SLOT],
+    sorting: 6,
+    sortingGMO: 8,
+    sortingHK28: 4,
+    sortingPB: 1,
+    sortingSKY: 5,
+    sortingWLGHK: 7,
+  },
+  {
+    path: `electron`,
+    title: `electron`,
+    img: TopMenuSlotPNG,
+    hoverImg: TopMenuSlotHoverPNG,
+    gameType: [GameTypeEnum.TABLEGAME],
+    sorting: 7,
+    sortingGMO: 3,
+    sortingHK28: 6,
+    sortingPB: 5,
+    sortingSKY: 6,
+    sortingWLGHK: 8,
+  },
+  {
+    path: `fish`,
+    title: `fish`,
+    img: TopMenuFishPNG,
+    hoverImg: TopMenuFishHoverPNG,
+    gameType: [GameTypeEnum.FISH],
+    sorting: 8,
+    sortingGMO: 4,
+    sortingHK28: 5,
+    sortingPB: 6,
+    sortingSKY: 4,
+    sortingWLGHK: 5,
+  },
+];
+
+const LanguageButton = styled.div`
+  margin-left: 15px;
+`;
+
+const GameFrameWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
+const Maintenance = styled.div`
+  position: absolute;
+  display: none;
+  padding: 5px 10px;
+  z-index: 1;
+  cursor: not-allowed;
+  pointer-event: none;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 24px;
+  background: rgba(0, 0, 0, 0.75);
+  text-transform: capitalize;
+  font-weight: bold;
+`;
+
+const GameFrame = styled.div`
+  max-width: 290px;
+  float: left;
+  min-height: 228px;
+  position: relative;
+  transition: transform 0.6s;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+
+  ${({ maintenance }) => {
+    return maintenance
+      ? `
+      ${GameImg}{
+        filter: brightness(40%) grayscale(200%);
+      }
+
+     ${AnotherCustomButton}{
+      filter: brightness(40%) grayscale(200%);
+    }
+
+      ${Maintenance}{
+
+        display: flex;
+      }
+
+    
+    `
+      : ``;
+  }}
+`;
+
+const CustomCsButton = styled(CustomExternalLink)`
+  margin-left: 40px;
+`;
+
+const IconPhone = styled.div`
+  background: url(${(props) => props.img}) no-repeat;
+  float: left;
+  width: 20px;
+  height: 20px;
+`;
+
+const PhoneText = styled.div`
+  color: #000;
+`;
+
+const PhoneContainer = styled.div`
+  float: left;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  padding-top: 2px;
+`;
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -501,17 +731,6 @@ class Header extends Component {
 
   updateInterval = null;
   tickCount = 0;
-
-  changeLanguage = (language) => {
-    this.props.getBanner();
-    this.props.getMarquee(language);
-    this.props.getAnnouncement(language);
-    GeneralService.GetLocalization().then((response) => {
-      if (response.IsSuccess) {
-        ErrorSwitcher.setTranslation(response.data);
-      }
-    });
-  };
 
   async componentDidMount() {
     this.setState({ selected: this.props.location.pathname });
@@ -569,8 +788,14 @@ class Header extends Component {
   onhandleDeposit = () => {
     this.props.history.push("/" + i18n.language + "/account/deposit");
   };
+  onhandleWithdraw = () => {
+    this.props.history.push("/" + i18n.language + "/account/withdrawal");
+  };
   handleInboxClick = () => {
     this.props.history.push("/" + i18n.language + "/account/inbox");
+  };
+  handleProfileClick = () => {
+    this.props.history.push("/" + i18n.language + "/account/profile");
   };
   handleRefreshBalanceClick = () => {
     this.tickCount = 0;
@@ -599,17 +824,8 @@ class Header extends Component {
     this.props.history.push("/" + i18n.language + `/${path}`);
   };
 
-  rightMenuImageSwitcher = (item, isHover) => {
-    switch (config.theme.toLowerCase()) {
-      case "pb":
-        return item.img_PB;
-      default:
-        return isHover ? item.hoverImg : item.img;
-    }
-  };
-
-  RightMenuItem = (to, image, label, imageHover, subMenuImg, img_PB) => {
-    const { classes, theme } = this.props;
+  RightMenuItem = (to, label, subMenuImg) => {
+    const { classes } = this.props;
 
     return (
       <RightMenuLI
@@ -617,40 +833,22 @@ class Header extends Component {
         onClick={() => this.handleClickMenu(to)}
         onMouseOver={() => this.handleMenuMouseOver(to)}
         onMouseLeave={this.handleMenuMouseLeave}
-        hoverimg={this.rightMenuImageSwitcher(
-          { img: image, hoverImg: imageHover, img_PB: img_PB },
-          true
-        )}
+        // hoverimg={imageHover}
       >
-        <RightMenuImg
-          img={this.rightMenuImageSwitcher(
-            { img: image, hoverImg: imageHover, img_PB: img_PB },
-            false
-          )}
-          hoverimg={this.rightMenuImageSwitcher(
-            { img: image, hoverImg: imageHover, img_PB: img_PB },
-            true
-          )}
-          active={this.state.selected === `${to}`}
-          className={`${
-            this.state.shouldShow === null
-              ? classes.maxIcon
-              : this.state.shouldShow
-              ? classes.maxIcon
-              : classes.minIcon
-          }`}
-        ></RightMenuImg>
-        <RightMenuTextSpan
-          className={`${
-            this.state.shouldShow === null
-              ? classes.maxLabel
-              : this.state.shouldShow
-              ? classes.maxLabel
-              : classes.minLabel
-          }`}
-        >
-          {label}
-        </RightMenuTextSpan>
+        <RightMenuTextContainer>
+          <RightMenuTextSpan
+            className={`${
+              this.state.shouldShow === null
+                ? classes.maxLabel
+                : this.state.shouldShow
+                ? classes.maxLabel
+                : classes.minLabel
+            }`}
+          >
+            {label}
+          </RightMenuTextSpan>
+        </RightMenuTextContainer>
+        <RightMenuBottomLine></RightMenuBottomLine>
         {(() => {
           if (subMenuImg != null) {
             return (
@@ -658,10 +856,10 @@ class Header extends Component {
                 onClick={(e) => e.stopPropagation()}
                 style={
                   this.state.shouldShow === null
-                    ? { top: "156px" }
+                    ? { top: "0px" }
                     : this.state.shouldShow
-                    ? { top: "156px" }
-                    : { top: "114px" }
+                    ? { top: "0px" }
+                    : { top: "0px" }
                 }
               >
                 <MouseOverBackground>{subMenuImg}</MouseOverBackground>
@@ -684,25 +882,19 @@ class Header extends Component {
 
   handleJoinLotteryGame = (name) => {
     if (this.props.account.token != null) {
-      if (document.getElementById("audio") != null)
-        document.getElementById("audio").volume = 0.0;
-      var win = window.open(
+      if (this.props.history.location.pathname.indexOf("play") >= 0) {
+        AppHistory.goBack();
+      }
+      Common.PopupCenter(
         "/" + i18n.language + "/joinlottery/" + name,
-        "gamewindow",
-        "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=1280,height=720"
+        name,
+        1280,
+        720
       );
-      var timer = setInterval(function () {
-        if (win.closed) {
-          clearInterval(timer);
-          if (document.getElementById("audio") != null)
-            document.getElementById("audio").volume = 1.0;
-        }
-      }, 1000);
     } else {
       this.props.showLogin(true);
     }
   };
-
   handleJoinGameClick = (gameType, path, gameCode, url) => {
     var slotPageGameType = [
       GameTypeEnum.SLOT,
@@ -712,30 +904,15 @@ class Header extends Component {
       GameTypeEnum.TABLEGAME,
       GameTypeEnum.FISH,
     ];
+    Common.closePreviousPopup();
     if (slotPageGameType.indexOf(gameType) >= 0) {
       if (gameType == GameTypeEnum.SPORTS || gameType == GameTypeEnum.ESPORTS) {
         if (!this.props.account.token) {
           this.props.showLogin(true);
         } else {
-          if (gameCode === "WGFM" || gameCode === "WGVIA") {
-            if (document.getElementById("audio") != null)
-              document.getElementById("audio").volume = 0;
-            var win = window.open(
-              `/${i18n.language}/joinlobbygame/${gameType}/${gameCode}`,
-              "gamewindow2"
-            );
-            var timer = setInterval(function () {
-              if (win.closed) {
-                clearInterval(timer);
-                if (document.getElementById("audio") != null)
-                  document.getElementById("audio").volume = 1.0;
-              }
-            }, 1000);
-          } else {
-            this.props.history.push(
-              "/" + i18n.language + "/sports/play/" + gameCode + "/" + gameType
-            );
-          }
+          this.props.history.push(
+            "/" + i18n.language + "/sports/play/" + gameCode + "/" + gameType
+          );
         }
       } else {
         this.props.history.push(`/${i18n.language}/${path}/${gameCode}`);
@@ -745,16 +922,10 @@ class Header extends Component {
         this.props.showLogin(true);
         return;
       }
-      if (document.getElementById("audio") != null)
-        document.getElementById("audio").volume = 0;
-      var win = Common.PopupCenter(url, gameCode, 1280, 720);
-      var timer = setInterval(function () {
-        if (win.closed) {
-          clearInterval(timer);
-          if (document.getElementById("audio") != null)
-            document.getElementById("audio").volume = 1.0;
-        }
-      }, 1000);
+      if (this.props.history.location.pathname.indexOf("play") >= 0) {
+        AppHistory.goBack();
+      }
+      Common.PopupCenter(url, gameCode, 1280, 720);
     }
   };
   handleBookmarkClick = () => {
@@ -792,195 +963,87 @@ class Header extends Component {
     }
     return false;
   };
+
   render() {
-    const { classes, theme } = this.props;
-
-    var containEsports = this.props.game.homePageGameList.filter((game) => {
-      return game.type === GameTypeEnum.ESPORTS;
-    });
-
-    const MenuItemList = [
-      {
-        path: "live",
-        title: i18n.t("common.live"),
-        img: TopMenuLivePNG,
-        img_PB: TopMenuLivePNG_PB,
-        hoverImg: TopMenuLiveHoverPNG,
-        gameType: [GameTypeEnum.LIVELOBBY],
-        sorting: 1,
-        sortingGMO: 1,
-        sortingHK28: 1,
-        sortingPB: 2,
-        sortingSKY: 1,
-        sortingWLGHK: 1,
-      },
-      {
-        path: "chess",
-        title: i18n.t("common.chess"),
-        img: TopMenuQipaiPNG,
-        img_PB: TopMenuQipaiPNG_PB,
-        hoverImg: TopMenuQipaiHoverPNG,
-        gameType: [GameTypeEnum.QIPAILOBBY],
-        sorting: 2,
-        sortingGMO: 2,
-        sortingHK28: 3,
-        sortingPB: 8,
-        sortingSKY: 2,
-        sortingWLGHK: 2,
-      },
-      {
-        path: "sports",
-        title: i18n.t("common.sport"),
-        img: TopMenuSportsPNG,
-        img_PB: TopMenuSportsPNG_PB,
-        hoverImg: TopMenuSportsHoverPNG,
-        gameType: [GameTypeEnum.SPORTS],
-        sorting: 3,
-        sortingGMO: 5,
-        sortingHK28: 2,
-        sortingPB: 3,
-        sortingSKY: 3,
-        sortingWLGHK: 3,
-      },
-      {
-        path: "esports",
-        title: i18n.t("common.esports"),
-        img: TopMenueSportsPNG,
-        img_PB: TopMenueSportsPNG_PB,
-        hoverImg: TopMenueSportsHoverPNG,
-        gameType: [GameTypeEnum.ESPORTS],
-        sorting: 4,
-        sortingGMO: 7,
-        sortingHK28: 2,
-        sortingPB: 4,
-        sortingSKY: 7,
-        sortingWLGHK: 4,
-      },
-      {
-        path: "lottery",
-        title: i18n.t("common.lottery"),
-        img: TopMenuLotteryPNG,
-        img_PB: TopMenuLotteryPNG_PB,
-        hoverImg: TopMenuLotteryHoverPNG,
-        gameType: [GameTypeEnum.LOTTERYLOBBY],
-        sorting: 5,
-        sortingGMO: 6,
-        sortingHK28: 7,
-        sortingPB: 7,
-        sortingSKY: 8,
-        sortingWLGHK: 6,
-      },
-      {
-        path: `slots`,
-        title: i18n.t("common.slot"),
-        img: TopMenuTigerPNG,
-        img_PB: TopMenuTigerPNG_PB,
-        hoverImg: TopMenuTigerHoverPNG,
-        gameType: [GameTypeEnum.SLOT],
-        sorting: 6,
-        sortingGMO: 8,
-        sortingHK28: 4,
-        sortingPB: 1,
-        sortingSKY: 5,
-        sortingWLGHK: 7,
-      },
-      {
-        path: `electron`,
-        title: i18n.t("common.electron"),
-        img: TopMenuSlotPNG,
-        img_PB: TopMenuSlotPNG_PB,
-        hoverImg: TopMenuSlotHoverPNG,
-        gameType: [GameTypeEnum.TABLEGAME],
-        sorting: 7,
-        sortingGMO: 3,
-        sortingHK28: 6,
-        sortingPB: 5,
-        sortingSKY: 6,
-        sortingWLGHK: 8,
-      },
-      {
-        path: `fish`,
-        title: config.features.MenuItem_ShootFish
-          ? i18n.t("common.shootFish")
-          : i18n.t("common.fish"),
-        img: TopMenuFishPNG,
-        img_PB: TopMenuFishPNG_PB,
-        hoverImg: TopMenuFishHoverPNG,
-        gameType: [GameTypeEnum.FISH],
-        sorting: 8,
-        sortingGMO: 4,
-        sortingHK28: 5,
-        sortingPB: 6,
-        sortingSKY: 4,
-        sortingWLGHK: 5,
-      },
-    ];
-
+    const { classes } = this.props;
     const settings = {
       className: "headerSubmenu",
       slidesToShow: 4,
       slidesToScroll: 4,
     };
-
     return (
-      <CustomAppBar hide={this.props.hide}>
+      <CustomAppBar elevation="0" hide={this.props.hide}>
         <InnerWrap>
-          <TopContainer>
-            <TimerContainer>
-              <TimerSpan>GMT+8 {this.state.systemDateTime}</TimerSpan>
-            </TimerContainer>
-            {config.features.DisplayPhone && (
-              <TimerContainer style={{ marginLeft: "10px" }}>
-                <IconPhone img={IconPhonePNG}></IconPhone>
-                <PhoneNumberSpan>
-                  {this.props.general.brandsSupport &&
-                    this.props.general.brandsSupport.length >= 1 &&
-                    this.props.general.brandsSupport[0].phone}
-                </PhoneNumberSpan>
+          {
+            <TopContainer>
+              <TimerContainer>
+                <div>
+                  <LinkContainer style={{ float: "left" }}>
+                    <LinkList>
+                      <LinkListItem style={{ lineHeight: "1.7em" }}>
+                        GMT+8 {this.state.systemDateTime}
+                      </LinkListItem>
+                    </LinkList>
+                  </LinkContainer>
+                  {config.features.DisplayPhone && (
+                    <PhoneContainer>
+                      <IconPhone img={IconPhonePNG}></IconPhone>
+                      <PhoneText>
+                        {this.props.general.brandsSupport &&
+                          this.props.general.brandsSupport.length >= 1 &&
+                          this.props.general.brandsSupport[0].phone}
+                      </PhoneText>
+                    </PhoneContainer>
+                  )}
+                  {config.features.OnlineUser && (
+                    <OnlinePlayerContainer>
+                      <OnlineUserDisplayer />
+                    </OnlinePlayerContainer>
+                  )}
+                </div>
+
+                <LinkContainer style={{ float: "right" }}>
+                  <LinkList>
+                    <LinkListItem>
+                      {this.props.general.brandLanguage.map((lang, index) => {
+                        return (
+                          <>
+                            <CustomExternalLink
+                              selected={i18n.language === lang.culturecode}
+                              onClick={() => {
+                                i18n.changeLanguage(lang.culturecode);
+                                AppHistory.replace(lang.culturecode);
+                                this.props.getBanner();
+                                this.props.getMarquee(lang.culturecode);
+                                this.props.getAnnouncement(lang.culturecode);
+                                GeneralService.GetLocalization().then(
+                                  (response) => {
+                                    if (response.IsSuccess) {
+                                      ErrorSwitcher.setTranslation(
+                                        response.data
+                                      );
+                                    }
+                                  }
+                                );
+                              }}
+                            >
+                              {i18n.t("lang." + lang.culturecode)}
+                            </CustomExternalLink>
+                            {index < this.props.general.brandLanguage.length - 1
+                              ? " | "
+                              : ""}
+                          </>
+                        );
+                      })}{" "}
+                      <BtnCS onClick={this.props.onhandleShowCSClick}>
+                        {i18n.t("common.cs")}
+                      </BtnCS>
+                    </LinkListItem>
+                  </LinkList>
+                </LinkContainer>
               </TimerContainer>
-            )}
-            <LinkContainer>
-              <LanguageChanger
-                language={this.props.general.brandLanguage}
-                changeLanguage={this.changeLanguage}
-              />
-            </LinkContainer>
-            <RightContainer>
-              <BtnCS onClick={this.props.onhandleShowCSClick}>
-                {i18n.t("common.cs")}
-              </BtnCS>
-              {(() => {
-                if (!this.props.general.isMaintenance) {
-                  if (
-                    this.props.account.token !== this.props.account.info.token
-                  ) {
-                    return (
-                      <GuestContainer
-                        onhandleShowCSClick={this.props.onhandleShowCSClick}
-                        onhandleContactUsClick={this.handleContactUsClick}
-                        onDialogChange={this.handleDialogChange}
-                      ></GuestContainer>
-                    );
-                  } else {
-                    return (
-                      <MemberContainer
-                        onhandleLogout={this.onhandleLogout}
-                        onhandleTransfer={this.onhandleTransfer}
-                        onhandleDeposit={this.onhandleDeposit}
-                        onhandleInboxClick={this.handleInboxClick}
-                        onhandleRefreshBalanceClick={
-                          this.handleRefreshBalanceClick
-                        }
-                        wallet={this.props.wallet}
-                        game={this.props.game}
-                        account={this.props.account}
-                      ></MemberContainer>
-                    );
-                  }
-                }
-              })()}{" "}
-            </RightContainer>
-          </TopContainer>
+            </TopContainer>
+          }
           <BottomContainer>
             <LogoContainer
               img={
@@ -996,18 +1059,28 @@ class Header extends Component {
                   : classes.minMenu
               }`}
             ></LogoContainer>
-            <RightMenuContainer>
-              <RightMenuUL
-                className="top-menu"
-                className={`${
-                  this.state.shouldShow === null
-                    ? classes.maxMenu
-                    : this.state.shouldShow
-                    ? classes.maxMenu
-                    : classes.minMenu
-                }`}
-              >
-                {MenuItemList.sort((a, b) => {
+            <RightMenuUL
+              className="top-menu"
+              className={`${
+                this.state.shouldShow === null
+                  ? classes.maxMenu
+                  : this.state.shouldShow
+                  ? classes.maxMenu
+                  : classes.minMenu
+              }`}
+            >
+              {this.RightMenuItem("home", i18n.t("common.home"), null)}
+              {MenuItemList.filter(
+                //filter with available game from homepagegamelist
+                (item) =>
+                  this.props.game.homePageGameList
+                    .map((item) => item.type)
+                    .filter(
+                      (value, index, self) => self.indexOf(value) === index
+                    )
+                    .indexOf(item.gameType[0]) >= 0
+              )
+                .sort((a, b) => {
                   if (config.features.MenuItem_Sorting_HK28) {
                     return a.sortingHK28 > b.sortingHK28 ? 1 : -1;
                   } else if (config.features.MenuItem_Sorting_WLGHK) {
@@ -1021,40 +1094,18 @@ class Header extends Component {
                   } else {
                     return a.sorting > b.sorting ? 1 : -1;
                   }
-                }).map((item, index) => {
-                  var list = this.props.game.homePageGameList
-                    .filter((game) => item.gameType.indexOf(game.type) >= 0)
-                    .sort((a, b) => {
-                      if (config.features.LiveGame_Sorting_SKY) {
-                        var sortDGFirst = ["DG"];
-                        return (
-                          sortDGFirst.indexOf(b.abbreviation) -
-                          sortDGFirst.indexOf(a.abbreviation)
-                        );
-                      } else return b - a;
-                    });
-                  if (list.length > 0) {
-                    return (
-                      <RightMenuLI
-                        key={index}
-                        active={this.state.selected === `${item.path}`}
-                        onClick={() => this.handleClickMenu(item.path)}
-                        onMouseOver={() => this.handleMenuMouseOver(item.path)}
-                        onMouseLeave={this.handleMenuMouseLeave}
-                        hoverimg={this.rightMenuImageSwitcher(item, true)}
-                      >
-                        <RightMenuImg
-                          img={this.rightMenuImageSwitcher(item, false)}
-                          hoverimg={this.rightMenuImageSwitcher(item, true)}
-                          active={this.state.selected === `${item.path}`}
-                          className={`${
-                            this.state.shouldShow === null
-                              ? classes.maxIcon
-                              : this.state.shouldShow
-                              ? classes.maxIcon
-                              : classes.minIcon
-                          }`}
-                        ></RightMenuImg>
+                })
+                .map((item, index) => {
+                  return (
+                    <RightMenuLI
+                      key={index}
+                      active={this.state.selected === `${item.path}`}
+                      onClick={() => this.handleClickMenu(item.path)}
+                      onMouseOver={() => this.handleMenuMouseOver(item.path)}
+                      onMouseLeave={this.handleMenuMouseLeave}
+                      hoverimg={item.hoverImg}
+                    >
+                      <RightMenuTextContainer>
                         <RightMenuTextSpan
                           className={`${
                             this.state.shouldShow === null
@@ -1064,80 +1115,61 @@ class Header extends Component {
                               : classes.minLabel
                           }`}
                         >
-                          {item.title}
+                          {i18n.t("common." + item.title)}
                         </RightMenuTextSpan>
-                        <MouseOverContainer
-                          onClick={(e) => e.stopPropagation()}
-                          style={
-                            this.state.shouldShow === null
-                              ? { top: "156px" }
-                              : this.state.shouldShow
-                              ? { top: "156px" }
-                              : { top: "114px" }
-                          }
-                        >
-                          <MouseOverBackground>
+                      </RightMenuTextContainer>
+                      <RightMenuBottomLine></RightMenuBottomLine>
+                      <MouseOverContainer
+                        onClick={(e) => e.stopPropagation()}
+                        style={
+                          this.state.shouldShow === null
+                            ? { top: "0px" }
+                            : this.state.shouldShow
+                            ? { top: "0px" }
+                            : { top: "0px" }
+                        }
+                      >
+                        <MouseOverBackground>
+                          {this.state.isHoverMenu && (
                             <MouseOverInner>
+                              {/* <ImagePromo src={`${process.env.PUBLIC_URL}/assets/images/pcHeaderMenu/${item.path}/rebate.png`} alt=""></ImagePromo> */}
                               {(() => {
-                                return list.length <= 5 ? (
+                                var list = this.props.game.homePageGameList
+                                  .filter(
+                                    (game) =>
+                                      item.gameType.indexOf(game.type) >= 0
+                                  )
+                                  .sort((a, b) => {
+                                    if (config.features.LiveGame_Sorting_SKY) {
+                                      var sortDGFirst = ["DG"];
+                                      return (
+                                        sortDGFirst.indexOf(b.abbreviation) -
+                                        sortDGFirst.indexOf(a.abbreviation)
+                                      );
+                                    } else return b - a;
+                                  });
+
+                                return list.length <= 4 ? (
                                   list.map((game, index) => {
                                     return (
                                       <GameFrame
                                         key={index}
                                         style={{
-                                          width: `calc(1264px / ${list.length})`,
+                                          width: `calc(1280px/${list.length})`,
                                         }}
-                                        //TODO: To remove
                                         maintenance={game.status != 0}
                                       >
                                         <GameFrameWrapper>
                                           <Maintenance>
                                             {i18n.t("transfer.maintenance")}
                                           </Maintenance>
-                                          {(() => {
-                                            var gameCode = game.abbreviation.toLowerCase();
-                                            if (gameCode === "joker") {
-                                              return (
-                                                <HotGameIcon></HotGameIcon>
-                                              );
-                                            }
-                                          })()}
-                                          {(() => {
-                                            var gameCode = game.abbreviation.toLowerCase();
-                                            if (
-                                              config.features.SportsHideLogo
-                                            ) {
-                                              if (gameCode === "wgvia") {
-                                                return (
-                                                  <GameName index={index}>
-                                                    {i18n.t("common.horserace")}
-                                                  </GameName>
-                                                );
-                                              } else if (gameCode === "wgfm") {
-                                                return (
-                                                  <GameName index={index}>
-                                                    {i18n.t("common.sport")}
-                                                  </GameName>
-                                                );
-                                              }
-                                            }
-                                          })()}
-
                                           <GameImg
                                             index={index}
                                             src={`${
                                               process.env.PUBLIC_URL
                                             }/assets/images/pcHeaderMenu/${
                                               item.path
-                                            }/${game.abbreviation.toLowerCase()}${
-                                              config.features.SportsHideLogo &
-                                              (game.abbreviation.toLowerCase() ===
-                                                "wgvia" ||
-                                                game.abbreviation.toLowerCase() ===
-                                                  "wgfm")
-                                                ? "-HKJP"
-                                                : ""
-                                            }.png`}
+                                            }/${game.abbreviation.toLowerCase()}.png`}
                                             alt=""
                                             onClick={() => {
                                               if (
@@ -1163,74 +1195,39 @@ class Header extends Component {
                                               }
                                             }}
                                           ></GameImg>
+
+                                          <AnotherCustomButton index={index}>
+                                            <HeaderTitle>
+                                              <TheTitleWrapper>
+                                                {i18n.t(
+                                                  `${game.abbreviation}.${item.path}`
+                                                )}
+                                              </TheTitleWrapper>
+                                            </HeaderTitle>
+                                          </AnotherCustomButton>
                                         </GameFrameWrapper>
                                       </GameFrame>
                                     );
                                   })
                                 ) : (
-                                  <Slider {...settings}>
+                                  <StyledSlider {...settings}>
                                     {list.map((game, index) => {
                                       return (
                                         <GameFrame
                                           key={index}
-                                          style={{
-                                            width: `calc(1264px / ${list.length})`,
-                                          }}
-                                          //TODO: To remove
                                           maintenance={game.status != 0}
                                         >
                                           <GameFrameWrapper>
                                             <Maintenance>
                                               {i18n.t("transfer.maintenance")}
                                             </Maintenance>
-                                            {(() => {
-                                              var gameCode = game.abbreviation.toLowerCase();
-                                              if (gameCode === "joker") {
-                                                return (
-                                                  <HotGameIcon></HotGameIcon>
-                                                );
-                                              }
-                                            })()}
-                                            {(() => {
-                                              var gameCode = game.abbreviation.toLowerCase();
-                                              if (
-                                                config.features.SportsHideLogo
-                                              ) {
-                                                if (gameCode === "wgvia") {
-                                                  return (
-                                                    <GameName index={index}>
-                                                      {i18n.t(
-                                                        "common.horserace"
-                                                      )}
-                                                    </GameName>
-                                                  );
-                                                } else if (
-                                                  gameCode === "wgfm"
-                                                ) {
-                                                  return (
-                                                    <GameName index={index}>
-                                                      {i18n.t("common.sport")}
-                                                    </GameName>
-                                                  );
-                                                }
-                                              }
-                                            })()}
-
                                             <GameImg
                                               index={index}
                                               src={`${
                                                 process.env.PUBLIC_URL
                                               }/assets/images/pcHeaderMenu/${
                                                 item.path
-                                              }/${game.abbreviation.toLowerCase()}${
-                                                config.features.SportsHideLogo &
-                                                (game.abbreviation.toLowerCase() ===
-                                                  "wgvia" ||
-                                                  game.abbreviation.toLowerCase() ===
-                                                    "wgfm")
-                                                  ? "-HKJP"
-                                                  : ""
-                                              }.png`}
+                                              }/${game.abbreviation.toLowerCase()}.png`}
                                               alt=""
                                               onClick={() => {
                                                 if (
@@ -1257,42 +1254,71 @@ class Header extends Component {
                                                 }
                                               }}
                                             ></GameImg>
+
+                                            <AnotherCustomButton index={index}>
+                                              <HeaderTitle>
+                                                <TheTitleWrapper>
+                                                  {i18n.t(
+                                                    `${game.abbreviation}.${item.path}`
+                                                  )}
+                                                </TheTitleWrapper>
+                                              </HeaderTitle>
+                                            </AnotherCustomButton>
                                           </GameFrameWrapper>
                                         </GameFrame>
                                       );
                                     })}
-                                  </Slider>
+                                  </StyledSlider>
                                 );
                               })()}
                             </MouseOverInner>
-                          </MouseOverBackground>
-                        </MouseOverContainer>
-                      </RightMenuLI>
+                          )}
+                        </MouseOverBackground>
+                      </MouseOverContainer>
+                    </RightMenuLI>
+                  );
+                })}
+              {this.RightMenuItem(
+                "promotion",
+                i18n.t("common.promotion"),
+                null
+              )}
+              {this.RightMenuItem("vip", "VIP", null)}
+            </RightMenuUL>
+            <RightContainer>
+              {(() => {
+                if (!this.props.general.isMaintenance) {
+                  if (
+                    this.props.account.token !== this.props.account.info.token
+                  ) {
+                    return (
+                      <GuestContainer
+                        onDialogChange={this.handleDialogChange}
+                        onhandleShowCSClick={this.props.onhandleShowCSClick}
+                        onhandleContactUsClick={this.handleContactUsClick}
+                      ></GuestContainer>
                     );
                   } else {
-                    return null;
+                    return (
+                      <MemberContainer
+                        onhandleLogout={this.onhandleLogout}
+                        onhandleTransfer={this.onhandleTransfer}
+                        onhandleDeposit={this.onhandleDeposit}
+                        onhandleWithdraw={this.onhandleWithdraw}
+                        onhandleInboxClick={this.handleInboxClick}
+                        handleProfileClick={this.handleProfileClick}
+                        onhandleRefreshBalanceClick={
+                          this.handleRefreshBalanceClick
+                        }
+                        wallet={this.props.wallet}
+                        account={this.props.account}
+                        game={this.props.game}
+                      ></MemberContainer>
+                    );
                   }
-                })}
-
-                {this.RightMenuItem(
-                  "promotion",
-                  TopMenuPromoPNG,
-                  i18n.t("common.promotion"),
-                  TopMenuPromoHoverPNG,
-                  null,
-                  TopMenuPromoPNG_PB
-                )}
-
-                {this.RightMenuItem(
-                  "vip",
-                  TopMenuPromoPNG,
-                  "VIP",
-                  TopMenuPromoHoverPNG,
-                  null,
-                  TopMenuPromoPNG_PB
-                )}
-              </RightMenuUL>
-            </RightMenuContainer>
+                }
+              })()}
+            </RightContainer>
           </BottomContainer>
         </InnerWrap>
       </CustomAppBar>
@@ -1307,8 +1333,8 @@ const mapStateToProps = (state) => {
     ui: state.ui,
     account: state.account,
     game: state.game,
-    wallet: state.wallet,
     general: state.general,
+    wallet: state.wallet,
   };
 };
 
@@ -1339,5 +1365,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(withSnackbar(withStyles(styles)(withTheme(Header))))
+  )(withSnackbar(withStyles(styles)(Header)))
 );

@@ -64,7 +64,6 @@ const Container = styled.div`
   ${({ customPosition }) => {
     return customPosition ? `bottom: 7%;` : `  top: 50%;`;
   }}
-
   display: flex;
   flex-direction: column;
   align-items: center;
