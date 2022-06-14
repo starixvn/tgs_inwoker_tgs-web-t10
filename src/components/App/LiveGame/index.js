@@ -6,6 +6,7 @@ import ScrollAnimation from "react-animate-on-scroll";
 import config from "../../../config/config";
 import { GameTypeEnum } from "../../../api-services/utils/Enum";
 import { SHOW_LOGIN } from "../../../api-services/constant/actionType";
+import Common from "../../../utils/Common";
 const Container = styled.div`
   width: 100%;
   height: auto;
@@ -39,10 +40,13 @@ const Maintenance = styled.div`
   color: white;
   display: none;
   text-transform: capitalize;
+  pointer-events: none;
   font-weight: bold;
-  font-size: 24px;
   user-select: none;
   cursor: not-allowed;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 14px;
 `;
 
 const TheSelectorContainer = styled.div`
@@ -57,6 +61,7 @@ const TheSelector = styled.div`
       ? "linear-gradient(101deg, rgba(252,195,111,1) 21%, rgba(252,203,119,0.7) 100%)"
       : " linear-gradient(101deg, rgba(139,202,207,1) 21%, rgba(133,196,200,0.7) 100%)";
   }};
+  position: relative;
   border-radius: 12px;
   padding: 10px 20px;
   min-width: 200px;
@@ -66,7 +71,18 @@ const TheSelector = styled.div`
   display: flex;
   align-items: center;
   transition: all 10s linear;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 3px;
+
+  ${({ maintenance }) => {
+    return (
+      maintenance &&
+      ` pointer-events: none;
+    
+  ${Maintenance} {
+    margin-left: -20px;
+    display: flex;
+  }`
+    );
+  }}
 
   ${({ selected }) => {
     return (
@@ -182,16 +198,17 @@ class LiveGame extends Component {
     if (this.props.account.token != null) {
       if (document.getElementById("audio") != null)
         document.getElementById("audio").volume = 0.0;
-
-      var win = window.open(
+      Common.closePreviousPopup();
+      var win = Common.PopupCenter(
         "/" +
           i18n.language +
           "/joingame/" +
           GameTypeEnum.LIVELOBBY +
           "/" +
           params.toUpperCase(),
-        "gamewindow",
-        "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=1280,height=720"
+        params.toUpperCase(),
+        1280,
+        720
       );
 
       var timer = setInterval(function () {
@@ -205,7 +222,6 @@ class LiveGame extends Component {
       this.props.showLogin(true);
     }
   };
-
   handleGameChange = (game) => {
     this.setState({
       selected: game,
@@ -242,11 +258,15 @@ class LiveGame extends Component {
                   >
                     <Maintenance>{i18n.t("transfer.maintenance")}</Maintenance>
                     <CustomChevron />
-                    <div> {i18n.t(`${item.abbreviation}.live`)}</div>
+                    <div>{i18n.t(`${item.abbreviation}.live`)}</div>
                   </TheSelector>
                 );
               })}
-              <JoinButton>
+              <JoinButton
+                onClick={() => {
+                  this.handleJoinGameClick(this.state.selected);
+                }}
+              >
                 <div>{i18n.t("common.joinGame")}</div>
               </JoinButton>
             </TheSelectorContainer>
