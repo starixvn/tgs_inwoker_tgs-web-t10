@@ -33,6 +33,7 @@ import PromoImage2 from "../assets/images/promotion/promo-2.jpg";
 import PromoImage3 from "../assets/images/promotion/promo-3.jpg";
 import i18n from "./i18n";
 
+var newWindow;
 function getCDNLanguagePrefix() {
   var prefix = "en-US";
   var arr = [
@@ -311,7 +312,8 @@ function PopupCenter(url, title, w, h) {
   var top = (height - h) / 2 / systemZoom + dualScreenTop;
   top = top < 0 ? 0 : top;
   left = left < 0 ? 0 : left;
-  var newWindow = window.open(
+  // closePreviousPopup();
+  newWindow = window.open(
     url,
     "gamewindow",
     "scrollbars=yes, width=" +
@@ -336,6 +338,9 @@ function PopupCenter(url, title, w, h) {
   }
   popup[title] = newWindow;
   return newWindow;
+}
+function closePreviousPopup() {
+  if (newWindow !== undefined) newWindow.close();
 }
 function GetBonusCategory(type_id) {
   switch (type_id) {
@@ -419,6 +424,7 @@ const Common = {
   formatNumberWithCommas,
   formatNumberWithThousand,
   PopupCenter,
+  closePreviousPopup,
   bankImageMapping,
   GetBankImageByTitle,
   GetBankImageByCode,
