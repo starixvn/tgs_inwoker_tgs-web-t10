@@ -67,7 +67,6 @@ const featureList = {
 
     LiveGame_Sorting_SKY: false,
     Report_ShowRoundsTotal: true,
-    Register_ShowSMSVerification: false,
     Profile_SetUpBirthdateOnce: true,
 
     Deposit_OriginAccount: false,
@@ -81,6 +80,7 @@ const featureList = {
     Deposit_UploadRequired: false,
     Deposit_HideDepositChannel: false,
     AddCard_EWalletCustoms: false,
+    Register_ShowEmail: false,
   },
 };
 export default featureList;

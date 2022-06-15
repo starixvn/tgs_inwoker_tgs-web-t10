@@ -411,37 +411,67 @@ class GuestContainer extends Component {
       });
       return;
     }
-    AccountService.Activation(
-      username,
-      password,
-      this.state.areaCode,
-      phone
-    ).then(async (response) => {
-      if (response.IsSuccess) {
-        this.state.securityKey = response.data;
-        // setSecurityKey(response.data);
-        // props.enqueueSnackbar(i18n.t("common.msgTokenSent"), {
-        //   variant: "info",
-        // });
-        AccountService.VerifyActivation(this.state.securityKey, "123456").then(
-          async (response) => {
-            // if (response.IsSuccess) {
-            // props.enqueueSnackbar(i18n.t("common.msgTokenVerified"), {
-            //   variant: "success",
-            // });
-            this.handleLoginClick(username, password);
-            // } else {
-            // props.enqueueSnackbar(response.info, {
-            //   variant: "warning",
-            // });
-            // }
-            this.handleLoginClick(username, password);
+
+    const result = await this.props.accountLogin(username, password);
+    if (result.IsSuccess) {
+      AccountService.Activation(this.state.areaCode, phone).then(
+        async (response) => {
+          if (response.IsSuccess) {
+            this.state.securityKey = response.data;
+            AccountService.VerifyActivation(
+              this.state.securityKey,
+              "123456"
+            ).then(async (response) => {
+              this.handleLoginSuccess(result.data);
+            });
+          } else {
+            this.handleLoginSuccess(result.data);
           }
-        );
-      } else {
-        this.handleLoginClick(username, password);
-      }
-    });
+        }
+      );
+    }
+  };
+  handleLoginClickWithHpEmail = async (username, password, phone, email) => {
+    if (username === "") {
+      this.props.enqueueSnackbar(i18n.t("web.login.errorMsg.emptyUsername"), {
+        variant: "warning",
+      });
+      return;
+    }
+    if (password === "") {
+      this.props.enqueueSnackbar(i18n.t("web.login.errorMsg.emptyPassword"), {
+        variant: "warning",
+      });
+      return;
+    }
+    const result = await this.props.accountLogin(username, password);
+    if (result.IsSuccess) {
+      AccountService.Activation(this.state.areaCode, phone).then(
+        async (response) => {
+          if (response.IsSuccess) {
+            this.state.securityKey = response.data;
+            AccountService.VerifyActivation(
+              this.state.securityKey,
+              "123456"
+            ).then(async (response) => {
+              AccountService.ActivationEmail(email).then(async (response) => {
+                if (response.IsSuccess) {
+                  this.state.securityKey = response.data;
+                  AccountService.VerifyActivationEmail(
+                    this.state.securityKey,
+                    "123456"
+                  ).then(async (response) => {
+                    this.handleLoginSuccess(result.data);
+                  });
+                }
+              });
+            });
+          } else {
+            this.handleLoginSuccess(result.data);
+          }
+        }
+      );
+    }
   };
   handleCloseSelfControlDialog = (token) => {
     this.setState({ ...this.state, openSelfControlDialog: false });
@@ -564,6 +594,7 @@ class GuestContainer extends Component {
                     onRegisterSuccess={this.handleRegisterSuccess}
                     doLogin={this.handleLoginClick}
                     doLoginWithHp={this.handleLoginClickWithHp}
+                    doLoginWithHpEmail={this.handleLoginClickWithHpEmail}
                   ></Register>
                 );
               } else if (this.state.openDialogName === "activation") {
@@ -573,6 +604,7 @@ class GuestContainer extends Component {
                     pass={this.state.pass}
                     onhandleClose={this.onhandleCloseDialog}
                     doLogin={this.handleLoginClick}
+                    doLoginSuccess={this.handleLoginSuccess}
                   ></Activation>
                 );
               } else if (this.state.openDialogName === "forgotpassword") {
