@@ -384,14 +384,19 @@ function Register(props) {
       });
       return;
     }
-    expr = new RegExp("/^[0-9]{8," + config.features.MAX_PHONE_LENGTH + "}$/");
+    expr = new RegExp(`^[0-9]{8,${config.features.MAX_PHONE_LENGTH || 10}}`);
     if (
       config.features.Register_ShowPhone
     ) {
       if (!expr.test(phone)) {
-        props.enqueueSnackbar(i18n.t("common.noReachMin"), {
-          variant: "warning",
-        });
+        props.enqueueSnackbar(
+          i18n
+            .t("common.noReachMin")
+            .replace(/{maxlength}/g, config.features.MAX_PHONE_LENGTH),
+          {
+            variant: "warning",
+          }
+        );
         return;
       }
     }
