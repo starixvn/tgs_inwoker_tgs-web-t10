@@ -81,6 +81,8 @@ const featureList = {
     Deposit_HideDepositChannel: false,
     AddCard_EWalletCustoms: false,
     Register_ShowEmail: false,
+
+    ForceRedirectAddCard: false,
   },
 };
 export default featureList;

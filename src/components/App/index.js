@@ -199,6 +199,19 @@ class App extends Component {
         // this.props.getVIP();
       }
     }
+    if (config.features.ForceRedirectAddCard) {
+      if (
+        this.props.account.token !== null &&
+        this.props.wallet.bankCardList <= 0 &&
+        (preProps.location.pathname !== this.props.location.pathname ||
+            preProps.account.token === null)
+      ) {
+        if(this.props.location.pathname !== `/${i18n.language}/account/withdrawal`)
+        {
+          AppHistory.push("/" + i18n.language + "/account/withdrawal?do=addCard");
+        }
+      }
+    }
     if (
       preProps.game.providerList.length !==
         this.props.game.providerList.length &&
