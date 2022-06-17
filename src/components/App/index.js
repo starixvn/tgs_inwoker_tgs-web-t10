@@ -162,7 +162,14 @@ class App extends Component {
         ) {
           const responseToken = await this.props.checkTokenIsValid();
           if (responseToken.IsSuccess) {
-            this.props.getAccountInfo();
+            var bankInfoAuthentication = null;
+            await this.props.getAccountInfo().then((response)=>{
+              bankInfoAuthentication = response.data.bankinfoauthentication; 
+            });
+            if (config.features.ForceRedirectAddCard && !bankInfoAuthentication) {
+              AppHistory.push("/" + i18n.language + "/account/withdrawal?do=addCard");
+              return;
+            }
             // this.props.checkGame();
             // this.props.getBankList();
             this.props.getBalanceList();
@@ -197,19 +204,6 @@ class App extends Component {
         this.props.getPromotionList(i18n.language);
 
         // this.props.getVIP();
-      }
-    }
-    if (config.features.ForceRedirectAddCard) {
-      if (
-        this.props.account.token !== null &&
-        this.props.wallet.bankCardList <= 0 &&
-        (preProps.location.pathname !== this.props.location.pathname ||
-            preProps.account.token === null)
-      ) {
-        if(this.props.location.pathname !== `/${i18n.language}/account/withdrawal`)
-        {
-          AppHistory.push("/" + i18n.language + "/account/withdrawal?do=addCard");
-        }
       }
     }
     if (

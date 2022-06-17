@@ -83,6 +83,7 @@ const featureList = {
     Register_ShowEmail: false,
 
     ForceRedirectAddCard: false,
+    Register_CustomFlow_IDR: false,
   },
 };
 export default featureList;

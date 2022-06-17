@@ -752,7 +752,13 @@ class Header extends Component {
         this.tickCount++;
         if (this.tickCount >= 10) {
           this.tickCount = 0;
-          this.props.getBalanceList(false);
+          if (!config.features.Register_CustomFlow_IDR)
+            this.props.getBalanceList(false);
+          else if (
+            config.features.Register_CustomFlow_IDR &&
+            this.props.wallet.bankCardList.length > 0
+          )
+            this.props.getBalanceList(false);
         }
       }
     }, 1000);

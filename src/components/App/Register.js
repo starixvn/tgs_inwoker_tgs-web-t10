@@ -699,7 +699,11 @@ function Register(props) {
         </DescriptionContainer>
 
         <ButtonLogin onClick={handleRegisterClick}>
-          <ButtonLoginLabel>{i18n.t("web.register.btn")}</ButtonLoginLabel>
+          <ButtonLoginLabel>
+            {config.features.Register_CustomFlow_IDR
+              ? i18n.t("common.nextStep")
+              : i18n.t("web.register.btn")}
+          </ButtonLoginLabel>
         </ButtonLogin>
       </FormContainer>
     </Container>

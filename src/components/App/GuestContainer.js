@@ -476,7 +476,7 @@ class GuestContainer extends Component {
   handleCloseSelfControlDialog = (token) => {
     this.setState({ ...this.state, openSelfControlDialog: false });
   };
-  handleLoginSuccess = (token) => {
+  handleLoginSuccess =  async (token) => {
     let urlParams = new URLSearchParams(this.props.location.search);
     if (urlParams.has("return_url")) {
       // const returnValue = urlParams.get("return_url");
@@ -486,25 +486,34 @@ class GuestContainer extends Component {
       // }
     } else {
       // this.props.checkGame();
-
-      this.props.getAccountInfo();
-      this.props.getMessageList(i18n.language, 0, 99);
-      this.props.getBankCardList();
-      this.props.getBalanceList();
-      this.props.getAutoTransferStatus();
-      this.props.getWithdrawalChannel();
-      this.props.game.providerList
-        .filter((item) => item.status === 0 && item.transferwallet === true)
-        .map((a) => {
-          this.props.getGameBalance(a.abbreviation);
-        });
+      var bankInfoAuthentication = null;
+      await this.props.getAccountInfo().then((response)=>{
+        if(response.IsSuccess)
+        {
+          bankInfoAuthentication = response.data.bankinfoauthentication;
+        }
+      });
+      if(!config.features.Register_CustomFlow_IDR)
+      {    
+        this.props.getBankCardList();
+        this.props.getMessageList(i18n.language, 0, 99);
+        this.props.getBalanceList();
+        this.props.getAutoTransferStatus();
+        this.props.getWithdrawalChannel();
+        this.props.game.providerList
+          .filter((item) => item.status === 0 && item.transferwallet === true)
+          .map((a) => {
+            this.props.getGameBalance(a.abbreviation);
+          });
+      }
       // this.props.getIDCardNo();
       // this.props.getInviteLink();
       // this.props.getDepositChannel();
 
       if (
         this.state.openDialogName === "activation" ||
-        this.state.openDialogName === "register"
+        this.state.openDialogName === "register" ||
+        (config.features.Register_CustomFlow_IDR && !bankInfoAuthentication)
       ) {
         if (config.features.NavigateToAddCard) {
           this.props.history.push(
