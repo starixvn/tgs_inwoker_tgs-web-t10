@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
 import Loading from "../App/Loading";
-import {GameService} from "../../api-services/services/GameService";
-import {GameTypeEnum} from "../../api-services/utils/Enum";
+import { GameService } from "../../api-services/services/GameService";
+import { GameTypeEnum } from "../../api-services/utils/Enum";
 import Maintenance from "./Maintenance";
 
 class JoinGame extends Component {
@@ -27,7 +27,8 @@ class JoinGame extends Component {
     } else if (
       gameType === GameTypeEnum.ARCADE ||
       gameType === GameTypeEnum.SLOT ||
-      gameType === GameTypeEnum.TABLEGAME
+      gameType === GameTypeEnum.TABLEGAME ||
+      gameType === GameTypeEnum.RNGSPORTS
     ) {
       GameService.JoinGame(this.props.match.params.params2, gameCode).then(
         (response) => {
