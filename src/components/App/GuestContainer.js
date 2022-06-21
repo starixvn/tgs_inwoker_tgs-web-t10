@@ -414,7 +414,7 @@ class GuestContainer extends Component {
 
     const result = await this.props.accountLogin(username, password);
     if (result.IsSuccess) {
-      AccountService.Activation(this.state.areaCode, phone).then(
+      AccountService.Activation(username, password,this.state.areaCode, phone).then(
         async (response) => {
           if (response.IsSuccess) {
             this.state.securityKey = response.data;
@@ -446,31 +446,36 @@ class GuestContainer extends Component {
     }
     const result = await this.props.accountLogin(username, password);
     if (result.IsSuccess) {
-      AccountService.Activation(this.state.areaCode, phone).then(
+      AccountService.Activation(username, password,this.state.areaCode, phone).then(
         async (response) => {
           if (response.IsSuccess) {
             this.state.securityKey = response.data;
             AccountService.VerifyActivation(
               this.state.securityKey,
               "123456"
-            ).then(async (response) => {
-              AccountService.ActivationEmail(email).then(async (response) => {
-                if (response.IsSuccess) {
-                  this.state.securityKey = response.data;
-                  AccountService.VerifyActivationEmail(
-                    this.state.securityKey,
-                    "123456"
-                  ).then(async (response) => {
-                    this.handleLoginSuccess(result.data);
-                  });
-                }
-              });
-            });
-          } else {
-            this.handleLoginSuccess(result.data);
-          }
+            )
+            // .then(async (response) => {
+              
+            // });
+          } 
+          // else {
+          //   this.handleLoginSuccess(result.data);
+          // }
         }
       );
+      AccountService.ActivationEmail(email).then(async (response) => {
+        if (response.IsSuccess) {
+          this.state.securityKey = response.data;
+          AccountService.VerifyActivationEmail(
+            this.state.securityKey,
+            "123456"
+          )
+          // .then(async (response) => {
+          //   this.handleLoginSuccess(result.data);
+          // });
+        }
+      });
+      this.handleLoginSuccess(result.data);
     }
   };
   handleCloseSelfControlDialog = (token) => {
