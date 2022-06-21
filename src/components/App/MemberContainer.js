@@ -11,6 +11,7 @@ import config from "../../config/config";
 import { SortedMenuList } from "../../utils/HeaderSorting";
 
 import CustomPopover from "../Share/custompopover";
+import { Textfit } from "react-textfit";
 
 export const rotateKeyFrame = keyframes`
   0% {
@@ -250,8 +251,21 @@ const MemberContainer = (props) => {
         >
           <div>
             <BrandAndBalanceButBigger>
-              <div>{i18n.t("web.header.mainAccount")}</div>
-              <div>{Common.formatNumberWithThousand(totalBalance)}</div>
+              <div style={{ paddingRight: 30 }}>
+                {i18n.t("web.header.mainAccount")}:
+              </div>
+              <div
+                style={{
+                  width: 150,
+                  display: "flex",
+                  alignSelf: "flex-end",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <Textfit mode="single">
+                  {Common.formatNumberWithThousand(totalBalance)}
+                </Textfit>
+              </div>
             </BrandAndBalanceButBigger>
           </div>
           {SortedMenuList.map((item, key) => {
