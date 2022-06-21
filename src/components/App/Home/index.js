@@ -15,8 +15,6 @@ import SecondSection from "./SecondSection";
 import ThirdSection from "./ThirdSection";
 import FourthSection from "./FourthSection";
 import FifthSection from "./FifthSection";
-import BGJPG from "../../../assets/images/home/section/bg.jpg";
-import TextBgPNG from "../../../assets/images/home/section/text-bg.png";
 import ScrollAnimation from "react-animate-on-scroll";
 import { Grid } from "@material-ui/core";
 import config from "../../../config/config";
@@ -50,28 +48,31 @@ const FirstSection = styled.div`
 const FirstSectionItemBg = styled(Grid)`
   position: absolute;
   bottom: 76px;
-  left: ${(props) => (i18n.language === "vi-VN" ? "0px" : "16px")};
+  right: ${(props) => (i18n.language === "vi-VN" ? "0px" : "16px")};
   width: 160px;
   padding-left: 30px;
 `;
 const FirstSectionItemLabel = styled(Grid)`
   text-transform: uppercase;
+  color: ${({ theme }) => theme.primary};
 `;
 
 const FirstSectionItemButton = styled(Grid)`
   font-size: 14px;
-  color: #fff;
+  color: #000;
   text-align: center;
   width: 85px;
   border-radius: 6px;
-  border: solid 1px #e4eaff;
+  border: solid 1px #000;
   margin-top: 25px;
   height: 34px;
   line-height: 2em;
   transition: all 0.3s;
   &:hover {
     cursor: pointer;
+    color: #fff;
     background-color: ${({ theme }) => theme.primary};
+    border: solid 1px ${({ theme }) => theme.primary};
     transition: all 0.3s;
   }
 `;
@@ -94,6 +95,7 @@ const FirstSectionItem = styled(Grid)`
   flex-direction: column;
   align-items: flex-start;
   transition: transform 0.3s;
+  background-size: contain;
   &:hover {
     transform: scale(1.05);
     transition: transform 0.3s;
@@ -333,9 +335,9 @@ class Home extends Component {
               });
             })()}
           </FirstSection>
-          {
-            //    <SecondSection navigate={this.handleNavigateClick} />
-          }
+
+          <SecondSection />
+
           <ScrollAnimation
             animateIn="fadeInLeft"
             duration={1}

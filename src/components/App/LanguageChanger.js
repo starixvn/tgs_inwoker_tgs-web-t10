@@ -62,8 +62,8 @@ const LanguageChanger = ({ language }) => {
   };
 
   return (
-    <div>
-      <CustomButton onClick={handlePopoverOpen}>
+    <div style={{ cursor: "pointer" }} onClick={handlePopoverOpen}>
+      <CustomButton>
         <Flag
           src={
             process.env.PUBLIC_URL +

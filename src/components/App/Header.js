@@ -744,31 +744,7 @@ class Header extends Component {
                 />
               </LanguageContainer>
             </div>
-            {/* <TimerContainer>
-              <TimerLogo></TimerLogo>
-              <TimerSpan>GMT+8 {this.state.systemDateTime}</TimerSpan>
-            </TimerContainer>
-            <LinkContainer>
-              <LinkList>
-                <LinkListItem>
-                  {config.languages.map((lang, index) => {
-                    return (
-                      <>
-                        <CustomExternalLink
-                          selected={i18n.language === lang.name}
-                          onClick={() => {
-                            window.location.href = `/${lang.name}`;
-                          }}
-                        >
-                          {lang.label}
-                        </CustomExternalLink>
-                        {index < config.languages.length - 1 ? " | " : ""}
-                      </>
-                    );
-                  })}
-                </LinkListItem>
-              </LinkList>
-            </LinkContainer> */}
+
             <RightContainer>
               {(() => {
                 if (!this.props.general.isMaintenance) {
@@ -863,7 +839,6 @@ class Header extends Component {
 
             <RightMenuContainer>
               <RightMenuUL
-                className="top-menu"
                 className={`${
                   this.state.shouldShow === null
                     ? classes.maxMenu

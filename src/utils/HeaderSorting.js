@@ -32,7 +32,7 @@ import TopMenuSlotHoverPNG from "../assets/images/top-menu-slot-hover.png";
 const MenuItemList = [
   {
     path: "live",
-    title: i18n.t("common.live"),
+    title: "common.live",
     img: TopMenuLivePNG,
     img_PB: TopMenuLivePNG_PB,
     hoverImg: TopMenuLiveHoverPNG,
@@ -46,7 +46,7 @@ const MenuItemList = [
   },
   {
     path: "chess",
-    title: i18n.t("common.chess"),
+    title: "common.chess",
     img: TopMenuQipaiPNG,
     img_PB: TopMenuQipaiPNG_PB,
     hoverImg: TopMenuQipaiHoverPNG,
@@ -60,7 +60,7 @@ const MenuItemList = [
   },
   {
     path: "sports",
-    title: i18n.t("common.sport"),
+    title: "common.sport",
     img: TopMenuSportsPNG,
     img_PB: TopMenuSportsPNG_PB,
     hoverImg: TopMenuSportsHoverPNG,
@@ -74,7 +74,7 @@ const MenuItemList = [
   },
   {
     path: "esports",
-    title: i18n.t("common.esports"),
+    title: "common.esports",
     img: TopMenueSportsPNG,
     img_PB: TopMenueSportsPNG_PB,
     hoverImg: TopMenueSportsHoverPNG,
@@ -88,7 +88,7 @@ const MenuItemList = [
   },
   {
     path: "lottery",
-    title: i18n.t("common.lottery"),
+    title: "common.lottery",
     img: TopMenuLotteryPNG,
     img_PB: TopMenuLotteryPNG_PB,
     hoverImg: TopMenuLotteryHoverPNG,
@@ -102,7 +102,7 @@ const MenuItemList = [
   },
   {
     path: `slots`,
-    title: i18n.t("common.slot"),
+    title: "common.slot",
     img: TopMenuTigerPNG,
     img_PB: TopMenuTigerPNG_PB,
     hoverImg: TopMenuTigerHoverPNG,
@@ -116,7 +116,7 @@ const MenuItemList = [
   },
   {
     path: `electron`,
-    title: i18n.t("common.electron"),
+    title: "common.electron",
     img: TopMenuSlotPNG,
     img_PB: TopMenuSlotPNG_PB,
     hoverImg: TopMenuSlotHoverPNG,
@@ -131,8 +131,8 @@ const MenuItemList = [
   {
     path: `fish`,
     title: config.features.MenuItem_ShootFish
-      ? i18n.t("common.shootFish")
-      : i18n.t("common.fish"),
+      ? "common.shootFish"
+      : "common.fish",
     img: TopMenuFishPNG,
     img_PB: TopMenuFishPNG_PB,
     hoverImg: TopMenuFishHoverPNG,
