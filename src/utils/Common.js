@@ -137,6 +137,7 @@ function GetBankImageByCode(code) {
 function GetDisplayGameType() {
   return [
     GameTypeEnum.SPORTS,
+    GameTypeEnum.RNGSPORTS,
     GameTypeEnum.ESPORTS,
     GameTypeEnum.LIVELOBBY,
     GameTypeEnum.QIPAILOBBY,
@@ -144,7 +145,6 @@ function GetDisplayGameType() {
     GameTypeEnum.LOTTERYLOBBY,
     GameTypeEnum.SLOT,
     GameTypeEnum.TABLEGAME,
-    GameTypeEnum.RNGSPORTS,
   ];
 }
 const gameImageMapping = [

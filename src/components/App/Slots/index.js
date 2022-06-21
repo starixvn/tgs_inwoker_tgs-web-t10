@@ -544,19 +544,26 @@ class Slots extends Component {
         .filter((s) => {
           return s.isactive === true; // show only active game.
         })
-        .map((el, i) => (
-          <ItemContainer
-            key={i}
-            img={`${
-              config.sourceUrl
-            }${el.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${
-              el.code
-            }.jpg`}
-          >
-            <GameDesc>
-              <GameProvider>{el.gpcode}</GameProvider>
-              <Spliter></Spliter>
-              {this.props.token !== null && this.props.token !== "" && (
+        .map((el, i) => {
+          var theName;
+          this.props.game.providerList.filter((a) => {
+            if (a.abbreviation === el.gpcode) {
+              return (theName = a.name);
+            }
+            return theName;
+          });
+          return (
+            <ItemContainer
+              key={i}
+              img={`${
+                config.sourceUrl
+              }${el.gpcode.toUpperCase()}/${Common.getCDNLanguagePrefix()}/${
+                el.code
+              }.jpg`}
+            >
+              <GameDesc>
+                <GameProvider>{theName}</GameProvider>
+                <Spliter></Spliter>
                 <Bookmark
                   bookmark={this.state.favGame.indexOf(el.id) > -1}
                   onClick={() =>
@@ -566,19 +573,17 @@ class Slots extends Component {
                     )
                   }
                 ></Bookmark>
-              )}
-            </GameDesc>
-            <GameHoverSelection
-              onClick={() => this.handleJoinGameClick(el.gpcode, el.id)}
-            >
-              GO
-            </GameHoverSelection>
-            <Namecontainer>{el.name}</Namecontainer>
-          </ItemContainer>
-        ));
+              </GameDesc>
+              <GameHoverSelection
+                onClick={() => this.handleJoinGameClick(el.gpcode, el.id)}
+              >
+                GO
+              </GameHoverSelection>
+              <Namecontainer>{el.name}</Namecontainer>
+            </ItemContainer>
+          );
+        });
     }
-
-    console.log(this.props.match.url.split("/")[2]);
 
     return (
       <Container
