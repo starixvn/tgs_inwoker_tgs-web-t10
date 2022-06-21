@@ -49,6 +49,7 @@ import eSports from "./eSports";
 
 import LiveChat from "../Share/live-chat";
 import config from "../../config/config";
+import CustomLibrary from "./Sports/CustomLibrary";
 
 const baseRouteUrl = Common.baseRouteUrl;
 const Main = styled.div`
@@ -204,11 +205,15 @@ class App extends Component {
         this.props.account.token !== null &&
         this.props.wallet.bankCardList <= 0 &&
         (preProps.location.pathname !== this.props.location.pathname ||
-            preProps.account.token === null)
+          preProps.account.token === null)
       ) {
-        if(this.props.location.pathname !== `/${i18n.language}/account/withdrawal`)
-        {
-          AppHistory.push("/" + i18n.language + "/account/withdrawal?do=addCard");
+        if (
+          this.props.location.pathname !==
+          `/${i18n.language}/account/withdrawal`
+        ) {
+          AppHistory.push(
+            "/" + i18n.language + "/account/withdrawal?do=addCard"
+          );
         }
       }
     }
@@ -339,6 +344,11 @@ class App extends Component {
                       exact
                       path={baseRouteUrl + "/sports/play/:params/:type"}
                       component={SportsPlay}
+                    />
+                    <Route
+                      exact
+                      path={baseRouteUrl + "/sports/:platform"}
+                      component={CustomLibrary}
                     />
                     <Route
                       exact

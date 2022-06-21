@@ -19,15 +19,20 @@ const ArrowUp = styled.div`
 
 const CustomPopoverContent = styled.div`
   min-width: 225px;
+  border-radius: 12px;
   padding: 10px;
   display: grid;
   background: ${({ theme }) => theme.popoverBackground};
-  max-height: 500px;
+  max-height: ${({ height }) => {
+    return height ? height : "500px";
+  }};
 
   overflow: auto;
   user-select: none;
+
   ::-webkit-scrollbar {
     width: 5px;
+    display: none;
   }
 
   ::-webkit-scrollbar-track {
@@ -43,7 +48,7 @@ const CustomPopoverContent = styled.div`
   }
 `;
 
-const CustomPopover = ({ children, open, anchorEl, handleClose }) => {
+const CustomPopover = ({ children, open, anchorEl, handleClose, height }) => {
   return (
     <div>
       <CustomPopoverThing
@@ -61,7 +66,7 @@ const CustomPopover = ({ children, open, anchorEl, handleClose }) => {
         }}
       >
         <ArrowUp />
-        <CustomPopoverContent>{children}</CustomPopoverContent>
+        <CustomPopoverContent height={height}>{children}</CustomPopoverContent>
       </CustomPopoverThing>
     </div>
   );
