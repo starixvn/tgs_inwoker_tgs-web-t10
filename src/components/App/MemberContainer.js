@@ -252,7 +252,7 @@ const MemberContainer = (props) => {
           <div>
             <BrandAndBalanceButBigger>
               <div style={{ paddingRight: 30 }}>
-                {i18n.t("web.header.mainAccount")}:
+                {i18n.t("web.header.mainAccount")}
               </div>
               <div
                 style={{
