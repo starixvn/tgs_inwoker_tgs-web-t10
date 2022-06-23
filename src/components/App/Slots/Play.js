@@ -339,7 +339,7 @@ class Play extends Component {
             </GameFrameHeader>
             <GameFrame
               ref={this.myRef}
-              scrolling="no"
+              scrolling="yes"
               frameBorder="0"
             ></GameFrame>
           </InnerContainer>
