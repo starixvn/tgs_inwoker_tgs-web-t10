@@ -498,7 +498,7 @@ class GuestContainer extends Component {
           bankInfoAuthentication = response.data.bankinfoauthentication;
         }
       });
-      if(!config.features.Register_CustomFlow_IDR)
+      if(!config.features.Register_CustomFlow_IDR || (config.features.Register_CustomFlow_IDR && bankInfoAuthentication))
       {    
         this.props.getBankCardList();
         this.props.getMessageList(i18n.language, 0, 99);
