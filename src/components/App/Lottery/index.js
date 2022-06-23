@@ -179,6 +179,7 @@ class Lottery extends Component {
       this.props.showLogin(true);
     } else {
       Common.closePreviousPopup();
+      this.props.performBalanceRefresh();
       Common.PopupCenter(
         "/" + i18n.language + "/joinlottery/" + params,
         params.toUpperCase(),

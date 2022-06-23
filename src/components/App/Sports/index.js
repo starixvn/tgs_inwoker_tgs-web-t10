@@ -178,6 +178,7 @@ class Sports extends Component {
           1280,
           720
         );
+        this.props.performBalanceRefresh();
       } else {
         this.props.history.push(
           "/" + i18n.language + "/sports/play/" + params + "/" + type

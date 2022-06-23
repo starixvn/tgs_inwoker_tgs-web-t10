@@ -166,6 +166,7 @@ class Qipai extends Component {
       this.props.showLogin(true);
     } else {
       Common.closePreviousPopup();
+      this.props.performBalanceRefresh();
       Common.PopupCenter(
         "/" +
           i18n.language +

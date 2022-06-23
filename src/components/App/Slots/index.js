@@ -418,6 +418,7 @@ class Slots extends Component {
         : "electron";
     if (this.props.token) {
       Common.closePreviousPopup();
+      this.props.performBalanceRefresh();
       this.props.history.push(
         `/${i18n.language}/${type}/play/${gpcode}/${gpid}`
       );
