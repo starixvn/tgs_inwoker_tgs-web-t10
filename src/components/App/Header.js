@@ -906,7 +906,7 @@ class Header extends Component {
               >
                 {SortedMenuList.map((item, index) => {
                   var gameList = this.props.game.homePageGameList.filter(
-                    (game) => item.gameType.indexOf(game.type) >= 0
+                    (game) => (item.gameType.indexOf(game.type) >= 0 && game.type !== GameTypeEnum.RNGSPORTS) || (game.type === GameTypeEnum.RNGSPORTS && game.abbreviation === "PPTF")
                   );
                   return (
                     gameList.length !== 0 && (
@@ -946,7 +946,7 @@ class Header extends Component {
                                 var list = this.props.game.homePageGameList
                                   .filter(
                                     (game) =>
-                                      item.gameType.indexOf(game.type) >= 0
+                                      (item.gameType.indexOf(game.type) >= 0 && game.type !== GameTypeEnum.RNGSPORTS) || (game.type === GameTypeEnum.RNGSPORTS && game.abbreviation === "PPTF")
                                   )
                                   .sort((a, b) => {
                                     if (config.features.LiveGame_Sorting_SKY) {

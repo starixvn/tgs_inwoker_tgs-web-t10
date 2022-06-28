@@ -151,7 +151,7 @@ class Sports extends Component {
       this.props.game.homePageGameList.length
     ) {
       var sportsList = this.props.game.homePageGameList.filter((item) => {
-        return item.type === GameTypeEnum.SPORTS;
+        return (item.type === GameTypeEnum.SPORTS || (item.type === GameTypeEnum.RNGSPORTS && item.abbreviation === "PPTF"));
       });
 
       this.setState({
