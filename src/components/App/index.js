@@ -45,6 +45,7 @@ import i18n from "../../utils/i18n";
 import Maintenance from "../Share/Maintenance";
 import Banned from "./Banned";
 import AnotherFloatPanel from "./Home/AnotherFloatPanel";
+import PromotionRoulette from "./Home/PromotionRoulette";
 import ESports from "./eSports";
 
 import LiveChat from "../Share/live-chat";

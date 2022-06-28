@@ -86,6 +86,7 @@ const featureList = {
     AddCard_Bank_Custom_IDR: false,
     Deposit_AddCard: false,
     Register_CustomFlow_IDR: false,
+    HomePage_PromoRoulette: false,
   },
 };
 export default featureList;
