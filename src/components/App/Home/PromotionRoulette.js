@@ -1,0 +1,830 @@
+import React, { useEffect, useState } from "react";
+import styled, { keyframes } from "styled-components";
+import { connect } from "react-redux";
+import DynamicFont from "react-dynamic-font";
+import { Textfit } from "react-textfit";
+import { generalAction } from "../../../api-services/actions/generalAction";
+import BtnRoulettePNG from "../../../assets/images/roulette/btn-roulette.png";
+import RoulettePointer from "../../../assets/images/roulette/roulette-pointer.png";
+import RouletteTurntable6 from "../../../assets/images/roulette/roulette-turntable-6.png";
+import ModalBackgroundPNG from "../../../assets/images/roulette/bg-modal.png";
+import BtnClose from "../../../assets/images/roulette/btn-close.png";
+import TabActivePNG from "../../../assets/images/roulette/tab-active.png";
+import TabPNG from "../../../assets/images/roulette/tab.png";
+import EmptyBackgroundPNG from "../../../assets/images/roulette/bg-empty.png";
+import LoadingGIF from "../../../assets/images/loading.gif";
+
+import i18n from "../../../utils/i18n";
+import { Dialog } from "@material-ui/core";
+import { AppHistory } from "../../../history/History";
+import config from "../../../config/config";
+import {
+  RESET_PROMOROULETTE,
+  SHOW_LOGIN,
+} from "../../../api-services/constant/actionType";
+
+const moment = require("moment");
+
+const Container = styled.div`
+  height: auto;
+  position: fixed;
+  left: 2%;
+  top: 40%
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(-50%);
+  overflow: visible;
+  color: white;
+  border-radius: 8px;
+
+  :hover {
+  }
+`;
+
+const BtnRoulette = styled.div`
+  cursor: pointer;
+  width: 130px;
+  height: 125px;
+  background: url(${BtnRoulettePNG}) no-repeat;
+  background-size: contain;
+`;
+
+const RouletteModal = styled(Dialog)`
+  .MuiBackdrop-root {
+    background: transparent;
+  }
+  .MuiDialog-scrollPaper {
+    align-items: flex-start;
+  }
+
+  .MuiDialog-paper {
+    min-width: 600px;
+    background: #fffdee;
+    border-radius: 50px;
+    min-height: 458px;
+    margin-top: 150px;
+  }
+`;
+
+const CustomModal = styled(Dialog)`
+  .MuiBackdrop-root {
+    background: transparent;
+  }
+  .MuiDialog-scrollPaper {
+  }
+
+  .MuiDialog-paper {
+    min-width: 549px;
+    background: url(${EmptyBackgroundPNG}) no-repeat;
+    min-height: 370px;
+    background-position: -9px -6px;
+    padding-top: 100px;
+  }
+`;
+
+const ModalTitle = styled.div`
+  text-align: center;
+  font-weight: bold;
+`;
+
+const ModalTitleH1 = styled(ModalTitle)`
+  font-size: 3em;
+`;
+const ModalTitleH2 = styled(ModalTitle)`
+  font-size: 2.5em;
+`;
+
+const CloseButton = styled.div`
+  cursor: pointer;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  background: url(${BtnClose}) no-repeat;
+  width: 31px;
+  height: 31px;
+`;
+
+const RouletteContainer = styled.div`
+  width: 600px;
+  height: 458px;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  background: url(${ModalBackgroundPNG});
+`;
+
+const LoadingIcon = styled.img`
+  margin: 0 auto;
+  display: block;
+  margin-top: 200px;
+`;
+const LoadingContainer = styled.div`
+  position: absolute;
+  width: 600px;
+  height: 458px;
+  transition: opacity 0.2s linear, height 0.02s linear 0.2s;
+  z-index: 9;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    ${(props) => (props.opacity ? props.opacity : 0.8)}
+  );
+  ${(props) =>
+    props.isLoading ? "opacity:1;height: 100%;" : "opacity:0;height:0px;"};
+`;
+
+const TabContainer = styled.div`
+  height: 50px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: self-end;
+  padding-right: 25px;
+`;
+const Tab = styled.div`
+  cursor: pointer;
+  height: 40px;
+  width: 100px;
+  padding: 0 10px;
+  margin: 0 10px;
+  background: url(${(props) =>
+      props.active ? `${TabActivePNG}` : `${TabPNG}`})
+    no-repeat;
+  background-size: contain;
+`;
+
+const TabTitle = styled.div`
+  line-height: 40px;
+  text-align: center;
+`;
+
+const Content = styled.div`
+  width: 600px;
+  height: 286px;
+  padding: 20px;
+`;
+
+const RouletteWrapper = styled.div`
+  padding-top: 25px;
+`;
+const Turntable = styled.div`
+  width: 385px;
+  height: 385px;
+  background: url(${RouletteTurntable6}) no-repeat;
+  margin: 0 auto;
+`;
+const Pointer = styled.div`
+  width: 116px;
+  height: 116px;
+  background: url(${RoulettePointer}) no-repeat;
+  position: absolute;
+  left: 242px;
+  top: 155px;
+  cursor: pointer;
+  ${(props) =>
+    props.disabled
+      ? `
+  filter: grayscale(1);
+  cursor: not-allowed;`
+      : ``}
+`;
+
+const RouletteItemContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+`;
+const RouletteLabelContainer = styled.div`
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  margin: 0 auto;
+  top: -32px;
+  left: 52px;
+  transform: scale(0.65);
+`;
+const RouletteTtem1 = styled.div``;
+const RouletteTtem2 = styled.div`
+  width: 100%;
+  height: 100%;
+  transform: rotate(-135deg);
+`;
+
+const RouletteSpan = styled.span`
+  width: 50%;
+  height: 50%;
+  display: inline-block;
+  position: absolute;
+`;
+
+const RouletteTitle = styled.b`
+  //padding-left: 50px;
+  font-size: 28px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 75px;
+  text-align: center;
+`;
+
+const EventTitle = styled.div`
+  color: #7e0000;
+  margin-bottom: 10px;
+  font-size: 19px;
+  font-family: Arial;
+  margin-left: -8px;
+`;
+const EventLabel = styled.div`
+  font-size: 15px;
+  color: #4f4f4f;
+  font-family: Arial;
+  line-height: 16px;
+  margin-bottom: 6px;
+  font-weight: bold;
+`;
+const EventText = styled.div`
+  font-size: 15px;
+  color: #4f4f4f;
+  font-family: Arial;
+  line-height: 16px;
+  margin-bottom: 12px;
+`;
+
+const Roulette = (props) => {
+  const [startRotateDeg, setStartRotateDeg] = useState(0);
+  useEffect(() => {
+    if (props.itemIndex !== null) {
+      handleSpinResult();
+    }
+  }, [props.itemIndex]);
+
+  const generateLabels = () => {
+    return (
+      <React.Fragment>
+        <RouletteTtem1>
+          {props.items.map((item, index) => {
+            if (index % 2 !== 0) {
+              return (
+                <RouletteSpan style={item.style.span}>
+                  <RouletteTitle style={item.style.label}>
+                    <Textfit min={20} max={25}>
+                      {item.label}
+                    </Textfit>
+                  </RouletteTitle>{" "}
+                </RouletteSpan>
+              );
+            } else return null;
+          })}
+        </RouletteTtem1>
+        <RouletteTtem2>
+          {props.items.map((item, index) => {
+            if (index % 2 === 0) {
+              return (
+                <RouletteSpan style={item.style.span}>
+                  <RouletteTitle style={item.style.label}>
+                    <Textfit min={20} max={25}>
+                      {item.label}
+                    </Textfit>
+                  </RouletteTitle>
+                </RouletteSpan>
+              );
+            } else return null;
+          })}
+        </RouletteTtem2>
+      </React.Fragment>
+    );
+  };
+
+  const randomNum = (minNum, maxNum) => {
+    return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+  };
+
+  const handleStartSpin = () => {
+    if (!props.disableOnSpin) {
+      if (props.account.token != null) {
+        if (config.features.SMSVerification) {
+          if (
+            props.account.info.member_phone === null ||
+            props.account.info.member_phone === ""
+          ) {
+            props.performCloseRouletteModal();
+            props.handlePhoneVerifyClick();
+          } else {
+            props.getRouletteResult();
+            handleSpin();
+          }
+        } else {
+          props.getRouletteResult();
+          handleSpin();
+        }
+      } else {
+        props.handleOnSpinDisable();
+        props.showLogin(true);
+      }
+    }
+  };
+
+  const handleSpin = () => {
+    props.handleOnSpinDisable();
+    const el = document.getElementById("roulette-turntable");
+    const el2 = document.getElementById("roulette-label");
+
+    const rouletteSpin = [{ transform: "rotate(1800deg)" }];
+    const rouletteTime = {
+      duration: 1000,
+      iterations: 30,
+    };
+    el.animate(rouletteSpin, rouletteTime);
+    el2.animate(rouletteSpin, rouletteTime);
+
+    setStartRotateDeg(1800);
+  };
+
+  const handleSpinResult = () => {
+    const ROULETTE_AREA_DEG_8 = [
+      [390, 431],
+      [68, 109],
+      [114, 155],
+      [160, 201],
+      [206, 247],
+      [252, 291],
+      [298, 339],
+      [344, 385],
+    ];
+    const ROULETTE_AREA_DEG_6 = [
+      [326, 393],
+      [36, 87],
+      [91, 145],
+      [149, 211],
+      [215, 268],
+      [272, 323],
+    ];
+    const giftIndex = props.itemIndex; //  result-1 index
+    const targetDegree = randomNum(
+      ROULETTE_AREA_DEG_6[giftIndex][0],
+      ROULETTE_AREA_DEG_6[giftIndex][1]
+    );
+
+    let rotateDeg = 0;
+
+    let i = 0;
+
+    const turntableEl = document.getElementById("roulette-turntable");
+    const labelEl = document.getElementById("roulette-label");
+
+    if (
+      turntableEl.getAnimations().length > 0 &&
+      labelEl.getAnimations().length > 0
+    ) {
+      turntableEl.getAnimations()[0].pause();
+      labelEl.getAnimations()[0].pause();
+      turntableEl.getAnimations()[0].finish();
+      labelEl.getAnimations()[0].finish();
+    }
+    if (labelEl.getAnimations().length > 0) {
+      labelEl.getAnimations()[0].pause();
+      labelEl.getAnimations()[0].finish();
+    }
+    const _fn = (n = 0) => {
+      if (targetDegree + 360 * n > startRotateDeg) {
+        rotateDeg = targetDegree + 360 * n;
+      } else {
+        i++;
+        _fn(i);
+      }
+    };
+    _fn();
+    turntableEl.style.transform = `rotate(${rotateDeg + 360}deg)`;
+    turntableEl.style.transition = `all 1000ms ease-out`;
+    labelEl.style.transform = `rotate(${rotateDeg + 360}deg)`;
+    labelEl.style.transition = `all 1000ms ease-out`;
+    turntableEl.ontransitionend = () => {
+      props.performOpenEmptyModal(i18n.t("promoRoulette.dialogRewardTitle1"), props.items[giftIndex].label);
+      turntableEl.style.transition = `none`;
+      labelEl.style.transition = `none`;
+    };
+    setStartRotateDeg(rotateDeg + 360);
+  };
+
+  return (
+    <RouletteWrapper>
+      <Turntable id="roulette-turntable"></Turntable>
+      <RouletteLabelContainer>
+        <RouletteItemContainer id="roulette-label">
+          {generateLabels()}
+        </RouletteItemContainer>
+      </RouletteLabelContainer>
+      <Pointer
+        disabled={props.disableOnSpin}
+        onClick={handleStartSpin}
+      ></Pointer>
+    </RouletteWrapper>
+  );
+};
+
+const PromotionRoulette = (props) => {
+  const [rouletteModal, setRouletteModal] = useState(false);
+  const [emptyModal, setEmptyModal] = useState(false);
+  const [isTabOpen, setIsTabOpen] = useState(false);
+  const [tabIndex, setTabIndex] = useState(0);
+  const [disableOnSpin, setDisableOnSpin] = useState(false);
+  const [dialogContent, setDialogContent] = useState({});
+  useEffect(() => {
+    if (props.general.isRouletteAvailable != null) {
+      if (props.general.isRouletteAvailable && rouletteModal) {
+        if (disableOnSpin) {
+          setDisableOnSpin(false);
+        }
+      } else if (!props.general.isRouletteAvailable && rouletteModal) {
+        setRouletteModal(false);
+        setDisableOnSpin(false);
+        performOpenEmptyModal(
+          i18n.t("promoRoulette.dialogUnavailableTitle1"),
+          i18n.t("promoRoulette.dialogUnavailableTitle2")
+        );
+      }
+    }
+  }, [props.general.isRouletteAvailable, rouletteModal]);
+
+  const performOpenRouletteModal = () => {
+    setRouletteModal(true);
+  };
+
+  const performCloseRouletteModal = () => {
+    props.resetPromoRoulette();
+    setDisableOnSpin(false);
+    setRouletteModal(false);
+  };
+
+  const performOpenEmptyModal = (title1, title2) => {
+    setEmptyModal(true);
+    setDialogContent({
+      title1: title1,
+      title2: title2,
+    });
+  };
+
+  const performCloseEmptyModal = () => {
+    props.resetPromoRoulette();
+    setEmptyModal(false);
+    setDialogContent({});
+  };
+
+  const handleOpenTab = (index) => {
+    if (tabIndex === index && isTabOpen) {
+      setIsTabOpen(false);
+    } else {
+      setIsTabOpen(true);
+    }
+  };
+
+  const handleSwitchTab = (index) => {
+    setTabIndex(index);
+  };
+
+  const handleOnSpinDisable = () => {
+    setDisableOnSpin(true);
+  };
+
+  const handlePhoneVerifyClick = () => {
+    AppHistory.push("/" + i18n.language + "/account/profile/member_phone");
+  };
+
+  const getRouletteResult = () => {
+    props.getPromotionRouletteResult(props.promotionDetail.id);
+  };
+
+  const getRouletteStatus = () => {
+    props.getPromotionRouletteStatus(props.promotionDetail.id);
+  };
+
+  const mapRouletteItems = (items) => {
+    //8
+    const rouletteItems8 = [
+      {
+        label: "1",
+        style: {
+          span: {
+            top: "120px",
+            right: "0",
+          },
+          label: {
+            transform: "translate(-50%, -50%)",
+          },
+        },
+      },
+      {
+        label: "2",
+        style: {
+          span: {
+            top: "120px",
+            left: "0",
+          },
+          label: {
+            transform: "translate(-50%, -50%) rotate(185deg)",
+          },
+        },
+      },
+      {
+        label: "3",
+        style: {
+          span: {
+            top: "0",
+            left: "120px",
+          },
+          label: {
+            transform: "translate(-50%, -50%) rotate(-85deg)",
+          },
+        },
+      },
+      {
+        label: "4",
+        style: {
+          span: {
+            bottom: "0",
+            left: "120px",
+          },
+          label: {
+            transform: "translate(-50%, -50%) rotate(-270deg)",
+          },
+        },
+      },
+      {
+        label: "5",
+        style: {
+          span: {
+            top: "120px",
+            left: "0",
+          },
+          label: {
+            transform: "translate(-50%, -50%) rotate(185deg)",
+          },
+        },
+      },
+      {
+        label: "6",
+        style: {
+          span: {
+            top: "120px",
+            right: "0",
+          },
+          label: {
+            transform: "translate(-50%, -50%)",
+          },
+        },
+      },
+      {
+        label: "7",
+        style: {
+          span: {
+            bottom: "0",
+            left: "120px",
+          },
+          label: {
+            transform: "translate(-50%, -50%) rotate(90deg)",
+          },
+        },
+      },
+      {
+        label: "8",
+        style: {
+          span: {
+            top: "0",
+            left: "120px",
+          },
+          label: {
+            transform: "translate(-50%, -50%) rotate(-85deg)",
+          },
+        },
+      },
+    ];
+    //6
+    const rouletteItems6 = [
+      {
+        label: "1",
+        style: {
+          span: {
+            top: "250px",
+            right: "0",
+            transform: "rotate(135deg)",
+          },
+          label: {
+            transform: "translate(-50%, -50%)",
+          },
+        },
+      },
+      {
+        label: "win10",
+        style: {
+          span: {
+            top: "40px",
+            left: "-40px",
+            transform: "rotate(110deg)",
+          },
+          label: {
+            transform: "translate(-50%, -50%) rotate(185deg)",
+          },
+        },
+      },
+      {
+        label: "20 coins is 20 coins",
+        style: {
+          span: {
+            top: "-60px",
+            left: "190px",
+            transform: "rotate(100deg)",
+          },
+          label: {
+            transform: "translate(-50%, -50%) rotate(-85deg)",
+          },
+        },
+      },
+      {
+        label: "50",
+        style: {
+          span: {
+            bottom: "-60px",
+            left: "120px",
+            transform: "rotate(90deg)",
+          },
+          label: {
+            transform: "translate(-50%, -50%) rotate(-270deg)",
+          },
+        },
+      },
+      {
+        label: "100",
+        style: {
+          span: {
+            top: "170px",
+            left: "-55px",
+            transform: "rotate(70deg)",
+          },
+          label: {
+            transform: "translate(-50%, -50%) rotate(185deg)",
+          },
+        },
+      },
+      {
+        label: "1000",
+        style: {
+          span: {
+            top: "35px",
+            right: "-40px",
+            transform: "rotate(70deg)",
+          },
+          label: {
+            transform: "translate(-50%, -50%)",
+          },
+        },
+      },
+    ];
+    rouletteItems6.map((item, index) => {
+      item.label = items[index].title;
+      item.id = items[index].id;
+      item.bonus = items[index].bonus;
+      return null;
+    });
+    return rouletteItems6;
+  };
+
+  const tabMenu = [
+    {
+      label: i18n.t("promoRoulette.main"),
+    },
+    {
+      label: i18n.t("promoRoulette.content"),
+    },
+    {
+      label: i18n.t("promoRoulette.terms"),
+    },
+  ];
+
+  return (
+    <div>
+      <Container>
+        <BtnRoulette
+          onClick={() => {
+            getRouletteStatus();
+            performOpenRouletteModal();
+          }}
+        ></BtnRoulette>
+      </Container>
+      <RouletteModal open={rouletteModal} onClose={performCloseRouletteModal}>
+        <RouletteContainer>
+          <LoadingContainer isLoading={props.general.loading}>
+            <LoadingIcon src={LoadingGIF}></LoadingIcon>
+          </LoadingContainer>
+          <Roulette
+            itemIndex={props.general.itemIndex}
+            items={mapRouletteItems(props.promotionDetail.campaignDetail.items)}
+            account={props.account}
+            showLogin={props.showLogin}
+            disableOnSpin={disableOnSpin}
+            handleOnSpinDisable={handleOnSpinDisable}
+            getRouletteResult={getRouletteResult}
+            performOpenEmptyModal={performOpenEmptyModal}
+            performCloseRouletteModal={performCloseRouletteModal}
+            handlePhoneVerifyClick={handlePhoneVerifyClick}
+          ></Roulette>
+          <TabContainer>
+            {tabMenu.map((item, index) => {
+              return (
+                <Tab
+                  active={index === tabIndex}
+                  onClick={() => {
+                    handleOpenTab(index);
+                    handleSwitchTab(index);
+                  }}
+                >
+                  <TabTitle>
+                    <DynamicFont content={item.label}></DynamicFont>
+                  </TabTitle>
+                </Tab>
+              );
+            })}
+          </TabContainer>
+        </RouletteContainer>
+        {isTabOpen && (
+          <Content>
+            {tabIndex === 0 && (
+              <React.Fragment>
+                <EventTitle>【{i18n.t("promotion.promoDetail")}】</EventTitle>
+                <EventLabel>{i18n.t("promotion.promoTarget")}:</EventLabel>
+                <EventText>
+                  {props.promotionDetail.vipLevels.map((a, index) => {
+                    return (
+                      <span key={index}>
+                        VIP{a}
+                        {index < props.promotionDetail.vipLevels.length - 1 &&
+                          ", "}
+                      </span>
+                    );
+                  })}
+                </EventText>
+                <br />
+                <EventLabel>{i18n.t("promotion.promoDate")}：</EventLabel>
+                <EventText>
+                  {moment(props.promotionDetail.from).format(
+                    "YYYY/MM/DD HH:mm:ss"
+                  )}
+                  {" - "}
+                  {moment(props.promotionDetail.to).format(
+                    "YYYY/MM/DD HH:mm:ss"
+                  )}
+                </EventText>
+              </React.Fragment>
+            )}
+            {tabIndex === 1 && (
+              <React.Fragment>
+                {props.promotionDetail.content
+                  ? props.promotionDetail.content
+                  : ""}
+              </React.Fragment>
+            )}
+            {tabIndex === 2 && (
+              <React.Fragment>
+                {props.promotionDetail.terms ? props.promotionDetail.terms : ""}
+              </React.Fragment>
+            )}
+          </Content>
+        )}
+        <CloseButton onClick={performCloseRouletteModal}></CloseButton>
+      </RouletteModal>
+      <CustomModal open={emptyModal} onClose={performCloseEmptyModal}>
+        {dialogContent.title1 && (
+          <ModalTitleH1>{dialogContent.title1}</ModalTitleH1>
+        )}
+        {dialogContent.title2 && (
+          <ModalTitleH2>{dialogContent.title2}</ModalTitleH2>
+        )}
+        {/* <CloseButton onClick={performCloseEmptyModal}></CloseButton> */}
+      </CustomModal>
+    </div>
+  );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    account: state.account,
+    ui: state.ui,
+    general: state.general,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    showLogin: (payload) => {
+      dispatch({ type: SHOW_LOGIN, payload });
+    },
+    getPromotionRouletteStatus: (id) =>
+      dispatch(generalAction.getPromotionRouletteStatus(id)),
+    getPromotionRouletteResult: (id) =>
+      dispatch(generalAction.getPromotionRouletteResult(id)),
+    resetPromoRoulette: () => dispatch({ type: RESET_PROMOROULETTE }),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(PromotionRoulette);
