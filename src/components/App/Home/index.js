@@ -118,12 +118,13 @@ class Home extends Component {
   }
 
   componentDidUpdate(preProps) {
+    var isInHomePage =
+    this.props.ui.mains &&
+    this.props.ui.mains !== preProps.ui.mains &&
+    this.props.ui.mains.length > 0;
+    
     if (config.features.PopupAnnouncement) {
-      if (
-        this.props.ui.mains &&
-        this.props.ui.mains !== preProps.ui.mains &&
-        this.props.ui.mains.length > 0
-      ) {
+      if (isInHomePage) {
         this.setState({
           openAnnouncement: true,
           showPromotion: false,
@@ -133,6 +134,7 @@ class Home extends Component {
 
     if (config.features.PopupPromotion) {
       if (
+        isInHomePage &&
         this.props.general.promotionList.items !==
           preProps.general.promotionList.items &&
         this.props.general.promotionList.items.length > 0

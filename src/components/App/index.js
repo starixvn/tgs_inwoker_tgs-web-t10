@@ -77,7 +77,7 @@ class App extends Component {
       this.props.getBanner();
       this.props.getBrand();
       this.props.getLiveChatURL();
-      this.props.getPromotionList(i18n.language);
+      this.props.getPromotion();
 
       // this.props.getVIP();
     }
@@ -184,7 +184,7 @@ class App extends Component {
             this.props.getMessageList(i18n.language, 0, 99);
             this.props.getBankCardList();
             this.props.getAutoTransferStatus();
-            this.props.getPlayerPromotionList(i18n.language);
+            this.props.getPromotion();
             this.props.getWithdrawalChannel();
             // if (inbox.IsSuccess) {
             //   this.setState({ inbox: inbox.data });
@@ -208,10 +208,14 @@ class App extends Component {
         this.props.getBanner();
         this.props.getBrand();
         this.props.getLiveChatURL();
-        this.props.getPromotionList(i18n.language);
+        this.props.getPromotion();
 
         // this.props.getVIP();
       }
+    }
+    if(preProps.account.token !== this.props.account.token && (this.props.account.token === null || this.props.account.token === ""))
+    {
+      this.props.getPromotion();
     }
     if (config.features.ForceRedirectAddCard) {
       if (
@@ -302,6 +306,20 @@ class App extends Component {
       .filter((item) => item.status === 0 && item.transferwallet === true)
       .map((a) => this.props.getGameBalance(a.abbreviation));
   };
+  
+  isRouletteAvailable = () => {
+    return (
+      this.props.general.promotionList.items &&
+      this.props.general.promotionList.items.length > 0 &&
+      this.props.general.promotionList.items.findIndex(
+        (item) => item.promotionType.toUpperCase() === "ROULETTE"
+      ) >= 0
+    );
+  };
+
+  isInHomePage = () => {
+    return this.props.location.pathname===`/${i18n.language}/`;
+  }
 
   render() {
     return (
@@ -505,6 +523,16 @@ class App extends Component {
                 <AnotherFloatPanel
                   onhandleShowCSClick={this.handleShowCSClick}
                 ></AnotherFloatPanel>
+                {config.features.HomePage_PromoRoulette &&
+                this.isInHomePage() &&
+                  this.isRouletteAvailable() && (
+                    <PromotionRoulette
+                      promotionDetail={this.props.general.promotionList.items.filter(
+                        (item) =>
+                          item.promotionType.toUpperCase() === "ROULETTE"
+                      )[0]}
+                    ></PromotionRoulette>
+                  )}
                 <Footer target={"_blank"}></Footer>
               </>
             );
@@ -567,6 +595,7 @@ const mapDispatchToProps = (dispatch) => {
     getWithdrawalChannel: () => dispatch(walletAction.getWithdrawalChannel()),
     //  getVIP: () => dispatch(generalAction.getVIP()),
     updateBalanceList: (loading) => dispatch(walletAction.updateBalanceList()),
+    getPromotion: () => dispatch(generalAction.getPromotion()),
   };
 };
 

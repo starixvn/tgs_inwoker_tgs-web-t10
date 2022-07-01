@@ -49,6 +49,7 @@ const BtnRoulette = styled.div`
   height: 125px;
   background: url(${BtnRoulettePNG}) no-repeat;
   background-size: contain;
+  filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.2));
 `;
 
 const RouletteModal = styled(Dialog)`
@@ -90,10 +91,23 @@ const ModalTitle = styled.div`
 `;
 
 const ModalTitleH1 = styled(ModalTitle)`
-  font-size: 3em;
+  font-size: 3em
+  width: 518px;
+  margin: 0 auto;
 `;
 const ModalTitleH2 = styled(ModalTitle)`
   font-size: 2.5em;
+  width: 518px;
+  margin: 0 auto;
+`;
+
+const ModalTitleH3 = styled(ModalTitle)`
+  font-size: 1.5em;
+  font-weight: normal;
+  color: #ff0000;
+  cursor: pointer;
+  width: 230px;
+  margin: 0 auto;
 `;
 
 const CloseButton = styled.div`
@@ -138,9 +152,8 @@ const LoadingContainer = styled.div`
 const TabContainer = styled.div`
   height: 50px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: self-end;
-  padding-right: 25px;
 `;
 const Tab = styled.div`
   cursor: pointer;
@@ -305,7 +318,7 @@ const Roulette = (props) => {
   const handleStartSpin = () => {
     if (!props.disableOnSpin) {
       if (props.account.token != null) {
-        if (config.features.SMSVerification) {
+        if (config.features.PromoRoulette_SMSVerification) {
           if (
             props.account.info.member_phone === null ||
             props.account.info.member_phone === ""
@@ -402,6 +415,7 @@ const Roulette = (props) => {
     labelEl.style.transform = `rotate(${rotateDeg + 360}deg)`;
     labelEl.style.transition = `all 1000ms ease-out`;
     turntableEl.ontransitionend = () => {
+      props.performCloseRouletteModal();
       props.performOpenEmptyModal(i18n.t("promoRoulette.dialogRewardTitle1"), props.items[giftIndex].label);
       turntableEl.style.transition = `none`;
       labelEl.style.transition = `none`;
@@ -443,7 +457,8 @@ const PromotionRoulette = (props) => {
         setDisableOnSpin(false);
         performOpenEmptyModal(
           i18n.t("promoRoulette.dialogUnavailableTitle1"),
-          i18n.t("promoRoulette.dialogUnavailableTitle2")
+          i18n.t("promoRoulette.dialogUnavailableTitle2"),
+          i18n.t("promoRoulette.dialogUnavailableTitle3"),
         );
       }
     }
@@ -459,11 +474,12 @@ const PromotionRoulette = (props) => {
     setRouletteModal(false);
   };
 
-  const performOpenEmptyModal = (title1, title2) => {
+  const performOpenEmptyModal = (title1, title2, title3) => {
     setEmptyModal(true);
     setDialogContent({
       title1: title1,
       title2: title2,
+      title3: title3,
     });
   };
 
@@ -492,6 +508,10 @@ const PromotionRoulette = (props) => {
   const handlePhoneVerifyClick = () => {
     AppHistory.push("/" + i18n.language + "/account/profile/member_phone");
   };
+
+  const handleNavigateToPromotion = () => {
+    AppHistory.push("/" + i18n.language + "/promotion");
+  }
 
   const getRouletteResult = () => {
     props.getPromotionRouletteResult(props.promotionDetail.id);
@@ -604,12 +624,12 @@ const PromotionRoulette = (props) => {
     //6
     const rouletteItems6 = [
       {
-        label: "1",
+        label: "",
         style: {
           span: {
-            top: "250px",
-            right: "0",
-            transform: "rotate(135deg)",
+            top: "240px",
+            right: "30px",
+            transform: "rotate(43deg)",
           },
           label: {
             transform: "translate(-50%, -50%)",
@@ -617,12 +637,12 @@ const PromotionRoulette = (props) => {
         },
       },
       {
-        label: "win10",
+        label: "",
         style: {
           span: {
-            top: "40px",
-            left: "-40px",
-            transform: "rotate(110deg)",
+            top: "38px",
+            left: "0px",
+            transform: "rotate(27deg)",
           },
           label: {
             transform: "translate(-50%, -50%) rotate(185deg)",
@@ -630,12 +650,12 @@ const PromotionRoulette = (props) => {
         },
       },
       {
-        label: "20 coins is 20 coins",
+        label: "",
         style: {
           span: {
-            top: "-60px",
-            left: "190px",
-            transform: "rotate(100deg)",
+            top: "-17px",
+            left: "182px",
+            transform: "rotate(13deg)",
           },
           label: {
             transform: "translate(-50%, -50%) rotate(-85deg)",
@@ -643,12 +663,12 @@ const PromotionRoulette = (props) => {
         },
       },
       {
-        label: "50",
+        label: "",
         style: {
           span: {
-            bottom: "-60px",
-            left: "120px",
-            transform: "rotate(90deg)",
+            bottom: "-33px",
+            left: "111px",
+            transform: "rotate(0deg)",
           },
           label: {
             transform: "translate(-50%, -50%) rotate(-270deg)",
@@ -656,12 +676,12 @@ const PromotionRoulette = (props) => {
         },
       },
       {
-        label: "100",
+        label: "",
         style: {
           span: {
-            top: "170px",
-            left: "-55px",
-            transform: "rotate(70deg)",
+            top: "155px",
+            left: "-32px",
+            transform: "rotate(-20deg)",
           },
           label: {
             transform: "translate(-50%, -50%) rotate(185deg)",
@@ -669,12 +689,12 @@ const PromotionRoulette = (props) => {
         },
       },
       {
-        label: "1000",
+        label: "",
         style: {
           span: {
-            top: "35px",
-            right: "-40px",
-            transform: "rotate(70deg)",
+            top: "64px",
+            right: "-24px",
+            transform: "rotate(-27deg)",
           },
           label: {
             transform: "translate(-50%, -50%)",
@@ -780,14 +800,54 @@ const PromotionRoulette = (props) => {
             )}
             {tabIndex === 1 && (
               <React.Fragment>
-                {props.promotionDetail.content
-                  ? props.promotionDetail.content
-                  : ""}
+                <EventText
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      "<div>" +
+                      (() => {
+                        if (
+                          props.promotionDetail.localization !== null &&
+                          props.promotionDetail.localization[i18n.language] !==
+                            undefined &&
+                          props.promotionDetail.localization[i18n.language]
+                            .content !== undefined
+                        ) {
+                          return props.promotionDetail.localization[
+                            i18n.language
+                          ].content;
+                        } else {
+                          return props.promotionDetail.content;
+                        }
+                      })() +
+                      "</div>",
+                  }}
+                ></EventText>
               </React.Fragment>
             )}
             {tabIndex === 2 && (
               <React.Fragment>
-                {props.promotionDetail.terms ? props.promotionDetail.terms : ""}
+                <EventText
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      "<div>" +
+                      (() => {
+                        if (
+                          props.promotionDetail.localization !== null &&
+                          props.promotionDetail.localization[i18n.language] !==
+                            undefined &&
+                          props.promotionDetail.localization[i18n.language]
+                            .terms !== undefined
+                        ) {
+                          return props.promotionDetail.localization[
+                            i18n.language
+                          ].terms;
+                        } else {
+                          return props.promotionDetail.terms;
+                        }
+                      })() +
+                      "</div>",
+                  }}
+                ></EventText>
               </React.Fragment>
             )}
           </Content>
@@ -796,10 +856,25 @@ const PromotionRoulette = (props) => {
       </RouletteModal>
       <CustomModal open={emptyModal} onClose={performCloseEmptyModal}>
         {dialogContent.title1 && (
-          <ModalTitleH1>{dialogContent.title1}</ModalTitleH1>
+          <ModalTitleH1>
+            <Textfit min={38} max={48}>
+              {dialogContent.title1}
+            </Textfit>
+          </ModalTitleH1>
         )}
         {dialogContent.title2 && (
-          <ModalTitleH2>{dialogContent.title2}</ModalTitleH2>
+          <ModalTitleH2>
+            <Textfit min={30} max={40}>
+              {dialogContent.title2}
+            </Textfit>
+          </ModalTitleH2>
+        )}
+        {dialogContent.title3 && (
+          <ModalTitleH3 onClick={handleNavigateToPromotion}>
+            <Textfit min={14} max={24}>
+              {dialogContent.title3}
+            </Textfit>
+          </ModalTitleH3>
         )}
         {/* <CloseButton onClick={performCloseEmptyModal}></CloseButton> */}
       </CustomModal>

@@ -87,6 +87,7 @@ const featureList = {
     Deposit_AddCard: false,
     Register_CustomFlow_IDR: false,
     HomePage_PromoRoulette: false,
+    PromoRoulette_SMSVerification: false,
   },
 };
 export default featureList;

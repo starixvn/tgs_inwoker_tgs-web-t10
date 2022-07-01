@@ -53,6 +53,7 @@ const ContentContainer = styled.div`
   margin: 20px 20px 10px 20px;
   padding: 0 3px;
   overflow: auto;
+  height: 800px;
 `;
 
 const ImageBanner = styled.div`
