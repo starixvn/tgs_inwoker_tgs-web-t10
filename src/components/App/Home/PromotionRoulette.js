@@ -217,11 +217,14 @@ const RouletteLabelContainer = styled.div`
   left: 52px;
   transform: scale(0.65);
 `;
-const RouletteTtem1 = styled.div``;
+const RouletteTtem1 = styled.div`
+  color: #fef6ec;
+`;
 const RouletteTtem2 = styled.div`
   width: 100%;
   height: 100%;
   transform: rotate(-135deg);
+  color: #e62155;
 `;
 
 const RouletteSpan = styled.span`
@@ -229,6 +232,7 @@ const RouletteSpan = styled.span`
   height: 50%;
   display: inline-block;
   position: absolute;
+  line-height: 23px;
 `;
 
 const RouletteTitle = styled.b`
@@ -283,7 +287,7 @@ const Roulette = (props) => {
               return (
                 <RouletteSpan style={item.style.span}>
                   <RouletteTitle style={item.style.label}>
-                    <Textfit min={20} max={25}>
+                    <Textfit min={18} max={22}>
                       {item.label}
                     </Textfit>
                   </RouletteTitle>{" "}
@@ -298,7 +302,7 @@ const Roulette = (props) => {
               return (
                 <RouletteSpan style={item.style.span}>
                   <RouletteTitle style={item.style.label}>
-                    <Textfit min={20} max={25}>
+                    <Textfit min={18} max={22}>
                       {item.label}
                     </Textfit>
                   </RouletteTitle>
