@@ -13,6 +13,7 @@ import TabActivePNG from "../../../assets/images/roulette/tab-active.png";
 import TabPNG from "../../../assets/images/roulette/tab.png";
 import EmptyBackgroundPNG from "../../../assets/images/roulette/bg-empty.png";
 import LoadingGIF from "../../../assets/images/loading.gif";
+import RouletteStandPNG from "../../../assets/images/roulette/roulette-stand.png";
 
 import i18n from "../../../utils/i18n";
 import { Dialog } from "@material-ui/core";
@@ -45,8 +46,8 @@ const Container = styled.div`
 
 const BtnRoulette = styled.div`
   cursor: pointer;
-  width: 130px;
-  height: 125px;
+  width: 200px;
+  height: 150px;
   background: url(${BtnRoulettePNG}) no-repeat;
   background-size: contain;
   filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.2));
@@ -118,6 +119,7 @@ const CloseButton = styled.div`
   background: url(${BtnClose}) no-repeat;
   width: 31px;
   height: 31px;
+  z-index: 2;
 `;
 
 const RouletteContainer = styled.div`
@@ -126,6 +128,8 @@ const RouletteContainer = styled.div`
   border-bottom-left-radius: 50px;
   border-bottom-right-radius: 50px;
   background: url(${ModalBackgroundPNG});
+  background-size: 602px 458px;
+  background-position-x: -2px;
 `;
 
 const LoadingIcon = styled.img`
@@ -154,6 +158,20 @@ const TabContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: self-end;
+  position: relative;
+  z-index: 2;
+`;
+
+const Stand = styled.div`
+  width: 200px;
+  height: 72px;
+  background: url(${RouletteStandPNG}) no-repeat;
+  background-size: cover;
+  margin: 0 auto;
+  position: absolute;
+  top: 386px;
+  left: 200px;
+  z-index: 1;
 `;
 const Tab = styled.div`
   cursor: pointer;
@@ -161,6 +179,7 @@ const Tab = styled.div`
   width: 100px;
   padding: 0 10px;
   margin: 0 10px;
+  color: ${(props) => (props.active ? `#000` : `#fff`)};
   background: url(${(props) =>
       props.active ? `${TabActivePNG}` : `${TabPNG}`})
     no-repeat;
@@ -180,11 +199,15 @@ const Content = styled.div`
 
 const RouletteWrapper = styled.div`
   padding-top: 25px;
+  position: relative;
+  z-index: 2;
 `;
+
 const Turntable = styled.div`
   width: 385px;
   height: 385px;
   background: url(${RouletteTurntable6}) no-repeat;
+  background-size: cover;
   margin: 0 auto;
 `;
 const Pointer = styled.div`
@@ -192,8 +215,8 @@ const Pointer = styled.div`
   height: 116px;
   background: url(${RoulettePointer}) no-repeat;
   position: absolute;
-  left: 242px;
-  top: 155px;
+  left: 250px;
+  top: 165px;
   cursor: pointer;
   ${(props) =>
     props.disabled
@@ -287,10 +310,11 @@ const Roulette = (props) => {
               return (
                 <RouletteSpan style={item.style.span}>
                   <RouletteTitle style={item.style.label}>
-                    <Textfit min={18} max={22}>
+                    <DynamicFont content={item.label}></DynamicFont>
+                    {/* <Textfit min={18} max={22}>
                       {item.label}
-                    </Textfit>
-                  </RouletteTitle>{" "}
+                    </Textfit> */}
+                  </RouletteTitle>
                 </RouletteSpan>
               );
             } else return null;
@@ -302,9 +326,10 @@ const Roulette = (props) => {
               return (
                 <RouletteSpan style={item.style.span}>
                   <RouletteTitle style={item.style.label}>
-                    <Textfit min={18} max={22}>
+                    <DynamicFont content={item.label}></DynamicFont>
+                    {/* <Textfit min={18} max={22}>
                       {item.label}
-                    </Textfit>
+                    </Textfit> */}
                   </RouletteTitle>
                 </RouletteSpan>
               );
@@ -361,16 +386,6 @@ const Roulette = (props) => {
   };
 
   const handleSpinResult = () => {
-    const ROULETTE_AREA_DEG_8 = [
-      [390, 431],
-      [68, 109],
-      [114, 155],
-      [160, 201],
-      [206, 247],
-      [252, 291],
-      [298, 339],
-      [344, 385],
-    ];
     const ROULETTE_AREA_DEG_6 = [
       [326, 393],
       [36, 87],
@@ -419,8 +434,13 @@ const Roulette = (props) => {
     labelEl.style.transform = `rotate(${rotateDeg + 360}deg)`;
     labelEl.style.transition = `all 1000ms ease-out`;
     turntableEl.ontransitionend = () => {
-      props.performCloseRouletteModal();
-      props.performOpenEmptyModal(i18n.t("promoRoulette.dialogRewardTitle1"), props.items[giftIndex].label);
+      setTimeout(() => {
+        props.performCloseRouletteModal();
+      }, 2000);
+      props.performOpenEmptyModal(
+        i18n.t("promoRoulette.dialogRewardTitle1"),
+        props.items[giftIndex].label
+      );
       turntableEl.style.transition = `none`;
       labelEl.style.transition = `none`;
     };
@@ -462,7 +482,7 @@ const PromotionRoulette = (props) => {
         performOpenEmptyModal(
           i18n.t("promoRoulette.dialogUnavailableTitle1"),
           i18n.t("promoRoulette.dialogUnavailableTitle2"),
-          i18n.t("promoRoulette.dialogUnavailableTitle3"),
+          i18n.t("promoRoulette.dialogUnavailableTitle3")
         );
       }
     }
@@ -515,7 +535,7 @@ const PromotionRoulette = (props) => {
 
   const handleNavigateToPromotion = () => {
     AppHistory.push("/" + i18n.language + "/promotion");
-  }
+  };
 
   const getRouletteResult = () => {
     props.getPromotionRouletteResult(props.promotionDetail.id);
@@ -526,114 +546,14 @@ const PromotionRoulette = (props) => {
   };
 
   const mapRouletteItems = (items) => {
-    //8
-    const rouletteItems8 = [
-      {
-        label: "1",
-        style: {
-          span: {
-            top: "120px",
-            right: "0",
-          },
-          label: {
-            transform: "translate(-50%, -50%)",
-          },
-        },
-      },
-      {
-        label: "2",
-        style: {
-          span: {
-            top: "120px",
-            left: "0",
-          },
-          label: {
-            transform: "translate(-50%, -50%) rotate(185deg)",
-          },
-        },
-      },
-      {
-        label: "3",
-        style: {
-          span: {
-            top: "0",
-            left: "120px",
-          },
-          label: {
-            transform: "translate(-50%, -50%) rotate(-85deg)",
-          },
-        },
-      },
-      {
-        label: "4",
-        style: {
-          span: {
-            bottom: "0",
-            left: "120px",
-          },
-          label: {
-            transform: "translate(-50%, -50%) rotate(-270deg)",
-          },
-        },
-      },
-      {
-        label: "5",
-        style: {
-          span: {
-            top: "120px",
-            left: "0",
-          },
-          label: {
-            transform: "translate(-50%, -50%) rotate(185deg)",
-          },
-        },
-      },
-      {
-        label: "6",
-        style: {
-          span: {
-            top: "120px",
-            right: "0",
-          },
-          label: {
-            transform: "translate(-50%, -50%)",
-          },
-        },
-      },
-      {
-        label: "7",
-        style: {
-          span: {
-            bottom: "0",
-            left: "120px",
-          },
-          label: {
-            transform: "translate(-50%, -50%) rotate(90deg)",
-          },
-        },
-      },
-      {
-        label: "8",
-        style: {
-          span: {
-            top: "0",
-            left: "120px",
-          },
-          label: {
-            transform: "translate(-50%, -50%) rotate(-85deg)",
-          },
-        },
-      },
-    ];
-    //6
     const rouletteItems6 = [
       {
         label: "",
         style: {
           span: {
-            top: "240px",
+            top: "255px",
             right: "30px",
-            transform: "rotate(43deg)",
+            transform: "rotate(46deg)",
           },
           label: {
             transform: "translate(-50%, -50%)",
@@ -644,9 +564,9 @@ const PromotionRoulette = (props) => {
         label: "",
         style: {
           span: {
-            top: "38px",
+            top: "28px",
             left: "0px",
-            transform: "rotate(27deg)",
+            transform: "rotate(25deg)",
           },
           label: {
             transform: "translate(-50%, -50%) rotate(185deg)",
@@ -657,9 +577,9 @@ const PromotionRoulette = (props) => {
         label: "",
         style: {
           span: {
-            top: "-17px",
+            top: "-21px",
             left: "182px",
-            transform: "rotate(13deg)",
+            transform: "rotate(9deg)",
           },
           label: {
             transform: "translate(-50%, -50%) rotate(-85deg)",
@@ -671,7 +591,7 @@ const PromotionRoulette = (props) => {
         style: {
           span: {
             bottom: "-33px",
-            left: "111px",
+            left: "103px",
             transform: "rotate(0deg)",
           },
           label: {
@@ -683,8 +603,8 @@ const PromotionRoulette = (props) => {
         label: "",
         style: {
           span: {
-            top: "155px",
-            left: "-32px",
+            top: "145px",
+            left: "-35px",
             transform: "rotate(-20deg)",
           },
           label: {
@@ -696,9 +616,9 @@ const PromotionRoulette = (props) => {
         label: "",
         style: {
           span: {
-            top: "64px",
+            top: "67px",
             right: "-24px",
-            transform: "rotate(-27deg)",
+            transform: "rotate(-29deg)",
           },
           label: {
             transform: "translate(-50%, -50%)",
@@ -771,6 +691,7 @@ const PromotionRoulette = (props) => {
               );
             })}
           </TabContainer>
+          <Stand></Stand>
         </RouletteContainer>
         {isTabOpen && (
           <Content>
