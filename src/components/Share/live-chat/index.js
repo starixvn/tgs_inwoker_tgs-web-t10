@@ -2,6 +2,7 @@ import React from "react";
 import Smartsupp from "./smartsupp";
 import LiveChatCS from "./livechat";
 import Tawkto from "./tawkto";
+import Zendesk from "./zendesk";
 
 const LiveChat = ({ vendor, license }) => {
   const typeSwitcher = (vendor) => {
@@ -12,6 +13,8 @@ const LiveChat = ({ vendor, license }) => {
         return <LiveChatCS license={license} />;
       case "tawk":
         return <Tawkto license={license} />;
+      case "zendesk":
+        return <Zendesk license={license} />;
       default:
         return "";
     }
