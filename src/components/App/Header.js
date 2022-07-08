@@ -105,7 +105,7 @@ const LogoContainer = styled.div`
   background-image: url("${(props) => props.img}");
   background-repeat: no-repeat;
   background-size: 75%;
-  background-position: left center;
+  background-position:  center;
   ${(props) => {
     if (props.headerCustom === true) {
       return `width:180px;`;
@@ -114,7 +114,7 @@ const LogoContainer = styled.div`
     }
   }}
 
-  float: left;
+
   &:hover {
     cursor: pointer;
   }
@@ -124,11 +124,12 @@ const LogoContainer = styled.div`
 `;
 
 const RightMenuContainer = styled.div`
-  float: right;
+  display: flex;
+  justify-content: center;
 `;
-const RightMenuUL = styled.ul`
-  float: right;
-  list-style: none;
+const RightMenuUL = styled.div`
+  display: flex;
+  align-item: flex-end;
   padding: 0;
   margin: 0;
 `;
@@ -222,7 +223,7 @@ const breatheAnimation = keyframes`
  to { transform:translateY(0px); }
 
 `;
-const RightMenuLI = styled.li`
+const RightMenuLI = styled.div`
   display: inline-block;
   ${(props) => {
     if (props.headerCustom === true) {
@@ -232,9 +233,10 @@ const RightMenuLI = styled.li`
     }
   }}
   max-width: 120px;
-  height: 95px;
-  line-height: 95px;
-  text-align: center;
+  display: flex;
+
+  align-items: flex-end;
+  padding-bottom: 20px;
   color: #000;
   border-bottom: solid 4px transparent;
   @media (max-width: 925px) {
@@ -776,6 +778,153 @@ class Header extends Component {
 
     var liveSorting = ["EVO", "SG", "WM", "SW", "AB", "AG", "BG"];
 
+    const theGameListDisplayer = (item, index) => {
+      var gameList = this.props.game.homePageGameList.filter(
+        (game) => item.gameType.indexOf(game.type) >= 0
+      );
+      return (
+        gameList.length !== 0 && (
+          <RightMenuLI
+            headerCustom={config.features.HeaderCustom}
+            key={index}
+            active={this.state.selected === `${item.path}`}
+            onClick={() => this.handleClickMenu(item.path)}
+            onMouseOver={() => this.handleMenuMouseOver(item.path)}
+            onMouseLeave={this.handleMenuMouseLeave}
+            hoverimg={item.hoverImg}
+          >
+            <RightMenuTextSpan>{i18n.t(item.title)}</RightMenuTextSpan>
+            <MouseOverContainer
+              onClick={(e) => e.stopPropagation()}
+              style={
+                this.state.shouldShow === null
+                  ? { top: "145px" }
+                  : this.state.shouldShow
+                  ? { top: "145px" }
+                  : { top: "114px" }
+              }
+            >
+              <MouseOverBackground>
+                <MouseOverInner>
+                  {(() => {
+                    var list = this.props.game.homePageGameList
+                      .filter((game) => item.gameType.indexOf(game.type) >= 0)
+                      .sort((a, b) => {
+                        if (config.features.LiveGame_Sorting_SKY) {
+                          var sortDGFirst = ["DG"];
+                          return (
+                            sortDGFirst.indexOf(b.abbreviation) -
+                            sortDGFirst.indexOf(a.abbreviation)
+                          );
+                        } else return b - a;
+                      });
+                    return list.length <= 5 ? (
+                      list
+                        .sort((a, b) => {
+                          return (
+                            config.features.LiveGame_CustomArrangement &&
+                            liveSorting.indexOf(a.abbreviation) -
+                              liveSorting.indexOf(b.abbreviation)
+                          );
+                        })
+                        .map((game, index) => {
+                          return (
+                            <GameFrame
+                              key={index}
+                              style={{
+                                width: `calc(1264px/${list.length})`,
+                              }}
+                              maintenance={game.status !== 0}
+                            >
+                              <GameFrameWrapper>
+                                <Maintenance>
+                                  {i18n.t("transfer.maintenance")}
+                                </Maintenance>
+                                <GameImg
+                                  index={index}
+                                  img={`${
+                                    process.env.PUBLIC_URL
+                                  }/assets/images/pcHeaderMenu/${
+                                    item.path
+                                  }/${game.abbreviation.toLowerCase()}.png`}
+                                  alt=""
+                                  onClick={() => {
+                                    if (
+                                      game.type === GameTypeEnum.LOTTERYLOBBY ||
+                                      game.type === GameTypeEnum.LOBBY
+                                    ) {
+                                      this.handleJoinLotteryGame(
+                                        game.abbreviation
+                                      );
+                                    } else {
+                                      this.consolidateJoinGame(game, item);
+                                    }
+                                  }}
+                                ></GameImg>
+                              </GameFrameWrapper>
+                            </GameFrame>
+                          );
+                        })
+                    ) : (
+                      <Slider {...settings}>
+                        {list
+                          .sort((a, b) => {
+                            return (
+                              config.features.LiveGame_CustomArrangement &&
+                              liveSorting.indexOf(a.abbreviation) -
+                                liveSorting.indexOf(b.abbreviation)
+                            );
+                          })
+                          .map((game, index) => {
+                            return (
+                              <GameFrame
+                                key={index}
+                                style={{
+                                  width: `calc(1264px/${list.length})`,
+                                }}
+                                maintenance={game.status != 0}
+                              >
+                                <GameFrameWrapper>
+                                  <Maintenance>
+                                    {i18n.t("transfer.maintenance")}
+                                  </Maintenance>
+                                  <GameImg
+                                    index={index}
+                                    img={`${
+                                      process.env.PUBLIC_URL
+                                    }/assets/images/pcHeaderMenu/${
+                                      item.path
+                                    }/${game.abbreviation.toLowerCase()}.png`}
+                                    alt=""
+                                    onClick={() => {
+                                      if (
+                                        game.type ===
+                                          GameTypeEnum.LOTTERYLOBBY ||
+                                        game.type === GameTypeEnum.LOBBY
+                                      ) {
+                                        this.handleJoinLotteryGame(
+                                          game.abbreviation
+                                        );
+                                      } else {
+                                        this.consolidateJoinGame(game, item);
+                                      }
+                                    }}
+                                  ></GameImg>
+                                </GameFrameWrapper>
+                              </GameFrame>
+                            );
+                          })}
+                      </Slider>
+                    );
+                  })()}
+                </MouseOverInner>
+              </MouseOverBackground>
+            </MouseOverContainer>
+          </RightMenuLI>
+        )
+      );
+    };
+
     return (
       <CustomAppBar hide={this.props.hide}>
         <InnerWrap>
@@ -837,63 +986,8 @@ class Header extends Component {
               })()}
             </RightContainer>
           </TopContainer>
+
           <BottomContainer>
-            <LogoContainer
-              headerCustom={config.features.HeaderCustom}
-              img={
-                this.props.general.brand &&
-                this.props.general.brand.desktopLogoUrl
-              }
-              onClick={this.onhandleLogoClick}
-              className={`${
-                this.state.shouldShow === null
-                  ? classes.maxMenu
-                  : this.state.shouldShow
-                  ? classes.maxMenu
-                  : classes.minMenu
-              }`}
-            ></LogoContainer>
-
-            {/* {(() => {
-                if (
-                  config.features.HeaderCustom
-                ) {
-                  return (
-                    <LogoContainer2
-              img={
-                this.props.general.brand &&
-                this.props.general.brand.desktopLogoUrl
-              }
-              onClick={this.onhandleLogoClick}
-              className={`${
-                this.state.shouldShow === null
-                  ? classes.maxMenu
-                  : this.state.shouldShow
-                  ? classes.maxMenu
-                  : classes.minMenu
-              }`}
-            ></LogoContainer2>
-                  );
-                } else {
-                  return (
-                    <LogoContainer
-              img={
-                this.props.general.brand &&
-                this.props.general.brand.desktopLogoUrl
-              }
-              onClick={this.onhandleLogoClick}
-              className={`${
-                this.state.shouldShow === null
-                  ? classes.maxMenu
-                  : this.state.shouldShow
-                  ? classes.maxMenu
-                  : classes.minMenu
-              }`}
-            ></LogoContainer>
-                  );
-                }
-              })()} */}
-
             <RightMenuContainer>
               <RightMenuUL
                 className={`${
@@ -904,175 +998,28 @@ class Header extends Component {
                     : classes.minMenu
                 }`}
               >
+                {SortedMenuList.slice(0, 5).map((item, index) => {
+                  return theGameListDisplayer(item, index);
+                })}
+                <LogoContainer
+                  headerCustom={config.features.HeaderCustom}
+                  img={
+                    this.props.general.brand &&
+                    this.props.general.brand.desktopLogoUrl
+                  }
+                  onClick={this.onhandleLogoClick}
+                  className={`${
+                    this.state.shouldShow === null
+                      ? classes.maxMenu
+                      : this.state.shouldShow
+                      ? classes.maxMenu
+                      : classes.minMenu
+                  }`}
+                ></LogoContainer>
                 {SortedMenuList.map((item, index) => {
-                  var gameList = this.props.game.homePageGameList.filter(
-                    (game) => item.gameType.indexOf(game.type) >= 0
-                  );
-                  return (
-                    gameList.length !== 0 && (
-                      <RightMenuLI
-                        headerCustom={config.features.HeaderCustom}
-                        key={index}
-                        active={this.state.selected === `${item.path}`}
-                        onClick={() => this.handleClickMenu(item.path)}
-                        onMouseOver={() => this.handleMenuMouseOver(item.path)}
-                        onMouseLeave={this.handleMenuMouseLeave}
-                        hoverimg={item.hoverImg}
-                      >
-                        <RightMenuTextSpan
-                          className={`${
-                            this.state.shouldShow === null
-                              ? classes.maxLabel
-                              : this.state.shouldShow
-                              ? classes.maxLabel
-                              : classes.minLabel
-                          }`}
-                        >
-                          {i18n.t(item.title)}
-                        </RightMenuTextSpan>
-                        <MouseOverContainer
-                          onClick={(e) => e.stopPropagation()}
-                          style={
-                            this.state.shouldShow === null
-                              ? { top: "145px" }
-                              : this.state.shouldShow
-                              ? { top: "145px" }
-                              : { top: "114px" }
-                          }
-                        >
-                          <MouseOverBackground>
-                            <MouseOverInner>
-                              {(() => {
-                                var list = this.props.game.homePageGameList
-                                  .filter(
-                                    (game) =>
-                                      item.gameType.indexOf(game.type) >= 0
-                                  )
-                                  .sort((a, b) => {
-                                    if (config.features.LiveGame_Sorting_SKY) {
-                                      var sortDGFirst = ["DG"];
-                                      return (
-                                        sortDGFirst.indexOf(b.abbreviation) -
-                                        sortDGFirst.indexOf(a.abbreviation)
-                                      );
-                                    } else return b - a;
-                                  });
-                                return list.length <= 5 ? (
-                                  list
-                                    .sort((a, b) => {
-                                      return (
-                                        config.features
-                                          .LiveGame_CustomArrangement &&
-                                        liveSorting.indexOf(a.abbreviation) -
-                                          liveSorting.indexOf(b.abbreviation)
-                                      );
-                                    })
-                                    .map((game, index) => {
-                                      return (
-                                        <GameFrame
-                                          key={index}
-                                          style={{
-                                            width: `calc(1264px/${list.length})`,
-                                          }}
-                                          maintenance={game.status !== 0}
-                                        >
-                                          <GameFrameWrapper>
-                                            <Maintenance>
-                                              {i18n.t("transfer.maintenance")}
-                                            </Maintenance>
-                                            <GameImg
-                                              index={index}
-                                              img={`${
-                                                process.env.PUBLIC_URL
-                                              }/assets/images/pcHeaderMenu/${
-                                                item.path
-                                              }/${game.abbreviation.toLowerCase()}.png`}
-                                              alt=""
-                                              onClick={() => {
-                                                if (
-                                                  game.type ===
-                                                    GameTypeEnum.LOTTERYLOBBY ||
-                                                  game.type ===
-                                                    GameTypeEnum.LOBBY
-                                                ) {
-                                                  this.handleJoinLotteryGame(
-                                                    game.abbreviation
-                                                  );
-                                                } else {
-                                                  this.consolidateJoinGame(
-                                                    game,
-                                                    item
-                                                  );
-                                                }
-                                              }}
-                                            ></GameImg>
-                                          </GameFrameWrapper>
-                                        </GameFrame>
-                                      );
-                                    })
-                                ) : (
-                                  <Slider {...settings}>
-                                    {list
-                                      .sort((a, b) => {
-                                        return (
-                                          config.features
-                                            .LiveGame_CustomArrangement &&
-                                          liveSorting.indexOf(a.abbreviation) -
-                                            liveSorting.indexOf(b.abbreviation)
-                                        );
-                                      })
-                                      .map((game, index) => {
-                                        return (
-                                          <GameFrame
-                                            key={index}
-                                            style={{
-                                              width: `calc(1264px/${list.length})`,
-                                            }}
-                                            maintenance={game.status != 0}
-                                          >
-                                            <GameFrameWrapper>
-                                              <Maintenance>
-                                                {i18n.t("transfer.maintenance")}
-                                              </Maintenance>
-                                              <GameImg
-                                                index={index}
-                                                img={`${
-                                                  process.env.PUBLIC_URL
-                                                }/assets/images/pcHeaderMenu/${
-                                                  item.path
-                                                }/${game.abbreviation.toLowerCase()}.png`}
-                                                alt=""
-                                                onClick={() => {
-                                                  if (
-                                                    game.type ===
-                                                      GameTypeEnum.LOTTERYLOBBY ||
-                                                    game.type ===
-                                                      GameTypeEnum.LOBBY
-                                                  ) {
-                                                    this.handleJoinLotteryGame(
-                                                      game.abbreviation
-                                                    );
-                                                  } else {
-                                                    this.consolidateJoinGame(
-                                                      game,
-                                                      item
-                                                    );
-                                                  }
-                                                }}
-                                              ></GameImg>
-                                            </GameFrameWrapper>
-                                          </GameFrame>
-                                        );
-                                      })}
-                                  </Slider>
-                                );
-                              })()}
-                            </MouseOverInner>
-                          </MouseOverBackground>
-                        </MouseOverContainer>
-                      </RightMenuLI>
-                    )
-                  );
+                  if (index >= 5) {
+                    return theGameListDisplayer(item, index);
+                  }
                 })}
 
                 {this.RightMenuItem(

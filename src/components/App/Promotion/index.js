@@ -10,8 +10,8 @@ import { AppHistory } from "../../../history/History";
 import { withSnackbar } from "notistack";
 
 import i18n from "../../../utils/i18n";
-import {generalAction} from "../../../api-services/actions/generalAction";
-import {SHOW_LOGIN} from "../../../api-services/constant/actionType";
+import { generalAction } from "../../../api-services/actions/generalAction";
+import { SHOW_LOGIN } from "../../../api-services/constant/actionType";
 import { Grid, Container as MContainer } from "@material-ui/core";
 
 import PromoEmpty from "../../../assets/images/promo-empty.png";
@@ -249,13 +249,14 @@ class Promotion extends Component {
                         <Grid container direction="column">
                           {(() => {
                             if (data.localization !== null) {
+                              var checkLocale =
+                                data.localization[i18n.language];
                               return (
                                 <PromoImages
                                   key={index}
                                   img={
-                                    data.localization.desktopBanner &&
-                                    data.localization.desktopBanner !== null
-                                      ? data.localization.desktopBanner
+                                    checkLocale
+                                      ? checkLocale.desktopBanner
                                       : data.desktopBanner
                                   }
                                 ></PromoImages>

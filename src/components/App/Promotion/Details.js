@@ -306,11 +306,11 @@ class PromotionDetails extends Component {
             <PromoDetailImage
               img={(() => {
                 if (this.state.details.localization !== null) {
-                  if (
-                    this.state.details.localization.desktopBanner &&
-                    this.state.details.localization.desktopBanner !== null
-                  ) {
-                    return this.state.details.localization.desktopBanner;
+                  var checkLocale = this.state.details.localization[
+                    i18n.language
+                  ];
+                  if (checkLocale) {
+                    return checkLocale.desktopBanner;
                   } else {
                     return this.state.details.desktopBanner;
                   }

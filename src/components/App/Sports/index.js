@@ -126,15 +126,17 @@ const JoinButton = styled.div`
 `;
 
 class Sports extends Component {
+  sportsList = this.props.game.homePageGameList.filter((item) => {
+    return (
+      item.type === GameTypeEnum.SPORTS || item.type === GameTypeEnum.RNGSPORTS
+    );
+  });
   constructor(props) {
     super(props);
-    var sportsList = props.game.homePageGameList.filter((item) => {
-      return item.type === GameTypeEnum.SPORTS;
-    });
 
     this.state = {
-      selected: sportsList[0] && sportsList[0].abbreviation,
-      list: sportsList,
+      selected: this.sportsList[0] && this.sportsList[0].abbreviation,
+      list: this.sportsList,
     };
   }
 
@@ -150,15 +152,10 @@ class Sports extends Component {
       preProps.game.homePageGameList.length !==
       this.props.game.homePageGameList.length
     ) {
-      var sportsList = this.props.game.homePageGameList.filter((item) => {
-        return item.type === GameTypeEnum.SPORTS;
-      });
-
       this.setState({
         ...this.state,
-        selected: sportsList[0] && sportsList[0].abbreviation,
-
-        list: sportsList,
+        selected: this.sportsList[0] && this.sportsList[0].abbreviation,
+        list: this.sportsList,
       });
     }
   }
