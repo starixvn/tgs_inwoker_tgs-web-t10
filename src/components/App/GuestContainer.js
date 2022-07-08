@@ -490,6 +490,11 @@ class GuestContainer extends Component {
       //     returnValue + "?token=" + BlowFishEncryption.Encrypt(token);
       // }
     } else {
+      if (config.features.HomePage_PromoRoulette) {
+        this.props.getPromotionRouletteStatus(
+          "18fa2258-8101-0000-0001-0000c19227bd"
+        );
+      }
       // this.props.checkGame();
       var bankInfoAuthentication = null;
       await this.props.getAccountInfo().then((response)=>{
@@ -510,6 +515,7 @@ class GuestContainer extends Component {
           .map((a) => {
             this.props.getGameBalance(a.abbreviation);
           });
+        this.props.getPromotion();
       }
       // this.props.getIDCardNo();
       // this.props.getInviteLink();
@@ -702,6 +708,9 @@ const mapDispatchToProps = (dispatch) => {
         generalAction.getPlayerPromotionList(language, 1, 99, true, "", true)
       ),
     getAutoTransferStatus: () => dispatch(walletAction.getAutoTransferStatus()),
+    getPromotionRouletteStatus: (id) =>
+      dispatch(generalAction.getPromotionRouletteStatus(id)),
+    getPromotion: () => dispatch(generalAction.getPromotion()),
   };
 };
 const mapStateToProps = (state) => {

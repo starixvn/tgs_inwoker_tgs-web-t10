@@ -140,19 +140,11 @@ class Promotion extends Component {
   };
 
   componentDidMount() {
-    if (this.props.account.token === null) {
-      this.props.getPromotionList(i18n.language);
-    } else {
-      this.props.getPlayerPromotionList(i18n.language);
-    }
+    this.props.getPromotion();
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.account.token !== this.props.account.token) {
-      if (this.props.account.token === null) {
-        this.props.getPromotionList(i18n.language);
-      } else {
-        this.props.getPlayerPromotionList(i18n.language);
-      }
+      this.props.getPromotion();
     }
 
     if (
@@ -375,6 +367,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(
         generalAction.getPlayerPromotionList(language, 1, 99, true, "", true)
       ),
+    getPromotion: () => dispatch(generalAction.getPromotion()),
   };
 };
 export default withRouter(
