@@ -1,3 +1,4 @@
+@Library('global-shared-library') _
 def componentArray = [];
 def componentArrayMerged = [];
 def message = "";
@@ -72,24 +73,44 @@ pipeline {
                 sh "echo 'tag: ${TAG}'"
             }
         }	
-        stage('Docker Build') {   
+        stage('Docker Build') { 
+            when {
+                expression {
+                    return env.kube_ns != 'dev';
+                }
+            }  
             steps {	  			    
                 sh "docker build -t ${Registry}${Image}:${TAG} ."
                 sh "docker tag ${Registry}${Image}:${TAG} ${Registry}${Image}:$env.kube_ns"
             }
         }			
         stage('Docker Push') {   
+            when {
+                expression {
+                    return env.kube_ns != 'dev';
+                }
+            }
             steps {	  
                 sh "docker push ${Registry}${Image}:${TAG}"
                 sh "docker push ${Registry}${Image}:$env.kube_ns"
             }
         }	
-		stage('Docker New Build') {   
+		stage('Docker New Build') {
+            when {
+                expression {
+                    return env.kube_ns == 'dev';
+                }
+            }   
             steps {	  			    
                 sh "docker build -f Dockerfile-New  -t ${Registry}${Image}:${MergedTag} ."
             }
         }			
-        stage('Docker New Push') {   
+        stage('Docker New Push') {  
+            when {
+                expression {
+                    return env.kube_ns == 'dev';
+                }
+            } 
             steps {	  
                 sh "docker push ${Registry}${Image}:${MergedTag}"
             }
@@ -139,19 +160,5 @@ pipeline {
         failure {
             sendTelegram("<b>Failed Pipeline:</b> ${currentBuild.fullDisplayName} Something is wrong with ${env.BUILD_URL}/console\n${currentBuild.getBuildCauses()[0].shortDescription}\n")
         }
-    }
-}
-
-def sendTelegram(message) {
-    def encodedMessage = URLEncoder.encode(message, "UTF-8")
-
-    withCredentials([string(credentialsId: "telegramToken", variable: "TOKEN"), string(credentialsId: "telegramChatId", variable: "CHAT_ID")]) {
-
-        response = httpRequest (consoleLogResponseBody: true,
-                contentType: 'APPLICATION_JSON',
-                httpMode: 'GET',
-                url: "https://api.telegram.org/bot${TOKEN}/sendMessage?text=${encodedMessage}&chat_id=${CHAT_ID}",
-                validResponseCodes: '200')
-        return response
     }
 }
