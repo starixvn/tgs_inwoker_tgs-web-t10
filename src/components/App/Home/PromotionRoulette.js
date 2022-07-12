@@ -436,11 +436,11 @@ const Roulette = (props) => {
     turntableEl.ontransitionend = () => {
       setTimeout(() => {
         props.performCloseRouletteModal();
+        props.performOpenEmptyModal(
+          i18n.t("promoRoulette.dialogRewardTitle1"),
+          props.items[giftIndex].label
+        );
       }, 2000);
-      props.performOpenEmptyModal(
-        i18n.t("promoRoulette.dialogRewardTitle1"),
-        props.items[giftIndex].label
-      );
       turntableEl.style.transition = `none`;
       labelEl.style.transition = `none`;
     };
