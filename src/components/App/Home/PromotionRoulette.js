@@ -175,7 +175,7 @@ const Stand = styled.div`
 `;
 const Tab = styled.div`
   cursor: pointer;
-  height: 40px;
+  height: 39px;
   width: 100px;
   padding: 0 10px;
   margin: 0 10px;
