@@ -365,7 +365,7 @@ function Activation(props) {
           props.enqueueSnackbar(i18n.t("common.msgTokenVerified"), {
             variant: "success",
           });
-          props.doLoginSuccess(response.data);
+          props.doLogin(response.data);
 
           props.history.push(
             "/" + i18n.language + "/registersuccess/" + username
