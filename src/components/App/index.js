@@ -51,6 +51,7 @@ import ESports from "./eSports";
 import LiveChat from "../Share/live-chat";
 import config from "../../config/config";
 import CustomLibrary from "./Sports/CustomLibrary";
+import ForcedVerification from "./ForcedVerification";
 
 const baseRouteUrl = Common.baseRouteUrl;
 const Main = styled.div`
@@ -213,8 +214,10 @@ class App extends Component {
         // this.props.getVIP();
       }
     }
-    if(preProps.account.token !== this.props.account.token && (this.props.account.token === null || this.props.account.token === ""))
-    {
+    if (
+      preProps.account.token !== this.props.account.token &&
+      (this.props.account.token === null || this.props.account.token === "")
+    ) {
       this.props.getPromotion();
     }
     if (config.features.ForceRedirectAddCard) {
@@ -306,7 +309,7 @@ class App extends Component {
       .filter((item) => item.status === 0 && item.transferwallet === true)
       .map((a) => this.props.getGameBalance(a.abbreviation));
   };
-  
+
   isRouletteAvailable = () => {
     return (
       this.props.general.promotionList.items &&
@@ -318,8 +321,8 @@ class App extends Component {
   };
 
   isInHomePage = () => {
-    return this.props.location.pathname===`/${i18n.language}/`;
-  }
+    return this.props.location.pathname === `/${i18n.language}/`;
+  };
 
   render() {
     return (
@@ -523,14 +526,31 @@ class App extends Component {
                 <AnotherFloatPanel
                   onhandleShowCSClick={this.handleShowCSClick}
                 ></AnotherFloatPanel>
+
+                <ForcedVerification
+                  forcedverify={
+                    config.features.SMSVerification &&
+                    this.props.account.info.identityformstatus === 0 &&
+                    (this.props.account.info.identityformid === "" ||
+                      this.props.account.info.identityformid === null)
+                  }
+                />
+                {this.props.account.registercompleted === false &&
+                  config.features.Register_ShowPhone && (
+                    <Redirect
+                      to={"/" + i18n.language + "/account/profile/member_phone"}
+                    />
+                  )}
                 {config.features.HomePage_PromoRoulette &&
-                this.isInHomePage() &&
+                  this.isInHomePage() &&
                   this.isRouletteAvailable() && (
                     <PromotionRoulette
-                      promotionDetail={this.props.general.promotionList.items.filter(
-                        (item) =>
-                          item.promotionType.toUpperCase() === "ROULETTE"
-                      )[0]}
+                      promotionDetail={
+                        this.props.general.promotionList.items.filter(
+                          (item) =>
+                            item.promotionType.toUpperCase() === "ROULETTE"
+                        )[0]
+                      }
                     ></PromotionRoulette>
                   )}
                 <Footer target={"_blank"}></Footer>
