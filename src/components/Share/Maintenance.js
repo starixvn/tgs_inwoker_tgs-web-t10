@@ -172,7 +172,16 @@ const Maintenance = (props) => {
     //       .replace("{lang}", i18n.language)
     //       .replace("{email}", email || "")
     //   : "";
-
+    if(config.features.LiveChatVendor.brand==="zendesk")
+    {
+      window.zE('webWidget', 'open');
+      return;
+    }
+    else if(config.features.LiveChatVendor.brand==="livechat")
+    {
+      window.LiveChatWidget.call("maximize");
+      return;
+    }
     if (newURL.length) {
       Common.PopupCenter(newURL, "", 785, 750);
     } else {
