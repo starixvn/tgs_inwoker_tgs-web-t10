@@ -88,6 +88,10 @@ const featureList = {
     Register_CustomFlow_IDR: false,
     HomePage_PromoRoulette: false,
     PromoRoulette_SMSVerification: false,
+    Maintenance_Detail: {
+      startTime: "2022-07-12T01:35:00.000Z",
+      endTime: "2022-07-12T04:30:00.000Z",
+    },
   },
 };
 export default featureList;

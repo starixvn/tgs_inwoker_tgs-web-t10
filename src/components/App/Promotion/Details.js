@@ -298,6 +298,7 @@ class PromotionDetails extends Component {
   }
   render() {
     if (this.state.details === null) return <></>;
+    var isDummy = this.state.details.promotionType.toUpperCase() === "DUMMY";
     return (
       <Container>
         <MContainer>
@@ -362,24 +363,26 @@ class PromotionDetails extends Component {
               )}
             </EventText>
             <Grid container justify="center">
-              <PromoButtonContainer
-                container
-                alignItems="center"
-                justify="center"
-                md={3}
-                disableTheButton={this.state.joined}
-                onClick={() =>
-                  !this.state.joined &&
-                  this.handlejoinPromotionClick(
-                    this.state.details.id,
-                    this.state.details.promotionType
-                  )
-                }
-              >
-                <PromoButtonText item>
-                  {i18n.t("promotion.joinPromo")}
-                </PromoButtonText>
-              </PromoButtonContainer>
+              {!isDummy && (
+                <PromoButtonContainer
+                  container
+                  alignItems="center"
+                  justify="center"
+                  md={3}
+                  disableTheButton={this.state.joined}
+                  onClick={() =>
+                    !this.state.joined &&
+                    this.handlejoinPromotionClick(
+                      this.state.details.id,
+                      this.state.details.promotionType
+                    )
+                  }
+                >
+                  <PromoButtonText item>
+                    {i18n.t("promotion.joinPromo")}
+                  </PromoButtonText>
+                </PromoButtonContainer>
+              )}
             </Grid>
           </PromoDetailContainer>
         </MContainer>
