@@ -91,13 +91,14 @@ const LanguageContainer = styled.div`
 `;
 
 const BottomContainer = styled.div`
-  height: 100px;
+  height: 55px;
 `;
 const LogoContainer = styled.div`
   background-image: url("${(props) => props.img}");
   background-repeat: no-repeat;
   background-size: 75%;
   background-position: left center;
+  height: 90px;
   ${(props) => {
     if (props.headerCustom === true) {
       return `width:180px;`;
@@ -116,10 +117,10 @@ const LogoContainer = styled.div`
 `;
 
 const RightMenuContainer = styled.div`
-  float: right;
+  display: flex;
+  justify-content: center;
 `;
-const RightMenuUL = styled.ul`
-  float: right;
+const RightMenuUL = styled.div`
   list-style: none;
   padding: 0;
   margin: 0;
@@ -152,7 +153,7 @@ const MouseOverContainer = styled.div`
 const MouseOverBackground = styled.div`
   width: 100%;
 
-  background-color: rgba(255, 255, 255, 1);
+  background-color: rgba(0, 0, 0, 0.75);
   height: 160px;
   position: absolute;
   bottom: 30px;
@@ -224,38 +225,12 @@ const RightMenuLI = styled.li`
     }
   }}
   max-width: 120px;
-  height: 95px;
-  line-height: 95px;
+  height: 50px;
+  line-height: 50px;
   text-align: center;
   color: #000;
   border-bottom: solid 4px transparent;
-  @media (max-width: 925px) {
-    ${(props) => {
-      if (props.headerCustom === true) {
-        return `width: 110px;`;
-      } else {
-        return `width: 100px;`;
-      }
-    }}
-  }
-  @media (max-width: 770px) {
-    ${(props) => {
-      if (props.headerCustom === true) {
-        return `width: 90px;`;
-      } else {
-        return `width: 80px;`;
-      }
-    }}
-  }
-  @media (max-width: 650px) {
-    ${(props) => {
-      if (props.headerCustom === true) {
-        return `width: 110px;`;
-      } else {
-        return `width: 100px;`;
-      }
-    }}
-  }
+
   &:hover {
     border-bottom: solid 4px ${({ theme }) => theme.primary};
     color: ${({ theme }) => theme.primary};
@@ -273,17 +248,13 @@ const RightMenuLI = styled.li`
   }
   background-repeat: no-repeat;
   background-position: 15% center;
-  ${(props) =>
-    props.active
-      ? `
-  border-bottom: solid 4px ${({ theme }) => theme.primary};
-  color: ${({ theme }) => theme.primary};
-
-
-  `
-      : `
-  
-  `}
+  ${({ active }) => {
+    return (
+      active &&
+      ` border-bottom: solid 4px ${({ theme }) => theme.primary};
+   color: ${({ theme }) => theme.primary};`
+    );
+  }}
 `;
 
 const IconPhone = styled.div`
@@ -404,14 +375,19 @@ const styles = {
     transform: "translate(18px, -30px)",
   },
   maxMenu: {
-    height: "100px",
     transition: "height .3s",
   },
   minMenu: {
-    height: "64px",
     transition: "height .3s",
   },
 };
+
+const TheLogoHolder = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+`;
 
 class Header extends Component {
   constructor(props) {
@@ -841,24 +817,25 @@ class Header extends Component {
             </TheContent>
           </HeaderContent>
         </TopMostHeader>
+        <TheLogoHolder>
+          <LogoContainer
+            headerCustom={config.features.HeaderCustom}
+            img={
+              this.props.general.brand &&
+              this.props.general.brand.desktopLogoUrl
+            }
+            onClick={this.onhandleLogoClick}
+            className={`${
+              this.state.shouldShow === null
+                ? classes.maxMenu
+                : this.state.shouldShow
+                ? classes.maxMenu
+                : classes.minMenu
+            }`}
+          />
+        </TheLogoHolder>
         <InnerWrap>
           <BottomContainer>
-            <LogoContainer
-              headerCustom={config.features.HeaderCustom}
-              img={
-                this.props.general.brand &&
-                this.props.general.brand.desktopLogoUrl
-              }
-              onClick={this.onhandleLogoClick}
-              className={`${
-                this.state.shouldShow === null
-                  ? classes.maxMenu
-                  : this.state.shouldShow
-                  ? classes.maxMenu
-                  : classes.minMenu
-              }`}
-            ></LogoContainer>
-
             <RightMenuContainer>
               <RightMenuUL
                 className={`${
@@ -903,9 +880,9 @@ class Header extends Component {
                           onClick={(e) => e.stopPropagation()}
                           style={
                             this.state.shouldShow === null
-                              ? { top: "145px" }
+                              ? { top: "188px" }
                               : this.state.shouldShow
-                              ? { top: "145px" }
+                              ? { top: "188px" }
                               : { top: "114px" }
                           }
                         >

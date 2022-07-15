@@ -29,13 +29,12 @@ const Icon = styled.div`
   width: 50px;
 
   background-color: ${({ theme, active }) => {
-    return active ? "white" : theme.primary;
+    return active ? theme.primary : "#fff";
   }};
   transition: transform 0.5s;
   mask: url(${({ active, src, src2 }) => (active ? src2 : src)}) no-repeat
     center / contain;
-  -webkit-mask: url(${({ active, src, src2 }) => (active ? src2 : src)})
-    no-repeat center / contain;
+
   background-size: 100%;
   transform: translateY(${({ active }) => (active ? "-5px" : "3px")});
 `;
@@ -48,10 +47,10 @@ const Text = styled.div`
   opacity: ${({ active }) => (active ? "1" : "0")};
   transition: opacity 200ms;
   transform: translateY(-15px);
+  color: ${({ theme }) => theme.primary};
 `;
 
 const RotateBack = styled.div`
-  transform: rotate(-45deg);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -69,7 +68,6 @@ const Container = styled.div`
   align-items: center;
   transform: translateY(-50%);
   overflow: visible;
-  color: white;
   border-radius: 8px;
 
   :hover {
@@ -83,40 +81,42 @@ const SidePanel = styled.div`
 
   width: 75px;
   height: 75px;
-  transform: rotate(45deg);
+
   overflow: visible;
 
   border-width: 2px;
-  border-color: ${({ theme }) => theme.primary};
+  border-color: #fff;
   border-style: solid;
-  border-radius: 10px;
+  border-radius: 1000px;
 
   ${({ active, theme }) => {
     return active
       ? `  
-       background-color:  ${theme.primary};`
+       background-color:  #fff;`
       : `  
-      background-color: #ffff;`;
+      background-color: ${theme.primary};`;
   }}
 
   &:hover {
-    background-color: ${({ theme }) => theme.primary};
+    background-color: #fff;
     cursor: pointer;
     border-color: transparent;
+    border-color: ${({ theme }) => theme.primary};
 
     ${Icon} {
-      background: url(${({ src2 }) => src2}) no-repeat center;
+      background: ${({ theme }) => theme.primary};
       background-size: 100%;
       transform: translateY(-5px);
     }
     ${Text} {
       opacity: 1;
+      color: ${({ theme }) => theme.primary};
       transition: opacity 200ms;
       transition-delay: 100ms;
     }
   }
   box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
-  margin: 30px 10px 5px auto;
+  margin: 10px 10px 5px auto;
 `;
 
 const CustomModal = styled(Dialog)`

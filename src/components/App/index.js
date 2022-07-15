@@ -58,7 +58,7 @@ const Main = styled.div`
   min-height: 600px;
 `;
 const EmptyHeader = styled.div`
-  height: 130px;
+  height: 190px;
 `;
 
 class App extends Component {
