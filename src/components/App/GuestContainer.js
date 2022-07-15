@@ -24,7 +24,7 @@ import Register from "./Register";
 
 import { withSnackbar } from "notistack";
 import ForgotPasswordPhone from "./ForgotPasswordPhone";
-import BlowFishEncryption from "../../utils/BlowFishEncryption";
+
 import i18n from "../../utils/i18n";
 import ErrorSwitcher from "../../utils/ErrorSwitcher";
 const Container = styled.div`
@@ -32,37 +32,35 @@ const Container = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  gap: 8px;
 `;
 const BtnLoginRegister = styled.div`
   float: right;
   font-size: 17px;
-  text-align: center;
-  color: ${({ theme }) => theme.pcHeaderText};
-
-  &:hover {
-    color: ${({ theme }) => theme.pcHeaderTextHover};
-    cursor: pointer;
-  }
+  text-align: center;    
+  height: 25px;
+  color #fff;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  min-width: 80px;
+  justify-content: center;
+  font-weight: bold;
+  padding: 3px 0px;
+  font-size: 14px;
+  cursor: pointer;
+ 
 `;
 const BtnRegister = styled(BtnLoginRegister)`
-  margin-left: 5px;
-  margin-right: 10px;
+  border: solid 1px #fff;
+  background: #fff;
+  color: ${({ theme }) => theme.primary};
 `;
 
 const BtnLogin = styled(BtnLoginRegister)`
-  margin-right: 5px;
+  border: solid 1px #fff;
 `;
 
-const BtnSpliter = styled.div`
-  float: right;
-  margin-top: 8px;
-  color: ${({ theme }) => theme.pcHeaderText};
-`;
-const BtnLoginRegisterLabel = styled.span`
-  text-align: center;
-  display: block;
-  margin-top: 7px;
-`;
 const StyledDialog = withStyles({
   root: {
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
@@ -566,29 +564,12 @@ class GuestContainer extends Component {
     return (
       <Container>
         <BtnLogin onClick={() => this.handleClickOpenDialog("login")}>
-          <BtnLoginRegisterLabel>
-            {i18n.t("common.login")}
-          </BtnLoginRegisterLabel>
+          {i18n.t("common.login")}
         </BtnLogin>
-        <BtnSpliter> | </BtnSpliter>
-        <BtnRegister onClick={() => this.onhandleRegister()}>
-          <BtnLoginRegisterLabel>
-            {i18n.t("common.register")}
-          </BtnLoginRegisterLabel>
-        </BtnRegister>
 
-        {
-          //    config.features.SMSVerification && (
-          //      <React.Fragment>
-          //        <BtnRegister onClick={() => this.onhandleActivation()}>
-          //          <BtnLoginRegisterLabel>
-          //            {i18n.t("web.register.activation")}
-          //          </BtnLoginRegisterLabel>
-          //        </BtnRegister>
-          //        <BtnSpliter> | </BtnSpliter>
-          //      </React.Fragment>
-          //    )
-        }
+        <BtnRegister onClick={() => this.onhandleRegister()}>
+          {i18n.t("common.register")}
+        </BtnRegister>
 
         <StyledDialog
           open={this.state.openDialog || this.props.ui.showLogin}

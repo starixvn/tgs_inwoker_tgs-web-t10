@@ -30,6 +30,7 @@ import { GeneralService } from "../../api-services/services/GeneralService";
 import ErrorSwitcher from "../../utils/ErrorSwitcher";
 import { AppHistory } from "../../history/History";
 import { SortedMenuList } from "../../utils/HeaderSorting";
+import OnlineUserDisplayer from "../Share/online-user-displayer";
 const moment = require("moment");
 
 const InnerWrap = styled.div`
@@ -38,24 +39,37 @@ const InnerWrap = styled.div`
   width: 100%;
   font-size: 14px;
 `;
-const TopContainer = styled.div`
-  height: 45px;
+
+const TopMostHeader = styled.div`
+  background: ${({ theme }) => theme.primary};
+  color: white;
   display: flex;
-  align-items: center;
+  justify-content: center;
+  padding: 4px 0;
+`;
+
+const HeaderContent = styled.div`
+  width: 1280px;
+  display: flex;
   justify-content: space-between;
 `;
+
+const TheContent = styled.div`
+  display: flex;
+  gap: 12px;
+  align-items: center;
+`;
+
 const TimerContainer = styled.div`
   font-family: arial;
-  float: left;
+  font-size: 14px;
+
   @media (max-width: 950px) {
     display: none;
   }
 `;
 
 const TimerSpan = styled.span`
-  color: #000;
-  float: left;
-  margin-left: 5px;
   width: 190px;
 `;
 
@@ -68,34 +82,12 @@ const CustomLink = styled(Link)`
   }
 `;
 
-const LanguageContent = styled.div`
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 255, 0.8);
-  padding: 12px 16px;
-  z-index: 1;
-`;
-
 const LanguageContainer = styled.div`
   float: left;
 
   padding-right: 5px;
   position: relative;
   display: inline-block;
-
-  :hover {
-    ${LanguageContent} {
-      display: block;
-    }
-  }
-`;
-
-const RightContainer = styled.div`
-  float: right;
-  display: flex;
-  align-items: center;
 `;
 
 const BottomContainer = styled.div`
@@ -295,10 +287,17 @@ const RightMenuLI = styled.li`
 `;
 
 const IconPhone = styled.div`
-  background: url(${(props) => props.img}) no-repeat;
-  float: left;
-  width: 20px;
-  height: 20px;
+  mask: url(${(props) => props.img}) no-repeat;
+  background: #fff;
+  mask-size: contain;
+  width: 15px;
+  height: 15px;
+`;
+
+const ThePhoneContainer = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 14px;
 `;
 
 const StyledAppBar = withStyles((theme) => ({
@@ -778,31 +777,35 @@ class Header extends Component {
 
     return (
       <CustomAppBar hide={this.props.hide}>
-        <InnerWrap>
-          <TopContainer>
-            <div style={{ display: "flex", alignItems: "center" }}>
+        <TopMostHeader>
+          <HeaderContent>
+            <TheContent>
               <TimerContainer>
                 <TimerSpan>GMT+8 {this.state.systemDateTime}</TimerSpan>
               </TimerContainer>
-              {config.features.DisplayPhone && (
-                <div>
+              {!config.features.DisplayPhone && (
+                <ThePhoneContainer>
                   <IconPhone img={IconPhonePNG}></IconPhone>
                   <div>
+                    123123123
                     {this.props.general.brandsSupport &&
                       this.props.general.brandsSupport.length >= 1 &&
                       this.props.general.brandsSupport[0].phone}
                   </div>
-                </div>
-              )}{" "}
+                </ThePhoneContainer>
+              )}
               <LanguageContainer>
                 <LanguangeChanger
                   language={this.props.general.brandLanguage}
                   changeLanguage={this.changeLanguage}
                 />
               </LanguageContainer>
-            </div>
+            </TheContent>
+            <TheContent style={{ justifyContent: "flex-end" }}>
+              {config.features.OnlineUser && (
+                <OnlineUserDisplayer color={"#fff"} size="14px" />
+              )}
 
-            <RightContainer>
               {(() => {
                 if (!this.props.general.isMaintenance) {
                   if (
@@ -835,8 +838,10 @@ class Header extends Component {
                   }
                 }
               })()}
-            </RightContainer>
-          </TopContainer>
+            </TheContent>
+          </HeaderContent>
+        </TopMostHeader>
+        <InnerWrap>
           <BottomContainer>
             <LogoContainer
               headerCustom={config.features.HeaderCustom}
@@ -854,46 +859,6 @@ class Header extends Component {
               }`}
             ></LogoContainer>
 
-            {/* {(() => {
-                if (
-                  config.features.HeaderCustom
-                ) {
-                  return (
-                    <LogoContainer2
-              img={
-                this.props.general.brand &&
-                this.props.general.brand.desktopLogoUrl
-              }
-              onClick={this.onhandleLogoClick}
-              className={`${
-                this.state.shouldShow === null
-                  ? classes.maxMenu
-                  : this.state.shouldShow
-                  ? classes.maxMenu
-                  : classes.minMenu
-              }`}
-            ></LogoContainer2>
-                  );
-                } else {
-                  return (
-                    <LogoContainer
-              img={
-                this.props.general.brand &&
-                this.props.general.brand.desktopLogoUrl
-              }
-              onClick={this.onhandleLogoClick}
-              className={`${
-                this.state.shouldShow === null
-                  ? classes.maxMenu
-                  : this.state.shouldShow
-                  ? classes.maxMenu
-                  : classes.minMenu
-              }`}
-            ></LogoContainer>
-                  );
-                }
-              })()} */}
-
             <RightMenuContainer>
               <RightMenuUL
                 className={`${
@@ -906,7 +871,11 @@ class Header extends Component {
               >
                 {SortedMenuList.map((item, index) => {
                   var gameList = this.props.game.homePageGameList.filter(
-                    (game) => (item.gameType.indexOf(game.type) >= 0 && game.type !== GameTypeEnum.RNGSPORTS) || (game.type === GameTypeEnum.RNGSPORTS && game.abbreviation === "PPTF")
+                    (game) =>
+                      (item.gameType.indexOf(game.type) >= 0 &&
+                        game.type !== GameTypeEnum.RNGSPORTS) ||
+                      (game.type === GameTypeEnum.RNGSPORTS &&
+                        game.abbreviation === "PPTF")
                   );
                   return (
                     gameList.length !== 0 && (
@@ -946,7 +915,10 @@ class Header extends Component {
                                 var list = this.props.game.homePageGameList
                                   .filter(
                                     (game) =>
-                                      (item.gameType.indexOf(game.type) >= 0 && game.type !== GameTypeEnum.RNGSPORTS) || (game.type === GameTypeEnum.RNGSPORTS && game.abbreviation === "PPTF")
+                                      (item.gameType.indexOf(game.type) >= 0 &&
+                                        game.type !== GameTypeEnum.RNGSPORTS) ||
+                                      (game.type === GameTypeEnum.RNGSPORTS &&
+                                        game.abbreviation === "PPTF")
                                   )
                                   .sort((a, b) => {
                                     if (config.features.LiveGame_Sorting_SKY) {

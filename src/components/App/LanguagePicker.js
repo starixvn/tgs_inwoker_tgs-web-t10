@@ -9,12 +9,12 @@ import styled from "styled-components";
 import { AppHistory } from "../../history/History";
 
 const ArrowDownImg = styled.div`
-  height: 14px;
-  width: 14px;
+  height: 10px;
+  width: 10px;
   margin-left: 5px;
   margin-top: 5px;
   margin-right: 10px;
-  background: #000;
+  background: #fff;
   mask: url(${({ src }) => {
     return src;
   }});
@@ -23,12 +23,13 @@ const ArrowDownImg = styled.div`
 `;
 
 const Text = styled.div`
-  color: #000;
+  font-size: 14px;
 `;
 
 const TheContainer = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 const LanguangeChanger = ({ language, changeLanguage }) => {

@@ -26,18 +26,19 @@ const Container = styled.div`
 
   display: flex;
   align-items: center;
+  gap: 10px;
 `;
 const BtnStyle1 = styled.div`
-  font-size: 12px;
+  font-size: 14px;
   text-align: center;
   min-width: 70px;
   height: 25px;
   border-radius: 5px;
-  margin-left: 5px;
+
   padding: 0 8px;
-  margin-right: 5px;
-  border: solid 1px ${(props) => props.theme.primary};
-  color: ${(props) => props.theme.primary};
+
+  border: solid 1px #fff;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,20 +47,16 @@ const BtnStyle1 = styled.div`
   }
 `;
 const BtnLogout = styled.div`
-  color: #000;
+  color: #fff;
   text-align: right;
-
+  cursor: pointer;
   float: right;
-  &:hover {
-    cursor: pointer;
-    color: ${(props) => props.theme.primary};
-  }
 `;
 
 const BtnDeposit = styled(BtnStyle1)``;
 
 const BalanceContainer = styled.div`
-  color: #000;
+  color: #fff;
   text-align: right;
   margin-right: 8px;
   &:hover {
@@ -85,24 +82,19 @@ const RefreshBalanceIcon = styled.div`
   width: 16px;
   height: 16px;
   margin-left: 2px;
-  background: ${(props) => props.theme.primary};
+  background: #fff;
 
   &:hover {
     animation: ${rotateKeyFrame} 1s linear 0s infinite;
   }
 `;
 const BalanceAmountLabel = styled.span`
-  color: #000;
+  color: #fff;
 `;
 const MemberUserName = styled.span`
-  color: ${({ theme }) => theme.primary};
+  color: #fff;
 `;
-const Spliter = styled.div`
-  padding: 12.5px 10px 10px 10px;
-  display: flex;
-  align-items: center;
-  color: rgba(0, 0, 0, 0.8);
-`;
+
 const InboxContainer = styled(BalanceContainer)`
   text-align: right;
   &:hover {
@@ -112,27 +104,28 @@ const InboxContainer = styled(BalanceContainer)`
 const InboxIconImg = styled.div`
   display: inline-block;
   float: right;
-  margin-top: 4px;
+
   height: 15px;
   width: 15px;
 
-  background: ${({ theme }) => theme.primary};
+  background: #fff;
   mask: url(${({ src }) => {
       return src;
     }}),
-    no-repeat center;
+    no-repeat;
 
   mask-repeat: no-repeat;
-  mask-size: 100%;
+  mask-size: contain;
+  mask-position: bottom;
 `;
 const InboxCountLabel = styled.span`
   margin-left: 6px;
-  color: #000;
+  color: #fff;
   display: inline-block;
   float: right;
 `;
 const WelcomeContainer = styled(BalanceContainer)`
-  color: #000;
+  color: #fff;
   float: right;
   margin-right: 0px;
   max-width: 300px;
@@ -221,16 +214,16 @@ const MemberContainer = (props) => {
           </MemberUserName>
         </CustomLink>
       </WelcomeContainer>
-      <Spliter>·</Spliter>
+
       <BtnLogout onClick={props.onhandleLogout}>
         {i18n.t("web.header.logout")}
       </BtnLogout>
-      <Spliter>·</Spliter>
+
       <InboxContainer onClick={props.onhandleInboxClick}>
         <InboxCountLabel>{props.account.info.message_num}</InboxCountLabel>
         <InboxIconImg src={InboxIconPNG}></InboxIconImg>
       </InboxContainer>
-      <Spliter>·</Spliter>
+
       <BalanceContainer style={{ display: "flex" }}>
         <span>{i18n.t("web.header.mainAccount")}: </span>
         <BalanceAmountLabel

@@ -35,10 +35,6 @@ const MarqueeContainer = styled.div`
 function Marquee(props) {
   return (
     <AnnounceContainer>
-      {config.features.OnlineUser && (
-        <OnlineUserDisplayer color="#fde73f" size="14px" />
-      )}
-
       <AnnounceText>{i18n.t("web.marquee.latestNews")}</AnnounceText>
       <MarqueeContainer>
         {props.ui.marquees && props.ui.marquees.length > 0 && (
