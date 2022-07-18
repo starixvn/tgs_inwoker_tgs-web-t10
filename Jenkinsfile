@@ -73,46 +73,16 @@ pipeline {
                 sh "echo 'tag: ${TAG}'"
             }
         }	
-        stage('Docker Build') { 
-            when {
-                expression {
-                    return env.kube_ns != 'dev';
-                }
-            }  
+        stage('Docker Build') {  
             steps {	  			    
                 sh "docker build -t ${Registry}${Image}:${TAG} ."
                 sh "docker tag ${Registry}${Image}:${TAG} ${Registry}${Image}:$env.kube_ns"
             }
         }			
         stage('Docker Push') {   
-            when {
-                expression {
-                    return env.kube_ns != 'dev';
-                }
-            }
             steps {	  
                 sh "docker push ${Registry}${Image}:${TAG}"
                 sh "docker push ${Registry}${Image}:$env.kube_ns"
-            }
-        }	
-		stage('Docker New Build') {
-            when {
-                expression {
-                    return env.kube_ns == 'dev';
-                }
-            }   
-            steps {	  			    
-                sh "docker build -f Dockerfile-New  -t ${Registry}${Image}:${MergedTag} ."
-            }
-        }			
-        stage('Docker New Push') {  
-            when {
-                expression {
-                    return env.kube_ns == 'dev';
-                }
-            } 
-            steps {	  
-                sh "docker push ${Registry}${Image}:${MergedTag}"
             }
         }	
 		stage('Deploy') {
@@ -140,12 +110,6 @@ pipeline {
 							for (i = 0;i < componentArray.length; i++) {
 								message += "\n    ${componentArray[i]}"
 								sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
-							}
-						}
-						if (env.tgs_lobby_t10_components_merged!="") {
-							for (i = 0;i < componentArrayMerged.length; i++) {
-								message += "\n    ${componentArrayMerged[i]}"
-								sh "kubectl set image deployment/${env.tgs_lobby_t10_deployment_merged} ${componentArrayMerged[i]}=${Registry}${Image}:${MergedTag} --record -n $env.kube_ns"
 							}
 						}
                     }
