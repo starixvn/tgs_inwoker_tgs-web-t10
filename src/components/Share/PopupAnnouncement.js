@@ -28,7 +28,7 @@ const Container = styled.div`
 `;
 const CloseButton = styled.div`
   background: ${({ theme }) => theme.primary};
-  color: ${({ theme }) => theme.primaryText};
+  color: white;
   padding: 20px 30px;
   margin-bottom: 10px;
   font-size: 30px;
