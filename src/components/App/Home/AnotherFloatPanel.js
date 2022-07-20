@@ -47,7 +47,7 @@ const Text = styled.div`
   opacity: ${({ active }) => (active ? "1" : "0")};
   transition: opacity 200ms;
   transform: translateY(-15px);
-  color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.accent};
 `;
 
 const RotateBack = styled.div`
@@ -94,23 +94,23 @@ const SidePanel = styled.div`
       ? `  
        background-color:  #fff;`
       : `  
-      background-color: ${theme.primary};`;
+      background-color: ${theme.accent};`;
   }}
 
   &:hover {
     background-color: #fff;
     cursor: pointer;
     border-color: transparent;
-    border-color: ${({ theme }) => theme.primary};
+    border-color: ${({ theme }) => theme.accent};
 
     ${Icon} {
-      background: ${({ theme }) => theme.primary};
+      background: ${({ theme }) => theme.accent};
       background-size: 100%;
       transform: translateY(-5px);
     }
     ${Text} {
       opacity: 1;
-      color: ${({ theme }) => theme.primary};
+      color: ${({ theme }) => theme.accent};
       transition: opacity 200ms;
       transition-delay: 100ms;
     }
@@ -147,7 +147,7 @@ const DialogTitle = styled.div`
 `;
 
 const DialogTitle2 = styled(DialogTitle)`
-  background: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => theme.accent};
   color: white;
 `;
 
@@ -162,7 +162,7 @@ const CloseButton = styled.div`
 `;
 
 const CSSection = styled.div`
-  background: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => theme.accent};
   display: flex;
   padding: 30px;
   align-items: center;

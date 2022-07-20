@@ -242,10 +242,10 @@ const GameButtonBlock = styled.div`
 `;
 
 const TabButton = styled.div`
-  background: ${({ selected }) => {
+  background: ${({ theme, selected }) => {
     return selected
       ? "linear-gradient(101deg, rgba(252,195,111,1) 21%, rgba(252,203,119,0.7) 100%)"
-      : " linear-gradient(101deg, rgba(139,202,207,1) 21%, rgba(133,196,200,0.7) 100%)";
+      : `rgba(${theme.primaryRgb}, 0.8)`;
   }};
   border-radius: 8px;
   display: flex;

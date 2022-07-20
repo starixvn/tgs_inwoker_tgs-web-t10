@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import i18n from "../../../utils/i18n";
+import { ProviderTitle } from "./SharedComponent";
 
 const Container = styled.div`
   display: flex;
@@ -18,20 +19,13 @@ const Content = styled.div`
   position: relative;
 `;
 
-const ProviderTitle = styled.div`
-  color: #107f9d;
-  font-size: 2.5em;
-
-  height: 125px;
-`;
-
 const TheFloatContent = styled.div`
   position: absolute;
   right: 150px;
   bottom: 20%;
   width: 400px;
   height: 350px;
-  background: #fff;
+
   border-radius: 12px;
   padding: 12px;
 `;
@@ -39,9 +33,9 @@ const TheFloatContent = styled.div`
 const SecondSection = (props) => {
   return (
     <Container>
-      <ProviderTitle>{i18n.t("web.footer.footerDescTitle")}</ProviderTitle>
+      <ProviderTitle title={i18n.t("t10.home.section2.title")} />
       <Content>
-        <TheFloatContent>content placeholder</TheFloatContent>
+        <TheFloatContent></TheFloatContent>
       </Content>
     </Container>
   );

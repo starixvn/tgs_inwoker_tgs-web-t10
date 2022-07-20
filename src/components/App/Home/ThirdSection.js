@@ -4,11 +4,12 @@ import styled from "styled-components";
 import DynamicFont from "react-dynamic-font";
 import ItemPNG from "../../../assets/images/home/section/section3-item.png";
 import i18n from "../../../utils/i18n";
+import { ProviderTitle } from "./SharedComponent";
 
 const Container = styled(Grid)`
   width: 1280px;
   margin: 0 auto;
-  margin-top: 175px;
+
   position: relative;
   display: flex;
   justify-content: space-around;
@@ -37,6 +38,11 @@ const ItemContainer = styled.div`
   padding-top: 85px;
 `;
 
+const OuterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const ThirdSection = (props) => {
   const itemList = [
     {
@@ -54,20 +60,23 @@ const ThirdSection = (props) => {
   ];
 
   return (
-    <Container>
-      {itemList.map((item, index) => {
-        return (
-          <ItemContainer key={index}>
-            <ItemInnerLabel>
-              <DynamicFont content={item.value}></DynamicFont>
-            </ItemInnerLabel>
-            <ItemBottomLabel>
-              <DynamicFont content={item.title}></DynamicFont>
-            </ItemBottomLabel>
-          </ItemContainer>
-        );
-      })}
-    </Container>
+    <OuterContainer>
+      <ProviderTitle title={i18n.t("t10.home.section3.title")} />
+      <Container>
+        {itemList.map((item, index) => {
+          return (
+            <ItemContainer key={index}>
+              <ItemInnerLabel>
+                <DynamicFont content={item.value}></DynamicFont>
+              </ItemInnerLabel>
+              <ItemBottomLabel>
+                <DynamicFont content={item.title}></DynamicFont>
+              </ItemBottomLabel>
+            </ItemContainer>
+          );
+        })}
+      </Container>
+    </OuterContainer>
   );
 };
 

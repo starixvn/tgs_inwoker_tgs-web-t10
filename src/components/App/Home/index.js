@@ -59,11 +59,11 @@ const FirstSectionItemLabel = styled(Grid)`
 
 const FirstSectionItemButton = styled(Grid)`
   font-size: 14px;
-  color: #000;
+  color: ${({ theme }) => theme.primary};
   text-align: center;
   width: 85px;
   border-radius: 6px;
-  border: solid 1px #000;
+  border: solid 1px ${({ theme }) => theme.primary};
   margin-top: 25px;
   height: 34px;
   line-height: 2em;
@@ -119,10 +119,10 @@ class Home extends Component {
 
   componentDidUpdate(preProps) {
     var isInHomePage =
-    this.props.ui.mains &&
-    this.props.ui.mains !== preProps.ui.mains &&
-    this.props.ui.mains.length > 0;
-    
+      this.props.ui.mains &&
+      this.props.ui.mains !== preProps.ui.mains &&
+      this.props.ui.mains.length > 0;
+
     if (config.features.PopupAnnouncement) {
       if (isInHomePage) {
         this.setState({

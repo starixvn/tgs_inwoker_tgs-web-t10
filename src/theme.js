@@ -468,19 +468,19 @@ export const wapT10 = {
   variant: "PB",
   loginBody: "#fff",
   loginText: "#404040",
-  primary: "#4bc5cb",
-  primaryRgb: "196, 5, 17",
-  primaryText: "#4bc5cb",
-  primaryGradient: "#4bc5cb",
+  primary: "#5f67ea",
+  primaryRgb: "95, 103, 234",
+  primaryText: "#5f67ea",
+  primaryGradient: "#5f67ea",
   primaryGradientRgb: "145, 3, 12",
-  primaryHightlight: "#4bc5cb",
+  primaryHightlight: "#5f67ea",
   secondary: "#404040",
   secondaryText: "rgba(0,0,0,0.5)",
   tertiary: "rgba(255, 255, 255, 1)",
   tertiaryText: "rgba(255, 255, 255, 0.5)",
   //new addition to compensate wap-t2
-  buttonBackground: "#4bc5cb",
-  buttonText: "#4bc5cb",
+  buttonBackground: "#5f67ea",
+  buttonText: "#5f67ea",
   buttonText2: "#FBFBFF",
   bottomnav: "#f5f5f5",
   bottomNavAction: "#404040",
@@ -489,11 +489,13 @@ export const wapT10 = {
     process.env.PUBLIC_URL + `/assets/images/wapp/resource/T2/supportbg.png`
   })
   no-repeat center,  linear-gradient(180deg, rgb(5 30 74) 40%, rgba(12,21,37,1) 100%)`,
-  balance: "#4bc5cb",
+  balance: "#5f67ea",
   pcHeaderText: "#000",
-  pcHeaderTextHover: "#4bc5cb",
-  pcHeaderRightMenu: "#4bc5cb",
-  pcHeaderRightMenuHover: "#4bc5cb",
+  pcHeaderTextHover: "#5f67ea",
+  pcHeaderRightMenu: "#5f67ea",
+  pcHeaderRightMenuHover: "#5f67ea",
+
+  accent: "#d772ff",
 };
 
 export const themeList = {

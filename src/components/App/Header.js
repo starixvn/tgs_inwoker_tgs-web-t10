@@ -60,6 +60,12 @@ const TheContent = styled.div`
   align-items: center;
 `;
 
+const LeftContent = styled(TheContent)`
+  @media (max-width: 1279px) {
+    display: none;
+  }
+`;
+
 const TimerContainer = styled.div`
   font-family: arial;
   font-size: 14px;
@@ -90,14 +96,12 @@ const LanguageContainer = styled.div`
   display: inline-block;
 `;
 
-const BottomContainer = styled.div`
-  height: 55px;
-`;
+const BottomContainer = styled.div``;
 const LogoContainer = styled.div`
   background-image: url("${(props) => props.img}");
   background-repeat: no-repeat;
   background-size: 75%;
-  background-position: left center;
+  background-position:  center;
   height: 90px;
   ${(props) => {
     if (props.headerCustom === true) {
@@ -111,9 +115,7 @@ const LogoContainer = styled.div`
   &:hover {
     cursor: pointer;
   }
-  @media (max-width: 1279px) {
-    display: none;
-  }
+
 `;
 
 const RightMenuContainer = styled.div`
@@ -121,19 +123,17 @@ const RightMenuContainer = styled.div`
   justify-content: center;
 `;
 const RightMenuUL = styled.div`
-  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
   padding: 0;
   margin: 0;
 `;
 
 const RightMenuTextSpan = styled.span`
   font-size: 16px;
-
   margin: 0 auto;
-
-  padding-top: 6px;
   text-align: center;
-
   display: inline-block;
   vertical-align: middle;
   line-height: normal;
@@ -215,7 +215,7 @@ const breatheAnimation = keyframes`
  to { transform:translateY(0px); }
 
 `;
-const RightMenuLI = styled.li`
+const RightMenuLI = styled.div`
   display: inline-block;
   ${(props) => {
     if (props.headerCustom === true) {
@@ -225,20 +225,15 @@ const RightMenuLI = styled.li`
     }
   }}
   max-width: 120px;
-  height: 50px;
+
   line-height: 50px;
   text-align: center;
   color: #000;
   border-bottom: solid 4px transparent;
+  cursor: pointer;
 
-  &:hover {
-    border-bottom: solid 4px ${({ theme }) => theme.primary};
-    color: ${({ theme }) => theme.primary};
-
-    cursor: pointer;
-  }
   &:hover ${MouseOverContainer} {
-    height: 190px;
+    height: 188px;
   }
   &:hover ${RightMenuImg} {
     ${(props) => `background-image:url(${props.hoverimg});`}
@@ -257,6 +252,19 @@ const RightMenuLI = styled.li`
   }}
 `;
 
+const CustomVIPHeaderButton = styled.div`
+  display: inline-block;
+  min-width: 95px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  letter-spacing: 3px;
+  color: ${({ theme }) => theme.primary};
+  border-bottom: solid 4px ${({ theme }) => theme.primary};
+`;
 const IconPhone = styled.div`
   mask: url(${(props) => props.img}) no-repeat;
   background: #fff;
@@ -755,7 +763,7 @@ class Header extends Component {
       <CustomAppBar hide={this.props.hide}>
         <TopMostHeader>
           <HeaderContent>
-            <TheContent>
+            <LeftContent>
               <TimerContainer>
                 <TimerSpan>GMT+8 {this.state.systemDateTime}</TimerSpan>
               </TimerContainer>
@@ -776,7 +784,7 @@ class Header extends Component {
                   changeLanguage={this.changeLanguage}
                 />
               </LanguageContainer>
-            </TheContent>
+            </LeftContent>
             <TheContent style={{ justifyContent: "flex-end" }}>
               {config.features.OnlineUser && (
                 <OnlineUserDisplayer color={"#fff"} size="14px" />
@@ -846,6 +854,12 @@ class Header extends Component {
                     : classes.minMenu
                 }`}
               >
+                <CustomVIPHeaderButton
+                  onClick={() => this.handleClickMenu("vip")}
+                >
+                  VIP
+                </CustomVIPHeaderButton>
+
                 {SortedMenuList.map((item, index) => {
                   var gameList = this.props.game.homePageGameList.filter(
                     (game) =>
@@ -880,9 +894,9 @@ class Header extends Component {
                           onClick={(e) => e.stopPropagation()}
                           style={
                             this.state.shouldShow === null
-                              ? { top: "188px" }
+                              ? { top: "186px" }
                               : this.state.shouldShow
-                              ? { top: "188px" }
+                              ? { top: "186px" }
                               : { top: "114px" }
                           }
                         >
@@ -1029,8 +1043,6 @@ class Header extends Component {
                   i18n.t("common.promotion"),
                   null
                 )}
-
-                {this.RightMenuItem("vip", "VIP", null)}
               </RightMenuUL>
             </RightMenuContainer>
           </BottomContainer>

@@ -49,80 +49,118 @@ const Maintenance = styled.div`
 `;
 
 const TheSelectorContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
+
   gap: 12px;
+  height: 80vh;
+  overflow: auto;
+
+  ::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+`;
+
+const TopLiner = styled.div`
+  height: 4px;
+  width: 40%;
+  background: #878dee;
+  ::before {
+    content: "";
+    display: block;
+
+    background: #878dee;
+    width: 4px;
+    height: 6px;
+    position: absolute;
+    right: 58px;
+
+    z-index: 0;
+    transform: rotate(135deg);
+  }
+
+  ::after {
+    content: "";
+    display: block;
+    background: #878dee;
+    width: 4px;
+    height: 6px;
+    position: absolute;
+    left: 58px;
+    transform: rotate(45deg);
+    z-index: 0;
+  }
+`;
+
+const BottomLiner = styled.div`
+  width: 100%;
+  height: 10px;
+
+  background: #878dee;
+`;
+
+const TheBottomLiner = styled.div`
+  position: absolute;
+  bottom: 0;
+
+  width: 100%;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const TheSelector = styled.div`
-  background: ${({ selected }) => {
-    return selected
-      ? "linear-gradient(101deg, rgba(252,195,111,1) 21%, rgba(252,203,119,0.7) 100%)"
-      : " linear-gradient(101deg, rgba(139,202,207,1) 21%, rgba(133,196,200,0.7) 100%)";
-  }};
+  background: rgba(${({ theme }) => theme.primaryRgb}, 0.6);
+
+  :hover {
+    background: rgba(${({ theme }) => theme.primaryRgb}, 1);
+    ${TopLiner} {
+      background: ${({ theme }) => theme.accent};
+      ::before {
+        background: ${({ theme }) => theme.accent};
+      }
+      ::after {
+        background: ${({ theme }) => theme.accent};
+      }
+    }
+    ${BottomLiner} {
+      background: ${({ theme }) => theme.accent};
+    }
+  }
   position: relative;
+  min-height: 100px;
   border-radius: 12px;
   padding: 10px 20px;
   min-width: 200px;
+  max-height: 100px;
   color: white;
   cursor: pointer;
   font-weight: bold;
   display: flex;
   align-items: center;
-  transition: all 10s linear;
+  justify-content: center;
 
   ${({ maintenance }) => {
     return (
       maintenance &&
       ` pointer-events: none;
+      opacity:1;
     
   ${Maintenance} {
-    margin-left: -20px;
+  
     display: flex;
   }`
     );
   }}
-
-  ${({ selected }) => {
-    return (
-      !selected &&
-      ` :hover {
-      background: linear-gradient(
-        101deg,
-        rgba(252, 195, 111, 0.75) 21%,
-        rgba(252, 203, 119, 0.75) 100%
-      );
-    }`
-    );
-  }};
 `;
 
-const CustomChevron = styled.div`
-  width: 15px;
-  height: 15px;
-  background-color: #fff;
-  mask: url(${process.env.PUBLIC_URL + `/assets/images/misc/arrow-right.png`})
-    no-repeat center / contain;
-  cursor: pointer;
-  margin-right: 10px;
-  border-radius: 100px;
-`;
+const CustomLogoHolder = styled.div`
+  width: 120px;
+  height: 100px;
 
-const JoinButton = styled.div`
-  margin-top: 20px;
-  border-radius: 50px;
-  padding: 10px 30px;
-  background: linear-gradient(
-    101deg,
-    rgba(252, 215, 132, 1) 21%,
-    rgba(252, 190, 105, 1) 100%
-  );
-  font-weight: bold;
-  color: rgba(0, 0, 0, 0.75);
-  width: fit-content;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
+  background: url(${({ src }) => src}) no-repeat center;
+  background-size: contain;
 `;
 
 class ESports extends Component {
@@ -201,27 +239,27 @@ class ESports extends Component {
                   <TheSelector
                     maintenance={item.status !== 0}
                     key={index}
-                    selected={this.state.selected === item.abbreviation}
                     onClick={() => {
-                      this.setState({
-                        ...this.state,
-                        selected: item.abbreviation,
-                      });
+                      this.handleJoinGameClick(item.abbreviation);
                     }}
                   >
                     <Maintenance>{i18n.t("transfer.maintenance")}</Maintenance>
-                    <CustomChevron />
-                    <div> {i18n.t(`${item.abbreviation}.sports`)}</div>
+                    <CustomLogoHolder
+                      src={
+                        process.env.PUBLIC_URL +
+                        "/assets/images/provider/white/" +
+                        item.abbreviation +
+                        ".png"
+                      }
+                    />
+
+                    <TheBottomLiner>
+                      <TopLiner />
+                      <BottomLiner />
+                    </TheBottomLiner>
                   </TheSelector>
                 );
               })}
-              <JoinButton
-                onClick={() => {
-                  this.handleJoinGameClick(this.state.selected);
-                }}
-              >
-                <div>{i18n.t("common.joinGame")}</div>
-              </JoinButton>
             </TheSelectorContainer>
           </LeftSlide>
         </ItemContainer>

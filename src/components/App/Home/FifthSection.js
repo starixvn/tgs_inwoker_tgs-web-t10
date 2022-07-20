@@ -2,17 +2,11 @@ import { Grid } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
 import i18n from "../../../utils/i18n";
+import { ProviderTitle } from "./SharedComponent";
 
 const Container = styled(Grid)`
   width: 1400px;
   margin: 175px auto;
-`;
-
-const ProviderTitle = styled.div`
-  color: #107f9d;
-  font-size: 2.5em;
-  text-align: center;
-  height: 125px;
 `;
 
 const ProviderContainer = styled.div`
@@ -31,7 +25,7 @@ const ProviderIMG = styled.div`
 const FifthSection = (props) => {
   return (
     <Container>
-      <ProviderTitle>{i18n.t("web.footer.footerDescTitle")}</ProviderTitle>
+      <ProviderTitle title={i18n.t("t10.home.section4.title")} />
       <ProviderContainer>
         {props.providerList
           .filter((gp) => {

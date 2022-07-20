@@ -17,13 +17,12 @@ const Container = styled(Grid)`
   margin: 0 auto;
   margin-top: 175px;
   position: relative;
-  display: flex;
 `;
 
 const FeatureContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 75px 25px;
+  display: flex;
+  justify-content: space-around;
+  width: 1280px;
 `;
 
 const FeatureBg = styled.div`
@@ -105,7 +104,10 @@ const FourthSection = (props) => {
         animateIn="fadeInLeft"
         duration={1}
         animateOnce={true}
-        style={{ overflow: "visible", position: "relative" }}
+        style={{
+          overflow: "visible",
+          position: "relative",
+        }}
       >
         <FeatureContainer>
           {featureList.map((feature, index) => {
@@ -116,9 +118,6 @@ const FourthSection = (props) => {
                   <FeatureTitle lang={i18n.language}>
                     {feature.title}
                   </FeatureTitle>
-                  <FeatureDesc lang={i18n.language}>
-                    {feature.description}
-                  </FeatureDesc>
                 </FeatureRightContainer>
               </FeatureBg>
             );
