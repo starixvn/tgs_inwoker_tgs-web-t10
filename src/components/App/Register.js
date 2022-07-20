@@ -348,7 +348,6 @@ function Register(props) {
   );
 
   const [fromCustomDomain, setFromCustomDomain] = React.useState(false);
-
   useEffect(() => {
     if (props.general.brand.hasInvitationCode) {
       props.getInvitationCode().then((result) => {
@@ -385,14 +384,12 @@ function Register(props) {
       return;
     }
     expr = new RegExp(`^[0-9]{8,${config.features.MAX_PHONE_LENGTH || 10}}`);
-    if (
-      config.features.Register_ShowPhone
-    ) {
+    if (config.features.Register_ShowPhone) {
       if (!expr.test(phone)) {
         props.enqueueSnackbar(
           i18n
             .t("common.noReachMin")
-            .replace(/{maxlength}/g, config.features.MAX_PHONE_LENGTH),
+            .replace(/{maxlength}/g, config.features.MAX_PHONE_LENGTH || 10),
           {
             variant: "warning",
           }
@@ -402,8 +399,8 @@ function Register(props) {
     }
 
     expr = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if(config.features.Register_ShowEmail) {
-      if(!expr.test(email)) {
+    if (config.features.Register_ShowEmail) {
+      if (!expr.test(email)) {
         props.enqueueSnackbar(i18n.t("common.msgInvalidEmail"), {
           variant: "warning",
         });
@@ -437,8 +434,11 @@ function Register(props) {
             //   }
             // }
             if (config.features.SMSVerification) {
-                props.onRegisterSuccess(username, password);
-            } else if (config.features.Register_ShowEmail && config.features.Register_ShowPhone) {
+              props.onRegisterSuccess(username, password);
+            } else if (
+              config.features.Register_ShowEmail &&
+              config.features.Register_ShowPhone
+            ) {
               props.doLoginWithHpEmail(username, password, phone, email);
             } else if (config.features.Register_ShowPhone) {
               props.doLoginWithHp(username, password, phone);
@@ -460,6 +460,93 @@ function Register(props) {
             //     variant: "warning",
             //   });
             // }
+          }
+        });
+    } else {
+      props.enqueueSnackbar(i18n.t("common.msgRegisterTermAndCondition"), {
+        variant: "warning",
+      });
+      return;
+    }
+  };
+
+  const performNewRegister = async () => {
+    var expr = /^[a-zA-Z0-9]{6,16}$/;
+    if (!expr.test(username)) {
+      props.enqueueSnackbar(i18n.t("common.msgRegisterUserNameInvalid"), {
+        variant: "warning",
+      });
+      return;
+    }
+    expr = /^.{6,20}$/;
+    if (!expr.test(password)) {
+      props.enqueueSnackbar(i18n.t("common.msgRegisterPassInvalid"), {
+        variant: "warning",
+      });
+      return;
+    }
+    if (password !== password2) {
+      props.enqueueSnackbar(i18n.t("common.msgRegisterPassMatchInvalid"), {
+        variant: "warning",
+      });
+      return;
+    }
+    expr = new RegExp(`^[0-9]{8,${config.features.MAX_PHONE_LENGTH || 10}}`);
+    if (config.features.Register_ShowPhone) {
+      if (!expr.test(phone)) {
+        props.enqueueSnackbar(
+          i18n
+            .t("common.noReachMin")
+            .replace(/{maxlength}/g, config.features.MAX_PHONE_LENGTH || 10),
+          {
+            variant: "warning",
+          }
+        );
+        return;
+      }
+    }
+
+    expr = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (config.features.Register_ShowEmail) {
+      if (!expr.test(email)) {
+        props.enqueueSnackbar(i18n.t("common.msgInvalidEmail"), {
+          variant: "warning",
+        });
+        return;
+      }
+    }
+
+    if (tnc) {
+      props
+        .newRegister("CreatePlayer", {
+          username: username,
+          pwd: password,
+        })
+        .then(async (response) => {
+          if (
+            response.IsSuccess &&
+            response.data.stepResponse.isnew === false
+          ) {
+            props.enqueueSnackbar(i18n.t("common.msgAlreadyExist"), {
+              variant: "warning",
+            });
+          } else if (response.IsSuccess) {
+            if (config.features.SMSVerification) {
+              props.onRegisterSuccess(username, password);
+            } else if (
+              config.features.Register_ShowEmail &&
+              config.features.Register_ShowPhone
+            ) {
+              props.doLoginWithHpEmail(username, password, phone, email);
+            } else if (config.features.Register_ShowPhone) {
+              props.doLoginWithHp(username, password, phone);
+            } else {
+              props.doLogin(username, password);
+            }
+          } else {
+            props.enqueueSnackbar(ErrorSwitcher.getTranslation(response.info), {
+              variant: "warning",
+            });
           }
         });
     } else {
@@ -584,7 +671,7 @@ function Register(props) {
           />
         </CustomTextWrapper>
 
-        {(config.features.Register_ShowPhone) && (
+        {config.features.Register_ShowPhone && (
           <React.Fragment>
             <CustomFormControl>
               <CustomSelect
@@ -628,8 +715,7 @@ function Register(props) {
           </React.Fragment>
         )}
         <div class="clear"></div>
-        {
-          (config.features.Register_ShowEmail) && (
+        {config.features.Register_ShowEmail && (
           <CustomTextWrapper>
             <CustomText
               onChange={handleEmailChange}
@@ -654,8 +740,7 @@ function Register(props) {
               }}
             />
           </CustomTextWrapper>
-          )
-        }
+        )}
 
         {!(config.features.Register_HideInvitation && fromCustomDomain) && (
           <CustomTextWrapper>
@@ -698,7 +783,7 @@ function Register(props) {
           <Description>{i18n.t("web.register.contract")}</Description>
         </DescriptionContainer>
 
-        <ButtonLogin onClick={handleRegisterClick}>
+        <ButtonLogin onClick={performNewRegister}>
           <ButtonLoginLabel>
             {config.features.Register_CustomFlow_IDR
               ? i18n.t("common.nextStep")
@@ -737,6 +822,8 @@ const mapDispatchToProps = (dispatch) => {
       ),
     accountLogin: (username, password) =>
       dispatch(accountAction.accountLogin(username, password)),
+    newRegister: (type, input) =>
+      dispatch(accountAction.newRegister(type, input)),
   };
 };
 export default withRouter(
