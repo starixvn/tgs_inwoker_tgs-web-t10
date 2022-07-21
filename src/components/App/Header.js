@@ -262,6 +262,7 @@ const CustomVIPHeaderButton = styled.div`
   font-weight: bold;
   font-size: 20px;
   letter-spacing: 3px;
+  cursor: pointer;
   color: ${({ theme }) => theme.primary};
   border-bottom: solid 4px ${({ theme }) => theme.primary};
 `;

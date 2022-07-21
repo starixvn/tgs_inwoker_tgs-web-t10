@@ -296,7 +296,7 @@ class LiveGame extends Component {
                       src={
                         process.env.PUBLIC_URL +
                         "/assets/images/provider/white/" +
-                        item.abbreviation +
+                        item.abbreviation.toLowerCase() +
                         ".png"
                       }
                     />
