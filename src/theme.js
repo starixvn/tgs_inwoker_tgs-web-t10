@@ -532,7 +532,7 @@ export const wapT10 = {
   buttonBackground: "#fff",
   buttonText: "#5f67ea",
   buttonText2: "#5f67ea",
-  bottomnav: "#f5f5f5",
+  bottomnav: "#fff",
   bottomNavAction: "#404040",
   bodyBackground: "#F0EFF5",
   supportBg: `url(${
