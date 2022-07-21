@@ -79,22 +79,23 @@ const FourthSection = (props) => {
   var featureList = [
     {
       icon: IconFeature1,
-      title: i18n.t("web.home.features.feature1.title"),
+      title: i18n.t("t10.home.section3.content.first"),
       description: i18n.t("web.home.features.feature1.description"),
     },
     {
-      icon: IconFeature2,
-      title: i18n.t("web.home.features.feature2.title"),
+      icon: IconFeature3,
+
+      title: i18n.t("t10.home.section3.content.second"),
       description: i18n.t("web.home.features.feature2.description"),
     },
     {
-      icon: IconFeature3,
-      title: i18n.t("web.home.features.feature3.title"),
+      icon: IconFeature2,
+      title: i18n.t("t10.home.section3.content.third"),
       description: i18n.t("web.home.features.feature3.description"),
     },
     {
       icon: IconFeature4,
-      title: i18n.t("web.home.features.feature4.title"),
+      title: i18n.t("t10.home.section3.content.forth"),
       description: i18n.t("web.home.features.feature4.description"),
     },
   ];

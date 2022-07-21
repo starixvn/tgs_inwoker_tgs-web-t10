@@ -286,7 +286,7 @@ const StyledAppBar = withStyles((theme) => ({
       margin: "0 auto",
     },
     "&.MuiPaper-elevation4": {
-      boxShadow: "none",
+      boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
     },
   },
 }))(AppBar);
@@ -857,6 +857,14 @@ class Header extends Component {
                 <CustomVIPHeaderButton
                   onClick={() => this.handleClickMenu("vip")}
                 >
+                  <img
+                    src={
+                      process.env.PUBLIC_URL +
+                      "/assets/images/wapp/home-vip.png"
+                    }
+                    alt=""
+                    style={{ height: 20, marginRight: 10 }}
+                  />{" "}
                   VIP
                 </CustomVIPHeaderButton>
 

@@ -17,7 +17,7 @@ const featureList = {
     HomePage_FirstSection6Widget: false,
     GamePage_SpecificBackground: false,
     Wap_SupportCustomBackground: false,
-    HaveDownloadFeature: false,
+    HaveDownloadFeature: true,
     FloatPanel_CustomTranslation: false,
     DisplayPhone: false,
     HaveAffiliateFeature: false,
@@ -71,17 +71,26 @@ const featureList = {
 
     Deposit_OriginAccount: false,
     Profile_ExistingDetails_ViewOnly: false, // except change password
-
     AddCard_HideCertainField: false, //impacted: Type、Bank name、Branch
-    Profile_DisableEditPhone: false,
     Withdrawal_USDT_ExchangeRate: 0.151,
-
     MAX_PHONE_LENGTH: 10,
-    Deposit_UploadRequired: false,
+    Deposit_UploadRequired: true,
     Deposit_HideDepositChannel: false,
     AddCard_EWalletCustoms: false,
+    HomePage_DisplayVIP: true,
+
+    Profile_DisableEditPhone: false, //doesn't mean cannot verify/edit phone
+    Profile_DisableVerifyPhone: false, //literally disable verify phone
+    Deposit_Withdrawal_PlayerNote: false,
+
+    Slot_InfoGap: false,
+    AddCard_CustomParam_IDR: false,
+
+    Download_PointlessDialog: false,
+    FloatPanel_NoDownloadAnimation: false,
     Register_ShowEmail: false,
 
+    NewTransferUI: false,
     ForceRedirectAddCard: false,
     AddCard_Bank_Custom_IDR: false,
     Deposit_AddCard: false,

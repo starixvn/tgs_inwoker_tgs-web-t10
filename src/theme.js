@@ -30,6 +30,10 @@ export const themeRed = {
   pcHeaderTextHover: "#fde73f",
   pcHeaderRightMenu: "#f6f6f6",
   pcHeaderRightMenuHover: "#fde73f",
+
+  popoverBackground: "rgba(255,255,255,0.95)",
+  popoverGameTypeText: "#c40511",
+  popoverSubWalletText: "#000",
 };
 
 export const themeBlue = {
@@ -64,6 +68,9 @@ export const themeBlue = {
   pcHeaderTextHover: "#fde73f",
   pcHeaderRightMenu: "#f6f6f6",
   pcHeaderRightMenuHover: "#fde73f",
+  popoverBackground: "rgba(255,255,255,0.95)",
+  popoverGameTypeText: "#1b86c7",
+  popoverSubWalletText: "#000",
 };
 
 export const themeBlack = {
@@ -98,6 +105,9 @@ export const themeBlack = {
   pcHeaderTextHover: "#fde73f",
   pcHeaderRightMenu: "#f6f6f6",
   pcHeaderRightMenuHover: "#fde73f",
+  popoverBackground: "rgba(255,255,255,0.95)",
+  popoverGameTypeText: "#000",
+  popoverSubWalletText: "#000",
 };
 export const MESS8 = {
   variant: "red",
@@ -127,6 +137,10 @@ export const MESS8 = {
   pcHeaderTextHover: "#fde73f",
   pcHeaderRightMenu: "#f6f6f6",
   pcHeaderRightMenuHover: "#fde73f",
+
+  popoverBackground: "rgba(255,255,255,0.95)",
+  popoverGameTypeText: "#c40511",
+  popoverSubWalletText: "#000",
 };
 export const wapT2 = {
   appbar: "#C69C6A",
@@ -163,6 +177,10 @@ export const wapT2 = {
   pcHeaderTextHover: "#fde73f",
   pcHeaderRightMenu: "#f6f6f6",
   pcHeaderRightMenuHover: "#fde73f",
+
+  popoverBackground: "rgba(0,0,0,0.95)",
+  popoverGameTypeText: "#fff",
+  popoverSubWalletText: "#fff",
 };
 
 export const wapT3 = {
@@ -200,6 +218,10 @@ export const wapT3 = {
   pcHeaderTextHover: "#fde73f",
   pcHeaderRightMenu: "#f6f6f6",
   pcHeaderRightMenuHover: "#fde73f",
+
+  popoverBackground: "rgba(0,0,0,0.95)",
+  popoverGameTypeText: "#fff",
+  popoverSubWalletText: "#fff",
 };
 
 export const wapT4 = {
@@ -247,6 +269,10 @@ export const wapT4 = {
   pcHeaderTextHover: "#fde73f",
   pcHeaderRightMenu: "#f6f6f6",
   pcHeaderRightMenuHover: "#fde73f",
+
+  popoverBackground: "rgba(0,0,0,0.95)",
+  popoverGameTypeText: "#fff",
+  popoverSubWalletText: "#fff",
 };
 
 export const wapT5 = {
@@ -282,6 +308,10 @@ export const wapT5 = {
   pcHeaderTextHover: "#fde73f",
   pcHeaderRightMenu: "#f6f6f6",
   pcHeaderRightMenuHover: "#fde73f",
+
+  popoverBackground: "rgba(255,255,255,0.95)",
+  popoverGameTypeText: "#C69C6A",
+  popoverSubWalletText: "#000",
 };
 
 export const wapT6 = {
@@ -309,8 +339,12 @@ export const wapT6 = {
   tabbar: "#121315",
   cardText: "#000",
   balance: "#fde73f",
-  supportBg: "#121315",
+  supportBg: "#0F79B7",
   gameTab: "#fff",
+
+  popoverBackground: "rgba(255,255,255,0.95)",
+  popoverGameTypeText: "#C69C6A",
+  popoverSubWalletText: "#000",
 };
 
 export const wapT7 = {
@@ -340,6 +374,10 @@ export const wapT7 = {
   balance: "#fde73f",
   supportBg: "#121315",
   gameTab: "#fff",
+
+  popoverBackground: "rgba(255,255,255,0.95)",
+  popoverGameTypeText: "#C69C6A",
+  popoverSubWalletText: "#000",
 };
 
 export const wapT8 = {
@@ -380,6 +418,10 @@ export const wapT8 = {
   gamelisterSelectedText: "#fff",
   gamelisterSelectedIcon: "#fff",
   gamelisterSelectedButton: " rgb(140,166,241)",
+
+  popoverBackground: "rgba(255,255,255,0.95)",
+  popoverGameTypeText: "#658AF8",
+  popoverSubWalletText: "#000",
 };
 
 export const GMO = {
@@ -424,6 +466,10 @@ export const GMO = {
   gamelisterSelectedIcon: "linear-gradient(0deg, #FEFFA1 25%, #e9a60b 100%)",
   gamelisterSelectedButton:
     "linear-gradient(80deg, rgb(7, 24, 66) 25%, rgb(21, 44, 98) 100%)",
+
+  popoverBackground: "rgba(255,255,255,0.95)",
+  popoverGameTypeText: "#e9a60b",
+  popoverSubWalletText: "#000",
 };
 
 export const PB = {
@@ -459,11 +505,15 @@ export const PB = {
   pcHeaderTextHover: "#0F79B7",
   pcHeaderRightMenu: "#0F79B7",
   pcHeaderRightMenuHover: "#0F79B7",
+
+  popoverBackground: "rgba(255,255,255,0.95)",
+  popoverGameTypeText: "#0F79B7",
+  popoverSubWalletText: "#000",
 };
 
 export const wapT10 = {
   pcAppBar: "#FBFBFF",
-  appbar: "#FBFBFF",
+  appbar: "#5f67ea",
   body: "#FBFBFF",
   variant: "PB",
   loginBody: "#fff",
@@ -479,9 +529,9 @@ export const wapT10 = {
   tertiary: "rgba(255, 255, 255, 1)",
   tertiaryText: "rgba(255, 255, 255, 0.5)",
   //new addition to compensate wap-t2
-  buttonBackground: "#5f67ea",
+  buttonBackground: "#fff",
   buttonText: "#5f67ea",
-  buttonText2: "#FBFBFF",
+  buttonText2: "#5f67ea",
   bottomnav: "#f5f5f5",
   bottomNavAction: "#404040",
   bodyBackground: "#F0EFF5",
@@ -494,6 +544,15 @@ export const wapT10 = {
   pcHeaderTextHover: "#5f67ea",
   pcHeaderRightMenu: "#5f67ea",
   pcHeaderRightMenuHover: "#5f67ea",
+
+  gamelisterOriginalText: "#fff",
+  gamelisterSelectedText: "#fff200",
+
+  popoverBackground: "rgba(255,255,255,0.95)",
+  popoverGameTypeText: "#5f67ea",
+  popoverSubWalletText: "#000",
+
+  buttonBorder: "#fff",
 
   accent: "#d772ff",
 };
