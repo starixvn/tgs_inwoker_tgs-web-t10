@@ -530,13 +530,16 @@ class App extends Component {
                 <ForcedVerification
                   forcedverify={
                     config.features.SMSVerification &&
-                    this.props.account.info.identityformstatus === 0 &&
-                    (this.props.account.info.identityformid === "" ||
-                      this.props.account.info.identityformid === null)
+                    this.props.account.registercompleted === false &&
+                    config.features.ForcedVerification
+                    // this.props.account.info.identityformstatus === 0 &&
+                    // (this.props.account.info.identityformid === "" ||
+                    //   this.props.account.info.identityformid === null)
                   }
                 />
                 {this.props.account.registercompleted === false &&
-                  config.features.Register_ShowPhone && (
+                  config.features.Register_ShowPhone &&
+                  config.features.ForcedVerification && (
                     <Redirect
                       to={"/" + i18n.language + "/account/profile/member_phone"}
                     />
