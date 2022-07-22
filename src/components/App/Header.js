@@ -232,6 +232,11 @@ const RightMenuLI = styled.div`
   border-bottom: solid 4px transparent;
   cursor: pointer;
 
+  :hover {
+    border-bottom: solid 4px ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.primary};
+  }
+
   &:hover ${MouseOverContainer} {
     height: 188px;
   }

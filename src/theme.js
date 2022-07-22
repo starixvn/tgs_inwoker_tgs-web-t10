@@ -520,7 +520,7 @@ export const wapT10 = {
   loginText: "#404040",
   primary: "#5f67ea",
   primaryRgb: "95, 103, 234",
-  primaryText: "#5f67ea",
+  primaryText: "#fff",
   primaryGradient: "#5f67ea",
   primaryGradientRgb: "145, 3, 12",
   primaryHightlight: "#5f67ea",
