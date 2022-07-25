@@ -25,8 +25,8 @@ import { AppHistory } from "../../../history/History";
 import config from "../../../config/config";
 
 const Icon = styled.div`
-  height: 70px;
-  width: 50px;
+  height: 60px;
+  width: 35px;
 
   background-color: ${({ theme, active }) => {
     return active ? theme.primary : "#fff";
@@ -36,13 +36,15 @@ const Icon = styled.div`
     center / contain;
 
   background-size: 100%;
-  transform: translateY(${({ active }) => (active ? "-5px" : "3px")});
+  transform: translateY(${({ active }) => (active ? "-5px" : "0px")});
 `;
 
 const Text = styled.div`
   font-size: 8px;
   text-align: center;
+
   width: 50px;
+  display: none;
   pointer-events: none;
   opacity: ${({ active }) => (active ? "1" : "0")};
   transition: opacity 200ms;
@@ -110,6 +112,7 @@ const SidePanel = styled.div`
     }
     ${Text} {
       opacity: 1;
+      display: block;
       color: ${({ theme }) => theme.accent};
       transition: opacity 200ms;
       transition-delay: 100ms;
