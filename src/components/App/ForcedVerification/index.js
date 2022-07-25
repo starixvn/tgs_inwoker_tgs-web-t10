@@ -341,12 +341,14 @@ const ForcedVerification = ({ forcedverify }) => {
   return (
     <StyledDialog open={open} onClose={() => {}}>
       <Container>
-        <CloseIconContainer
-          viewBox="4 4 16 16"
-          onClick={() => {
-            setOpen(false);
-          }}
-        ></CloseIconContainer>
+        {
+          //    <CloseIconContainer
+          //    viewBox="4 4 16 16"
+          //    onClick={() => {
+          //      setOpen(false);
+          //    }}
+          //  ></CloseIconContainer>
+        }
 
         <TitleContainer>{i18n.t("web.register.activation")}</TitleContainer>
         <CustomFormControl>
