@@ -539,7 +539,7 @@ export const wapT10 = {
     process.env.PUBLIC_URL + `/assets/images/wapp/resource/T2/supportbg.png`
   })
   no-repeat center,  linear-gradient(180deg, rgb(5 30 74) 40%, rgba(12,21,37,1) 100%)`,
-  balance: "#5f67ea",
+  balance: "#e9a60b",
   pcHeaderText: "#000",
   pcHeaderTextHover: "#5f67ea",
   pcHeaderRightMenu: "#5f67ea",
