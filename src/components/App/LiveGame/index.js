@@ -56,6 +56,7 @@ const TheSelectorContainer = styled.div`
   gap: 12px;
   height: 80vh;
   overflow: auto;
+  padding-bottom: 500px;
 
   ::-webkit-scrollbar {
     display: none; /* Safari and Chrome */

@@ -50,7 +50,7 @@ const Maintenance = styled.div`
 const TheSelectorContainer = styled.div`
   display: flex;
   flex-direction: column;
-
+  padding-bottom: 500px;
   gap: 12px;
   height: 80vh;
   overflow: auto;
