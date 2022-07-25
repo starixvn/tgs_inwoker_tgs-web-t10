@@ -608,7 +608,11 @@ class Slots extends Component {
           }`,
         }}
       >
-        <InnerWrap>
+        <InnerWrap
+          style={{
+            marginTop: this.state.type === GameTypeEnum.FISH ? "880px" : "",
+          }}
+        >
           <GameTabContainer>
             <TabButton
               selected={this.state.platform === ""}

@@ -95,7 +95,36 @@ const LanguageContainer = styled.div`
   position: relative;
   display: inline-block;
 `;
+const GameName = styled.div`
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: ${(props) => (i18n.language === "en-US" ? "20px" : "22px")};
+  width: 100px;
+  position: absolute;
+  text-align: ${(props) => (i18n.language === "en-US" ? "left" : "right")};
+  transition: transform 0.6s;
+  top: 30px;
+  left: ${(props) => (i18n.language === "en-US" ? "50px" : "20px")};
+  transform-origin: bottom center;
+  transform: translateY(-160px) scale(1);
+  animation-duration: 200ms;
+  animation-delay: ${(props) => `${100 + props.index * 100}`}ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+`;
 
+const HotGameIcon = styled.div`
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 3px 5px 0 0;
+  height: 19px;
+  width: 19px;
+  position: absolute;
+  top: 30px;
+  right: 0;
+`;
 const BottomContainer = styled.div``;
 const LogoContainer = styled.div`
   background-image: url("${(props) => props.img}");
@@ -209,6 +238,8 @@ const GameImg = styled.div`
     justify-content: center;
     height: 50px;
   }
+
+ 
 `;
 const breatheAnimation = keyframes`
 
@@ -231,6 +262,13 @@ const RightMenuLI = styled.div`
   color: #000;
   border-bottom: solid 4px transparent;
   cursor: pointer;
+
+  ${({ active, theme }) => {
+    return active
+      ? `  color: ${theme.primary} !important;
+  border-bottom: solid 4px ${theme.primary};`
+      : "";
+  }}
 
   :hover {
     border-bottom: solid 4px ${({ theme }) => theme.primary};
@@ -264,12 +302,25 @@ const CustomVIPHeaderButton = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-weight: bold;
-  font-size: 20px;
+  padding-top: 20px;
+  padding-top: 4px;
+  font-size: 16px;
   letter-spacing: 3px;
   cursor: pointer;
-  color: ${({ theme }) => theme.primary};
-  border-bottom: solid 4px ${({ theme }) => theme.primary};
+  border-bottom: solid 4px transparent;
+  color: #000;
+
+  ${({ active, theme }) => {
+    return active
+      ? `  color: ${theme.primary} !important;
+  border-bottom: solid 4px ${theme.primary};`
+      : "";
+  }}
+
+  :hover {
+    color: ${({ theme }) => theme.primary};
+    border-bottom: solid 4px ${({ theme }) => theme.primary};
+  }
 `;
 const IconPhone = styled.div`
   mask: url(${(props) => props.img}) no-repeat;
@@ -651,18 +702,31 @@ class Header extends Component {
               "/" + i18n.language + "/sports/" + gameCode
             );
           } else if (gameCode === "WGFM" || gameCode === "WGVIA") {
+            if (document.getElementById("audio") != null)
+              document.getElementById("audio").volume = 0;
             if (this.props.history.location.pathname.indexOf("play") >= 0) {
               AppHistory.goBack();
             }
-            this.handleRefreshBalanceClick();
-            Common.PopupCenter(
+            // this.handleRefreshBalanceClick();
+            var win = Common.PopupCenter(
               `/${i18n.language}/joinlobbygame/${gameType}/${gameCode}`,
               gameCode,
               1280,
               720
             );
+            // var win = window.open(
+            //   ,
+            //   "_blank"
+            // );
+            var timer = setInterval(function () {
+              if (win.closed) {
+                clearInterval(timer);
+                if (document.getElementById("audio") != null)
+                  document.getElementById("audio").volume = 1.0;
+              }
+            }, 1000);
           } else {
-            this.handleRefreshBalanceClick();
+            // this.handleRefreshBalanceClick();
             this.props.history.push(
               "/" + i18n.language + "/sports/play/" + gameCode + "/" + gameType
             );
@@ -681,7 +745,7 @@ class Header extends Component {
       if (this.props.history.location.pathname.indexOf("play") >= 0) {
         AppHistory.goBack();
       }
-      this.handleRefreshBalanceClick();
+      // this.handleRefreshBalanceClick();
       var win = Common.PopupCenter(url, gameCode, 1280, 720);
       var timer = setInterval(function () {
         if (win.closed) {
@@ -765,6 +829,8 @@ class Header extends Component {
 
     var liveSorting = ["EVO", "SG", "WM", "SW", "AB", "AG", "BG"];
 
+    var currentPage = window.location.pathname.split("/").pop();
+
     return (
       <CustomAppBar hide={this.props.hide}>
         <TopMostHeader>
@@ -777,7 +843,6 @@ class Header extends Component {
                 <ThePhoneContainer>
                   <IconPhone img={IconPhonePNG}></IconPhone>
                   <div>
-                    123123123
                     {this.props.general.brandsSupport &&
                       this.props.general.brandsSupport.length >= 1 &&
                       this.props.general.brandsSupport[0].phone}
@@ -861,6 +926,7 @@ class Header extends Component {
                 }`}
               >
                 <CustomVIPHeaderButton
+                  active={currentPage === "vip"}
                   onClick={() => this.handleClickMenu("vip")}
                 >
                   <img
@@ -875,19 +941,23 @@ class Header extends Component {
                 </CustomVIPHeaderButton>
 
                 {SortedMenuList.map((item, index) => {
-                  var gameList = this.props.game.homePageGameList.filter(
-                    (game) =>
-                      (item.gameType.indexOf(game.type) >= 0 &&
-                        game.type !== GameTypeEnum.RNGSPORTS) ||
-                      (game.type === GameTypeEnum.RNGSPORTS &&
-                        game.abbreviation === "PPTF")
-                  );
+                  var gameList = this.props.game.homePageGameList
+                    .filter((game) => item.gameType.indexOf(game.type) >= 0)
+                    .sort((a, b) => {
+                      if (config.features.LiveGame_Sorting_SKY) {
+                        var sortDGFirst = ["DG"];
+                        return (
+                          sortDGFirst.indexOf(b.abbreviation) -
+                          sortDGFirst.indexOf(a.abbreviation)
+                        );
+                      } else return b - a;
+                    });
                   return (
                     gameList.length !== 0 && (
                       <RightMenuLI
                         headerCustom={config.features.HeaderCustom}
                         key={index}
-                        active={this.state.selected === `${item.path}`}
+                        active={currentPage === `${item.path}`}
                         onClick={() => this.handleClickMenu(item.path)}
                         onMouseOver={() => this.handleMenuMouseOver(item.path)}
                         onMouseLeave={this.handleMenuMouseLeave}
@@ -917,39 +987,77 @@ class Header extends Component {
                           <MouseOverBackground>
                             <MouseOverInner>
                               {(() => {
-                                var list = this.props.game.homePageGameList
-                                  .filter(
-                                    (game) =>
-                                      (item.gameType.indexOf(game.type) >= 0 &&
-                                        game.type !== GameTypeEnum.RNGSPORTS) ||
-                                      (game.type === GameTypeEnum.RNGSPORTS &&
-                                        game.abbreviation === "PPTF")
-                                  )
-                                  .sort((a, b) => {
-                                    if (config.features.LiveGame_Sorting_SKY) {
-                                      var sortDGFirst = ["DG"];
-                                      return (
-                                        sortDGFirst.indexOf(b.abbreviation) -
-                                        sortDGFirst.indexOf(a.abbreviation)
-                                      );
-                                    } else return b - a;
-                                  });
-                                return list.length <= 5 ? (
-                                  list
-                                    .sort((a, b) => {
-                                      return (
-                                        config.features
-                                          .LiveGame_CustomArrangement &&
-                                        liveSorting.indexOf(a.abbreviation) -
-                                          liveSorting.indexOf(b.abbreviation)
-                                      );
-                                    })
-                                    .map((game, index) => {
+                                return gameList.length <= 5 ? (
+                                  gameList.map((game, index) => {
+                                    return (
+                                      <GameFrame
+                                        key={index}
+                                        style={{
+                                          width: `calc(1264px / ${gameList.length})`,
+                                        }}
+                                        //TODO: To remove
+                                        maintenance={game.status !== 0}
+                                      >
+                                        <GameFrameWrapper>
+                                          <Maintenance>
+                                            {i18n.t("transfer.maintenance")}
+                                          </Maintenance>
+                                          {(() => {
+                                            var gameCode = game.abbreviation.toLowerCase();
+                                            if (gameCode === "joker") {
+                                              return (
+                                                <HotGameIcon></HotGameIcon>
+                                              );
+                                            }
+                                          })()}
+                                          {(() => {
+                                            var gameCode = game.abbreviation.toLowerCase();
+                                            if (
+                                              config.features.SportsHideLogo
+                                            ) {
+                                              if (gameCode === "wgvia") {
+                                                return (
+                                                  <GameName index={index}>
+                                                    {i18n.t("common.horserace")}
+                                                  </GameName>
+                                                );
+                                              } else if (gameCode === "wgfm") {
+                                                return (
+                                                  <GameName index={index}>
+                                                    {i18n.t("common.sport")}
+                                                  </GameName>
+                                                );
+                                              }
+                                            }
+                                          })()}
+
+                                          <GameImg
+                                            index={index}
+                                            img={`${
+                                              process.env.PUBLIC_URL
+                                            }/assets/images/pcHeaderMenu/${
+                                              item.path
+                                            }/${game.abbreviation.toLowerCase()}.png`}
+                                            alt=""
+                                            onClick={() => {
+                                              this.consolidateJoinGame(
+                                                game,
+                                                item
+                                              );
+                                            }}
+                                          ></GameImg>
+                                        </GameFrameWrapper>
+                                      </GameFrame>
+                                    );
+                                  })
+                                ) : (
+                                  <Slider {...settings}>
+                                    {gameList.map((game, index) => {
                                       return (
                                         <GameFrame
                                           key={index}
                                           style={{
-                                            width: `calc(1264px/${list.length})`,
+                                            width: `calc(1264px / ${gameList.length})`,
                                           }}
                                           maintenance={game.status !== 0}
                                         >
@@ -957,6 +1065,39 @@ class Header extends Component {
                                             <Maintenance>
                                               {i18n.t("transfer.maintenance")}
                                             </Maintenance>
+                                            {(() => {
+                                              var gameCode = game.abbreviation.toLowerCase();
+                                              if (gameCode === "joker") {
+                                                return (
+                                                  <HotGameIcon></HotGameIcon>
+                                                );
+                                              }
+                                            })()}
+                                            {(() => {
+                                              var gameCode = game.abbreviation.toLowerCase();
+                                              if (
+                                                config.features.SportsHideLogo
+                                              ) {
+                                                if (gameCode === "wgvia") {
+                                                  return (
+                                                    <GameName index={index}>
+                                                      {i18n.t(
+                                                        "common.horserace"
+                                                      )}
+                                                    </GameName>
+                                                  );
+                                                } else if (
+                                                  gameCode === "wgfm"
+                                                ) {
+                                                  return (
+                                                    <GameName index={index}>
+                                                      {i18n.t("common.sport")}
+                                                    </GameName>
+                                                  );
+                                                }
+                                              }
+                                            })()}
+
                                             <GameImg
                                               index={index}
                                               img={`${
@@ -966,81 +1107,16 @@ class Header extends Component {
                                               }/${game.abbreviation.toLowerCase()}.png`}
                                               alt=""
                                               onClick={() => {
-                                                if (
-                                                  game.type ===
-                                                    GameTypeEnum.LOTTERYLOBBY ||
-                                                  game.type ===
-                                                    GameTypeEnum.LOBBY
-                                                ) {
-                                                  this.handleJoinLotteryGame(
-                                                    game.abbreviation
-                                                  );
-                                                } else {
-                                                  this.consolidateJoinGame(
-                                                    game,
-                                                    item
-                                                  );
-                                                }
+                                                this.consolidateJoinGame(
+                                                  game,
+                                                  item
+                                                );
                                               }}
                                             ></GameImg>
                                           </GameFrameWrapper>
                                         </GameFrame>
                                       );
-                                    })
-                                ) : (
-                                  <Slider {...settings}>
-                                    {list
-                                      .sort((a, b) => {
-                                        return (
-                                          config.features
-                                            .LiveGame_CustomArrangement &&
-                                          liveSorting.indexOf(a.abbreviation) -
-                                            liveSorting.indexOf(b.abbreviation)
-                                        );
-                                      })
-                                      .map((game, index) => {
-                                        return (
-                                          <GameFrame
-                                            key={index}
-                                            style={{
-                                              width: `calc(1264px/${list.length})`,
-                                            }}
-                                            maintenance={game.status != 0}
-                                          >
-                                            <GameFrameWrapper>
-                                              <Maintenance>
-                                                {i18n.t("transfer.maintenance")}
-                                              </Maintenance>
-                                              <GameImg
-                                                index={index}
-                                                img={`${
-                                                  process.env.PUBLIC_URL
-                                                }/assets/images/pcHeaderMenu/${
-                                                  item.path
-                                                }/${game.abbreviation.toLowerCase()}.png`}
-                                                alt=""
-                                                onClick={() => {
-                                                  if (
-                                                    game.type ===
-                                                      GameTypeEnum.LOTTERYLOBBY ||
-                                                    game.type ===
-                                                      GameTypeEnum.LOBBY
-                                                  ) {
-                                                    this.handleJoinLotteryGame(
-                                                      game.abbreviation
-                                                    );
-                                                  } else {
-                                                    this.consolidateJoinGame(
-                                                      game,
-                                                      item
-                                                    );
-                                                  }
-                                                }}
-                                              ></GameImg>
-                                            </GameFrameWrapper>
-                                          </GameFrame>
-                                        );
-                                      })}
+                                    })}
                                   </Slider>
                                 );
                               })()}
