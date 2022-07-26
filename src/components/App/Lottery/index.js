@@ -128,7 +128,7 @@ const TheSelector = styled.div`
     }
   }
   position: relative;
-  height: 100px;
+  min-height: 100px;
   border-radius: 12px;
   padding: 10px 20px;
   min-width: 200px;

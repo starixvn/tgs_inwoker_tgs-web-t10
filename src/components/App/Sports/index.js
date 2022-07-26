@@ -133,6 +133,7 @@ const TheSelector = styled.div`
   border-radius: 12px;
   padding: 10px 20px;
   min-width: 200px;
+  max-height: 100px;
   color: white;
   cursor: pointer;
   font-weight: bold;
