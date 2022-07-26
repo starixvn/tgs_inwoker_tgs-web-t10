@@ -42,7 +42,7 @@ const InnerWrap = styled.div`
   background: rgba(255, 255, 255);
   box-shadow: 2px 2px 7px 7.5px rgba(79, 95, 120, 0.29);
 
-  margin: 660px auto 50px auto;
+  margin: 110px auto 50px auto;
   padding: 16px 46px;
   box-sizing: border-box;
   overflow-y: auto;
@@ -608,11 +608,7 @@ class Slots extends Component {
           }`,
         }}
       >
-        <InnerWrap
-          style={{
-            marginTop: this.state.type === GameTypeEnum.FISH ? "880px" : "",
-          }}
-        >
+        <InnerWrap>
           <GameTabContainer>
             <TabButton
               selected={this.state.platform === ""}
