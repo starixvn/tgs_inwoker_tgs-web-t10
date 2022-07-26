@@ -521,6 +521,7 @@ function Register(props) {
         .newRegister("CreatePlayer", {
           username: username,
           pwd: password,
+          invitationcode: promotionId,
         })
         .then(async (response) => {
           if (
