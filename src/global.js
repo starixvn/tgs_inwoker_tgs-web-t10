@@ -51,11 +51,30 @@ export const GlobalStyles = createGlobalStyle`
     margin-left: 25px;
     margin-right: 35px;
   }
-  
+
   .headerSubmenu .slick-prev::before,
   .headerSubmenu .slick-next::before {
-    color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.primaryText}; 
+    position: relative;top: -20px;
   }
+
+  .headerSubmenu .slick-prev::before{
+    content: url(${
+      process.env.PUBLIC_URL + "/assets/images/pcHeaderMenu/left.png"
+    });
+  
+  
+  left: 0;
+  
+  }
+
+  .headerSubmenu .slick-next::before {
+    content: url(${
+      process.env.PUBLIC_URL + "/assets/images/pcHeaderMenu/right.png"
+    }); right: 20px;
+  }
+  
+
   
 
 
