@@ -2,6 +2,7 @@ import i18next from "i18next";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
+import config from "../../../config/config";
 const OnlineDisplayerText = styled.div`
   color: ${({ color, theme }) => {
     return color ? color : theme.secondary;
@@ -23,7 +24,7 @@ const OnlineUserDisplayer = ({ color, size }) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  var userRange = randomNumberGenerator(26500, 27500);
+  var userRange = randomNumberGenerator(config.features.Home_OnlineUsers.min, config.features.Home_OnlineUsers.max);
 
   const [totalPlayer, setTotalPlayer] = useState(userRange);
 
