@@ -30,6 +30,9 @@ const TheContainer = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const LanguangeChanger = ({ language, changeLanguage }) => {

@@ -69,7 +69,9 @@ const LeftContent = styled(TheContent)`
 const TimerContainer = styled.div`
   font-family: arial;
   font-size: 14px;
-
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   @media (max-width: 950px) {
     display: none;
   }

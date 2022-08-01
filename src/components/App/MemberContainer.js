@@ -34,7 +34,9 @@ const BtnStyle1 = styled.div`
   min-width: 70px;
   height: 25px;
   border-radius: 5px;
-
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   padding: 0 8px;
 
   border: solid 1px #fff;
@@ -51,6 +53,9 @@ const BtnLogout = styled.div`
   text-align: right;
   cursor: pointer;
   float: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const BtnDeposit = styled(BtnStyle1)``;
@@ -58,7 +63,12 @@ const BtnDeposit = styled(BtnStyle1)``;
 const BalanceContainer = styled.div`
   color: #fff;
   text-align: right;
-  margin-right: 8px;
+
+  display: flex;
+  gap: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   &:hover {
     cursor: pointer;
   }

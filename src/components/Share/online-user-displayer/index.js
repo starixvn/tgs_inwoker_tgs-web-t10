@@ -10,7 +10,9 @@ const OnlineDisplayerText = styled.div`
   font-size ${({ size }) => {
     return size ? size : "";
   }};
-
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   min-width: 125px;
   padding-right: 10px;
 `;
@@ -24,7 +26,10 @@ const OnlineUserDisplayer = ({ color, size }) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  var userRange = randomNumberGenerator(config.features.Home_OnlineUsers.min, config.features.Home_OnlineUsers.max);
+  var userRange = randomNumberGenerator(
+    config.features.Home_OnlineUsers.min,
+    config.features.Home_OnlineUsers.max
+  );
 
   const [totalPlayer, setTotalPlayer] = useState(userRange);
 
