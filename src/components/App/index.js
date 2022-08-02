@@ -166,16 +166,36 @@ class App extends Component {
           const responseToken = await this.props.checkTokenIsValid();
           if (responseToken.IsSuccess) {
             var bankInfoAuthentication = null;
+            var isPhoneNull = null;
+            var isEmailNull = null;
+            var isRegisterCompleted = null;
             await this.props.getAccountInfo().then((response) => {
               bankInfoAuthentication = response.data.bankinfoauthentication;
+              isPhoneNull = response.data.phone === null;
+              isEmailNull = response.data.email === null;
+              isRegisterCompleted = response.data.registercompleted;
             });
             if (
               config.features.ForceRedirectAddCard &&
               !bankInfoAuthentication
             ) {
-              AppHistory.push(
-                "/" + i18n.language + "/account/withdrawal?do=addCard"
-              );
+              if (isPhoneNull) {
+                AppHistory.push(
+                  "/" + i18n.language + "/account/profile/member_phone"
+                );
+              } else {
+                if (isEmailNull) {
+                  AppHistory.push(
+                    "/" + i18n.language + "/account/profile/member_email"
+                  );
+                } else {
+                  if (!isRegisterCompleted) {
+                    AppHistory.push(
+                      "/" + i18n.language + "/account/withdrawal?do=addCard"
+                    );
+                  }
+                }
+              }
               return;
             }
             // this.props.checkGame();
@@ -224,6 +244,8 @@ class App extends Component {
       if (
         this.props.general.token !== null &&
         this.props.account.token !== null &&
+        this.props.account.info.member_phone !== null && 
+        this.props.account.info.member_email !== null &&
         this.props.account.info.bankInfoAuthentication !== undefined &&
         !this.props.account.info.bankInfoAuthentication &&
         this.props.location.pathname !== `/${i18n.language}/account/withdrawal`
