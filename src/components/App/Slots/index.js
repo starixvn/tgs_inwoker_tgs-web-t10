@@ -528,7 +528,7 @@ class Slots extends Component {
               return a.tag.new === true;
             } else if (this.state.filterGame === SlotFilterType.Recommend) {
               return a.tag.recommend === true;
-            } else if (this.state.filterGame === "fav") {
+            } else if (this.state.filterGame === SlotFilterType.Bookmark) {
               return this.state.favGame.indexOf(a.id) > -1;
             }
           }
@@ -657,26 +657,6 @@ class Slots extends Component {
               SlotFilterType.Bookmark,
               i18n.t("slot.bookmarkGame")
             )}
-
-            {/* {this.genCategoryItem(
-              SlotFilterType.Bookmark,
-              i18n.t("slot.bookmarkGame")
-            )}
-            {this.genCategoryItem(
-              SlotFilterType.History,
-              i18n.t("slot.historyGame")
-            )} */}
-            {
-              //   <SearchFilterItemContainer>
-              //     <SearchFilterItemInput
-              //       type="text"
-              //       maxLength="15"
-              //       autocomplete="off"
-              //       placeholder={i18n.t("slot.search")}
-              //       onChange={this.handleKeywordChange}
-              //     ></SearchFilterItemInput>
-              //   </SearchFilterItemContainer>
-            }
           </GameSubFilterContainer>
           <GameListContainer>{list}</GameListContainer>
           {/* <ButtonMore
