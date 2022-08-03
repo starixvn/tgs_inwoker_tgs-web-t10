@@ -107,6 +107,7 @@ const featureList = {
       min: 26500,
       max: 27500,
     },
+    Wap_DisplayButton: false,
   },
 };
 export default featureList;
