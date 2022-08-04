@@ -10,6 +10,7 @@ import { withSnackbar } from "notistack";
 import { AppHistory } from "../../history/History";
 import IMHandler from "./IMHandler";
 import config from "../../config/config";
+import { UiService } from "../../api-services/services/UiService";
 const Container = styled.div`
   width: 100%;
   background: url(${MaintenancePNG}) no-repeat center;
@@ -140,6 +141,11 @@ const Maintenance = (props) => {
   const [open, setOpen] = useState(false);
   const [imList, setIMList] = useState([]);
   const [liveChat, setLiveChat] = useState("");
+  const [beginTime, setBeginTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [content, setContent] = useState("");
+  const [isFailed, setFailed] = useState(false);
+
   useEffect(() => {
     props.getLiveChatURL().then((e) => {
       if (e.IsSuccess) {
@@ -151,6 +157,24 @@ const Maintenance = (props) => {
     props.getBrandCommunicationList().then((e) => {
       if (e.IsSuccess) {
         setIMList(e.data);
+      }
+    });
+
+    UiService.GetMaintenance().then((result) => {
+      if (result.IsSuccess) {
+        if (result.data) {
+          if (result.data.beginTime) {
+            setBeginTime(result.data.beginTime);
+          }
+          if (result.data.beginTime) {
+            setEndTime(result.data.endTime);
+          }
+          if (result.data.content) {
+            setContent(result.data.content);
+          }
+        }
+      } else {
+        setFailed(true);
       }
     });
   }, []);
@@ -172,13 +196,10 @@ const Maintenance = (props) => {
     //       .replace("{lang}", i18n.language)
     //       .replace("{email}", email || "")
     //   : "";
-    if(config.features.LiveChatVendor.brand==="zendesk")
-    {
-      window.zE('webWidget', 'open');
+    if (config.features.LiveChatVendor.brand === "zendesk") {
+      window.zE("webWidget", "open");
       return;
-    }
-    else if(config.features.LiveChatVendor.brand==="livechat")
-    {
+    } else if (config.features.LiveChatVendor.brand === "livechat") {
       window.LiveChatWidget.call("maximize");
       return;
     }
@@ -201,9 +222,25 @@ const Maintenance = (props) => {
     return strTime;
   };
 
-  return (
-    <Container>
-      <MaintenanceTextContainer>
+  const Api = () => {
+    return (
+      <>
+        <Text>
+          {i18n.t("common.maintenance")}: {beginTime} ~ {endTime} (GMT+8){" "}
+        </Text>
+        <Text
+          style={{ color: "#fff" }}
+          dangerouslySetInnerHTML={{
+            __html: content,
+          }}
+        />
+      </>
+    );
+  };
+
+  const Local = () => {
+    return (
+      <>
         <Text>我们现正维护中，请稍后再试。 </Text>
         <Text>
           如您有任何问题，请
@@ -245,6 +282,15 @@ const Maintenance = (props) => {
           {formatTime(config.features.Maintenance_Detail.startTime)} ~{" "}
           {formatTime(config.features.Maintenance_Detail.endTime)} (GMT+8){" "}
         </Text>
+      </>
+    );
+  };
+
+  return (
+    <Container>
+      <MaintenanceTextContainer>
+        {isFailed ? <Local /> : <Api />}
+
         <ButtonContainer>
           <AnotherButton onClick={handleCSClick}>
             {i18n.t("support.online")}
