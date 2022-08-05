@@ -417,6 +417,9 @@ const baseRouteUrl = `/:locale(en-US|zh-CN|zh-TW|th-TH|id-ID|vi-VN)`;
 function addComma(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+function arrayValidator(array) {
+  return array && Array.isArray(array) && array.length > 0;
+}
 
 const Common = {
   baseRouteUrl,
@@ -438,5 +441,6 @@ const Common = {
   getLanguagePrefixFolder,
   getCDNLanguagePrefix,
   addComma,
+  arrayValidator,
 };
 export default Common;
