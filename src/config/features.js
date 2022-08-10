@@ -108,6 +108,7 @@ const featureList = {
       max: 27500,
     },
     Wap_DisplayButton: false,
+    MergeEVORTNT: true,
   },
 };
 export default featureList;
