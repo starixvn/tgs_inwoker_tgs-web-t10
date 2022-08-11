@@ -17,6 +17,8 @@ const Container = styled.div`
   background-size: cover;
   position: relative;
   height: calc(100vh);
+  overflow: auto;
+  padding: 50px;
 `;
 
 const MaintenanceTextContainer = styled.div`
@@ -29,7 +31,8 @@ const Text = styled.div`
   color: white;
   font-size: 30px;
   text-align: center;
-  padding: 20px 0px;
+  padding: 20px 40px;
+  white-space: pre-wrap;
 `;
 
 const Hyperlink = styled.span`
