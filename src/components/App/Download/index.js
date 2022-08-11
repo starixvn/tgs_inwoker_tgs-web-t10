@@ -171,7 +171,7 @@ const QRCodeHolder = styled.div`
   align-items: center;
   justify-content: center;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 24px;
   border: solid 1px rgba(0, 0, 0, 0.5);
 `;
 
