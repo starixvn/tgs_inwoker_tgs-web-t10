@@ -251,6 +251,7 @@ const Download = () => {
   function logoSwitcher(brand) {
     switch (brand) {
       case "Atinbet":
+      case "PB2":
         return "Atinbet";
       default:
         return "PB";
