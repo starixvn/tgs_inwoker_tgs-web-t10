@@ -4,13 +4,14 @@ import i18n from "../../../utils/i18n";
 import { Dialog } from "@material-ui/core";
 import config from "../../../config/config";
 import QRCode from "react-qr-code";
+import copy from "copy-to-clipboard";
+import { useSnackbar } from "notistack";
 
 const Container = styled.div`
   width: 100%;
   min-height: 2000px;
   position: relative;
-  background: url(${process.env.PUBLIC_URL +
-    `/assets/images/download/bg-${i18n.language}.jpg`})
+  background: url(${process.env.PUBLIC_URL + `/assets/images/download/bg.jpg`})
     no-repeat;
   position: relative;
   display: flex;
@@ -23,7 +24,7 @@ const ContentPlacedHere = styled.div`
 `;
 
 const TheFirstSection = styled.div`
-  margin-top: 1035px;
+  margin-top: -100px;
   display: flex;
   min-height: 150px;
   justify-content: flex-end;
@@ -33,6 +34,7 @@ const TheFirstSection = styled.div`
 const TheSecondSection = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 80px;
 `;
 
 const FirstSectionContent = styled.div`
@@ -107,8 +109,6 @@ const CustomModal = styled(Dialog)`
   }
 
   .MuiDialog-paper {
-    min-width: 900px;
-
     border-radius: 16px;
     background: #f6f8f7;
     min-height: 200px;
@@ -154,7 +154,7 @@ const DownloadSection = styled.div`
 const QRCodeContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 80px 40px 20px 40px;
+  padding: 40px;
   align-items: center;
 `;
 
@@ -167,9 +167,10 @@ const DeviceText = styled.div`
 const QRCodeHolder = styled.div`
   height: 200px;
   width: 200px;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 10px;
-
   border-radius: 10px;
   border: solid 1px rgba(0, 0, 0, 0.5);
 `;
@@ -185,9 +186,38 @@ const DownloadButton = styled.div`
   text-align: center;
 `;
 
+const PointlessShit = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const HiddenDialogContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const DeviceName = styled.div`
+  width: 80px;
+  font-weight: bold;
+`;
+
+const Links = styled.div`
+  width: 325px;
+  opacity: 0.75;
+  cursor: pointer;
+  font-size: 15px;
+`;
+
 const Download = () => {
   const [open, setOpen] = useState(false);
   const [download, setDownload] = useState([]);
+
+  const [pointlessDialog, setPointlessDialog] = useState(false);
+
+  const { enqueueSnackbar } = useSnackbar();
 
   function getJsonData() {
     return fetch(
@@ -204,37 +234,32 @@ const Download = () => {
       });
   }
 
+  function copyStupidLink(link) {
+    enqueueSnackbar(i18n.t("pointless.copy"), {
+      variant: "success",
+    });
+    copy(link);
+  }
+
   useEffect(() => {
     if (download.length === 0) {
       getJsonData();
     } else {
     }
   }, []);
+
+  function logoSwitcher(brand) {
+    switch (brand) {
+      case "Atinbet":
+        return "Atinbet";
+      default:
+        return "PB";
+    }
+  }
+
   return (
     <Container>
       <ContentPlacedHere>
-        <TheFirstSection>
-          <FirstSectionContent>
-            <SectionContentItem>
-              <Text>{i18n.t("download.supported")}:</Text>
-            </SectionContentItem>
-            <SectionContentItem>
-              <Icons icon="android" />
-            </SectionContentItem>
-            <SectionContentItem>
-              <Icons icon="ios" />
-            </SectionContentItem>
-            <SectionContentItem>
-              <InstallationGuideButton
-                onClick={() => {
-                  setOpen(true);
-                }}
-              >
-                {i18n.t("download.openGuide")}
-              </InstallationGuideButton>
-            </SectionContentItem>
-          </FirstSectionContent>
-        </TheFirstSection>
         <TheSecondSection>
           <DownloadTitleSection>
             <DownloadIcon icon="download" />
@@ -264,12 +289,104 @@ const Download = () => {
             );
           })}
         </DownloadSection>
+        <HiddenDialogContainer>
+          {config.features.Download_PointlessDialog && (
+            <>
+              <QRCodeContainer>
+                <QRCodeHolder style={{ marginBottom: 20 }}>
+                  <img
+                    src={
+                      process.env.PUBLIC_URL +
+                      `/assets/images/download/brand/${logoSwitcher(
+                        config.brand
+                      )}_logo.png`
+                    }
+                    alt="download section"
+                  />
+                </QRCodeHolder>
+
+                <DownloadButton
+                  onClick={() => {
+                    setPointlessDialog(true);
+                  }}
+                >
+                  {i18n.t("pointless.link")}
+                </DownloadButton>
+              </QRCodeContainer>
+              <CustomModal
+                maxWidth="md"
+                open={pointlessDialog}
+                onClose={() => {
+                  setPointlessDialog(false);
+                }}
+              >
+                <DialogTitle2>
+                  <div>{i18n.t("pointless.download")}</div>
+                  <CloseButton
+                    onClick={() => {
+                      setPointlessDialog(false);
+                    }}
+                  >
+                    ✖
+                  </CloseButton>
+                </DialogTitle2>
+                <DialogContent>
+                  {download.map((data, index) => {
+                    return (
+                      <PointlessShit>
+                        <DeviceName>{data.platform}</DeviceName>
+                        <Links
+                          onClick={() => {
+                            copyStupidLink(data.link);
+                          }}
+                        >
+                          {data.link}
+                        </Links>
+                      </PointlessShit>
+                    );
+                  })}
+                </DialogContent>
+              </CustomModal>
+            </>
+          )}
+        </HiddenDialogContainer>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <img
+            style={{ height: 650 }}
+            src={process.env.PUBLIC_URL + `/assets/images/download/girl.png`}
+            alt="girl"
+          />
+        </div>
+
+        <TheFirstSection>
+          <FirstSectionContent>
+            <SectionContentItem>
+              <Text>{i18n.t("download.supported")}:</Text>
+            </SectionContentItem>
+            <SectionContentItem>
+              <Icons icon="android" />
+            </SectionContentItem>
+            <SectionContentItem>
+              <Icons icon="ios" />
+            </SectionContentItem>
+            <SectionContentItem>
+              <InstallationGuideButton
+                onClick={() => {
+                  setOpen(true);
+                }}
+              >
+                {i18n.t("download.openGuide")}
+              </InstallationGuideButton>
+            </SectionContentItem>
+          </FirstSectionContent>
+        </TheFirstSection>
       </ContentPlacedHere>
       <CustomModal
         open={open}
         onClose={() => {
           setOpen(false);
         }}
+        maxWidth="md"
       >
         <DialogTitle2>
           <div>{i18n.t("download.openGuide")}</div>
