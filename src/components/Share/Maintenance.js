@@ -241,7 +241,7 @@ const Maintenance = (props) => {
     );
   };
 
-  const Local = () => {
+  const Local = ({ beginTime, endTime }) => {
     return (
       <>
         <Text>我们现正维护中，请稍后再试。 </Text>
@@ -250,8 +250,15 @@ const Maintenance = (props) => {
           <Hyperlink>联系客服</Hyperlink>。
         </Text>
         <Text>
-          維修時間 : {formatTime(config.features.Maintenance_Detail.startTime)}{" "}
-          ~ {formatTime(config.features.Maintenance_Detail.endTime)} (GMT+8){" "}
+          維修時間 :{" "}
+          {beginTime
+            ? beginTime
+            : formatTime(config.features.Maintenance_Detail.startTime)}{" "}
+          ~{" "}
+          {endTime
+            ? endTime
+            : formatTime(config.features.Maintenance_Detail.endTime)}{" "}
+          (GMT+8){" "}
         </Text>
         {(() => {
           if (i18n.language === "vi-VN") {
@@ -266,8 +273,17 @@ const Maintenance = (props) => {
                 </Text>
                 <Text>
                   thời gian bảo trì :{" "}
-                  {formatTime(config.features.Maintenance_Detail.startTime)} ~{" "}
-                  {formatTime(config.features.Maintenance_Detail.endTime)}{" "}
+                  {beginTime
+                    ? beginTime
+                    : formatTime(
+                        config.features.Maintenance_Detail.startTime
+                      )}{" "}
+                  ~{" "}
+                  {endTime
+                    ? endTime
+                    : formatTime(
+                        config.features.Maintenance_Detail.endTime
+                      )}{" "}
                   (GMT+8){" "}
                 </Text>
               </React.Fragment>
@@ -282,8 +298,14 @@ const Maintenance = (props) => {
         </Text>
         <Text>
           Maintenance Time :{" "}
-          {formatTime(config.features.Maintenance_Detail.startTime)} ~{" "}
-          {formatTime(config.features.Maintenance_Detail.endTime)} (GMT+8){" "}
+          {beginTime
+            ? beginTime
+            : formatTime(config.features.Maintenance_Detail.startTime)}{" "}
+          ~{" "}
+          {endTime
+            ? endTime
+            : formatTime(config.features.Maintenance_Detail.endTime)}{" "}
+          (GMT+8){" "}
         </Text>
       </>
     );
@@ -292,7 +314,13 @@ const Maintenance = (props) => {
   return (
     <Container>
       <MaintenanceTextContainer>
-        {isFailed ? <Local /> : <Api />}
+        {isFailed ? (
+          <Local />
+        ) : content ? (
+          <Api />
+        ) : (
+          <Local beginTime={beginTime} endTime={endTime} />
+        )}
 
         <ButtonContainer>
           <AnotherButton onClick={handleCSClick}>
