@@ -59,8 +59,10 @@ const GameSubFilterContainer = styled.div`
   padding-left: 20px;
   width: 1280;
   height: 42px;
-
-  margin: 0px 0 25px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 25px 0;
 `;
 
 const CategoryContainer = styled.div`
@@ -257,6 +259,46 @@ const TabButton = styled.div`
   padding: 5px 0;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   font-size: 12px;
+`;
+
+const SearchFilterItemContainer = styled.div`
+  width: 180px;
+  height: 30px;
+  border-radius: 8px;
+  background-color: #d3d3d3;
+  position: relative;
+  display: flex;
+  padding: 5px 20px;
+  align-items: center;
+`;
+const SearchFilterItemInput = styled.input`
+  background: transparent;
+  border: none;
+  color: ${({ theme }) => theme.secondary};
+  font-size: 15px;
+
+  width: 100px;
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    color: #818181;
+  }
+  :-ms-input-placeholder {
+    color: #818181;
+  }
+`;
+
+const SearchIcon = styled.div`
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  mask: url(${process.env.PUBLIC_URL +
+  "/assets/images/pcGamePage/slots/search.png"});
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  background: #818181;
+
+  right: 5px;
+  top: 5px;
 `;
 
 class Slots extends Component {
@@ -646,17 +688,31 @@ class Slots extends Component {
               })}
           </GameTabContainer>
           <GameSubFilterContainer>
-            {this.genCategoryItem(SlotFilterType.All, i18n.t("slot.allGame"))}
-            {this.genCategoryItem(SlotFilterType.Hot, i18n.t("slot.hotGame"))}
-            {this.genCategoryItem(SlotFilterType.New, i18n.t("slot.newGame"))}
-            {this.genCategoryItem(
-              SlotFilterType.Recommend,
-              i18n.t("slot.recommendGame")
-            )}
-            {this.genCategoryItem(
-              SlotFilterType.Bookmark,
-              i18n.t("slot.bookmarkGame")
-            )}
+            <div>
+              {this.genCategoryItem(SlotFilterType.All, i18n.t("slot.allGame"))}
+              {this.genCategoryItem(SlotFilterType.Hot, i18n.t("slot.hotGame"))}
+              {this.genCategoryItem(SlotFilterType.New, i18n.t("slot.newGame"))}
+              {this.genCategoryItem(
+                SlotFilterType.Recommend,
+                i18n.t("slot.recommendGame")
+              )}
+              {this.genCategoryItem(
+                SlotFilterType.Bookmark,
+                i18n.t("slot.bookmarkGame")
+              )}
+            </div>
+            <div>
+              <SearchFilterItemContainer>
+                <SearchFilterItemInput
+                  type="text"
+                  maxLength="15"
+                  autocomplete="off"
+                  placeholder={i18n.t("slot.search")}
+                  onChange={this.handleKeywordChange}
+                ></SearchFilterItemInput>
+                <SearchIcon />
+              </SearchFilterItemContainer>
+            </div>
           </GameSubFilterContainer>
           <GameListContainer>{list}</GameListContainer>
           {/* <ButtonMore
