@@ -324,14 +324,18 @@ class PromotionDetails extends Component {
             ></PromoDetailImage>
             <EventTitle>{i18n.t("promotion.promoTarget")}：</EventTitle>
             <EventText>
-              {this.state.details.vipLevels.map((a, index) => {
-                return (
-                  <span key={index}>
-                    VIP{a}
-                    {index < this.state.details.vipLevels.length - 1 && ", "}
-                  </span>
-                );
-              })}
+              {this.state.details.vipLevels
+                .sort((a, b) => {
+                  return a - b;
+                })
+                .map((a, index) => {
+                  return (
+                    <span key={index}>
+                      VIP{a}
+                      {index < this.state.details.vipLevels.length - 1 && ", "}
+                    </span>
+                  );
+                })}
             </EventText>
             <EventTitle>{i18n.t("promotion.promoDate")}：</EventTitle>
             <EventText>
