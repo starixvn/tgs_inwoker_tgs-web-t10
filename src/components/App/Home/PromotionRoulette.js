@@ -700,15 +700,19 @@ const PromotionRoulette = (props) => {
                 <EventTitle>【{i18n.t("promotion.promoDetail")}】</EventTitle>
                 <EventLabel>{i18n.t("promotion.promoTarget")}:</EventLabel>
                 <EventText>
-                  {props.promotionDetail.vipLevels.map((a, index) => {
-                    return (
-                      <span key={index}>
-                        VIP{a}
-                        {index < props.promotionDetail.vipLevels.length - 1 &&
-                          ", "}
-                      </span>
-                    );
-                  })}
+                  {props.promotionDetail.vipLevels
+                    .sort((a, b) => {
+                      return a - b;
+                    })
+                    .map((a, index) => {
+                      return (
+                        <span key={index}>
+                          VIP{a}
+                          {index < props.promotionDetail.vipLevels.length - 1 &&
+                            ", "}
+                        </span>
+                      );
+                    })}
                 </EventText>
                 <br />
                 <EventLabel>{i18n.t("promotion.promoDate")}：</EventLabel>
