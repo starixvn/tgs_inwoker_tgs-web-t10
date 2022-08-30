@@ -424,7 +424,7 @@ class GuestContainer extends Component {
     }
   };
 
-  performLoginWithPhoneAndEmail = async (username, password, phone, email) => {
+  performLoginWithPhoneAndEmail = async (username, password, phone, email, setPhoneDontCareDuplicate) => {
     if (username === "") {
       this.props.enqueueSnackbar(i18n.t("web.login.errorMsg.emptyUsername"), {
         variant: "warning",
@@ -439,48 +439,68 @@ class GuestContainer extends Component {
     }
     const result = await this.props.accountLogin(username, password);
     if (result.IsSuccess) {
-      await this.props
-        .newRegister("InitPhone", {
-          input: "Init",
-          data: {
-            areacode: this.state.areaCode,
-            phone: phone,
-          },
-        })
-        .then(async (response) => {
-          if (response.IsSuccess) {
-            await this.props
-              .newRegister("InitPhone", {
-                input: "Valid",
-                data: {
-                  securitykey: response.data.stepResponse,
-                  validatecode: "123456",
-                },
-              })
-              .then(async (response) => {
-                if (response.IsSuccess) {
-                  await this.props
-                    .newRegister("InitMail", {
-                      input: "Init",
-                      data: {
-                        email: email,
-                      },
-                    })
-                    .then(async (response) => {
-                      if (response.IsSuccess) {
-                        await this.props.newRegister("InitMail", {
-                          input: "Valid",
-                          data: {
-                            securitykey: response.data.stepResponse,
-                            validatecode: "123456",
-                          },
-                        });
-                      }
-                    });
-                }
-              });
-          }
-        });
+      if(setPhoneDontCareDuplicate)
+      {
+        await this.props
+          .newRegister("SetPhoneDontCareDuplicate", {
+              areacode: this.state.areaCode,
+              phone: phone,
+          })
+          .then(async (response) => {
+            if (response.IsSuccess) {
+              if (response.data.nextStepType === "SetEmailDontCareDuplicate")
+                await this.props.newRegister("SetEmailDontCareDuplicate", {
+                    email: email,
+                });
+            }
+          });
+      }
+      else
+      {
+        await this.props
+          .newRegister("InitPhone", {
+            input: "Init",
+            data: {
+              areacode: this.state.areaCode,
+              phone: phone,
+            },
+          })
+          .then(async (response) => {
+            if (response.IsSuccess) {
+              await this.props
+                .newRegister("InitPhone", {
+                  input: "Valid",
+                  data: {
+                    securitykey: response.data.stepResponse,
+                    validatecode: "123456",
+                  },
+                })
+                .then(async (response) => {
+                  if (response.IsSuccess) {
+                    await this.props
+                      .newRegister("InitMail", {
+                        input: "Init",
+                        data: {
+                          email: email,
+                        },
+                      })
+                      .then(async (response) => {
+                        if (response.IsSuccess) {
+                          await this.props.newRegister("InitMail", {
+                            input: "Valid",
+                            data: {
+                              securitykey: response.data.stepResponse,
+                              validatecode: "123456",
+                            },
+                          });
+                        }
+                      });
+                  }
+                });
+            }
+          });
+      }
+      
 
       this.handleLoginSuccess(result.data);
     }
