@@ -26,11 +26,11 @@ build:
   needs:
     - initial
   only:
-    - main
-    - release
+    - master
+    - release/current
     - develop
   script:
-    - export Tag="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d%H%M).$CI_PIPELINE_IID"
+    - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d%H%M).$CI_PIPELINE_IID"
     - docker build -t ${ImageName}:${TAG} .
     - docker push ${ImageName}:${TAG}
   artifacts:
@@ -51,7 +51,7 @@ deploy-dev:
   before_script:
     - export KUBECONFIG=$KubeConfig_Raypro_dev
   script:
-    - export Tag="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d%H%M).$CI_PIPELINE_IID"
+    - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d%H%M).$CI_PIPELINE_IID"
     - |
       componentArray = $components.split(",")
       for (i = 0;i < componentArray.length; i++) {
