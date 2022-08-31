@@ -1,0 +1,60 @@
+variables:
+  ImageName: pgtgs/lobby-t10
+  message: ""
+  
+stages:
+  - initial
+  - build
+  - deploy
+  
+initial:
+  stage: initial
+  only:
+    - master
+    - release/current
+    - develop
+  script:
+    - echo "branch:$CI_COMMIT_BRANCH"
+    - git config --file=.gitmodules submodule.src/components/Wap.branch $CI_COMMIT_BRANCH
+    - git config --file=.gitmodules submodule.src/components/App/Account.branch $CI_COMMIT_BRANCH
+    - git config --file=.gitmodules submodule.src/api-services.branch $CI_COMMIT_BRANCH
+    - git submodule sync
+    - git submodule update --remote
+    
+build:
+  stage: build
+  needs:
+    - initial
+  only:
+    - main
+    - release
+    - develop
+  script:
+    - export Tag="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d%H%M).$CI_PIPELINE_IID"
+    - docker build -t ${ImageName}:${TAG} .
+    - docker push ${ImageName}:${TAG}
+  artifacts:
+    untracked: true
+    expire_in: "1 days"
+
+deploy-dev:
+  stage: deploy
+  variables:
+    GIT_STRATEGY: none
+    components: lobby-t10
+    namespace: dev
+  needs:
+    - initial
+    - build
+  only:
+    - develop
+  before_script:
+    - export KUBECONFIG=$KubeConfig_Raypro_dev
+  script:
+    - export Tag="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d%H%M).$CI_PIPELINE_IID"
+    - |
+      componentArray = $components.split(",")
+      for (i = 0;i < componentArray.length; i++) {
+        message += "\n    ${componentArray[i]}"
+        sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${ImageName}:${TAG} --record -n $namespace"
+      }
