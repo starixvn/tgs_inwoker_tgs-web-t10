@@ -49,7 +49,7 @@ deploy-dev:
   only:
     - develop
   before_script:
-    - export KUBECONFIG=$KubeConfig_Raypro_dev
+    - export KUBECONFIG=$kubeconfig_dev
   script:
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d%H%M).$CI_PIPELINE_IID"
     - |
