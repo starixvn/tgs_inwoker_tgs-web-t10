@@ -58,7 +58,7 @@ deploy-staging:
   needs:
     - build
   only:
-    - develop
+    - release/current
   before_script:
     - export KUBECONFIG=$kubeconfig_staging
   script:
@@ -79,7 +79,7 @@ deploy-prod:
   needs:
     - build
   only:
-    - develop
+    - master
   before_script:
     - export KUBECONFIG=$kubeconfig_prod
   script:
