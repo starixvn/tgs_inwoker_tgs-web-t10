@@ -34,7 +34,6 @@ deploy-dev:
     components: lobby-t10
     namespace: dev
   needs:
-    - initial
     - build
   only:
     - develop
