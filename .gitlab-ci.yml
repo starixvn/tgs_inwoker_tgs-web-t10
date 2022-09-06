@@ -42,6 +42,7 @@ deploy-dev:
     - export KUBECONFIG=$kubeconfig_dev
   script:
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
+    - echo $components | cut -f2 -d","
     - |
       componentArray = $components.split(",")
       for (i = 0;i < componentArray.length; i++) {
