@@ -26,8 +26,8 @@ build:
   needs:
     - initial
   only:
-    - main
-    - release
+    - master
+    - release/current
     - develop
   script:
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d%H%M).$CI_PIPELINE_IID"
