@@ -19,8 +19,9 @@ build:
     - git config --file=.gitmodules submodule.src/components/App/Account.branch $CI_COMMIT_BRANCH
     - git config --file=.gitmodules submodule.src/api-services.branch $CI_COMMIT_BRANCH
     - git submodule sync
+    - git submodule update
   script:
-    - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d%H%M).$CI_PIPELINE_IID"
+    - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
     - docker build -t ${ImageName}:${TAG} .
     - docker push ${ImageName}:${TAG}
   artifacts:
@@ -40,7 +41,7 @@ deploy-dev:
   before_script:
     - export KUBECONFIG=$kubeconfig_dev
   script:
-    - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d%H%M).$CI_PIPELINE_IID"
+    - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
     - |
       componentArray = $components.split(",")
       for (i = 0;i < componentArray.length; i++) {
