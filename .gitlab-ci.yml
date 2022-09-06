@@ -43,7 +43,7 @@ deploy-dev:
   script:
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
     - |
-      componentArray = $components | cut -f2 -d","
+      IFS=',' read -r -a componentArray <<< "$components"
       for (i = 0;i < componentArray.length; i++) {
         message += "\n    ${componentArray[i]}"
         sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${ImageName}:${TAG} --record -n $namespace"
