@@ -1,5 +1,6 @@
 variables:
   ImageName: pgtgs/lobby-t10
+  GIT_SUBMODULE_STRATEGY: recursive # 會把submodule中的submodule也引進到項目中
   message: ""
   
 stages:
