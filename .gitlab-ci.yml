@@ -32,7 +32,7 @@ deploy-dev:
   stage: deploy
   variables:
     GIT_STRATEGY: none
-    components: lobby-t10
+    components: lobby-t10,lobby-t11
     namespace: dev
   needs:
     - build
@@ -44,6 +44,10 @@ deploy-dev:
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
     - |
       IFS=',' read -r -a componentArray <<< "$components"
+      echo "componentArray[0]=${componentArray[0]}"
+      echo "componentArray[1]=${componentArray[1]}"
+      
+      
       for (i = 0;i < componentArray.length; i++) {
         message += "\n    ${componentArray[i]}"
         sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${ImageName}:${TAG} --record -n $namespace"
