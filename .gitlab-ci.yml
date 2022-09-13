@@ -46,7 +46,7 @@ deploy-dev:
       IFS=',' read -r -a componentArray <<< "$components"
       
       for component in "${componentArray[@]}" {
-         kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
+         /usr/bin/kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
       }
 
 deploy-staging:
