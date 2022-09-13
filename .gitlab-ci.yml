@@ -44,11 +44,8 @@ deploy-dev:
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
     - |
       IFS=',' read -r -a componentArray <<< "$components"
-      echo "componentArray[0]=${componentArray[0]}"
-      echo "componentArray[1]=${componentArray[1]}"
       
       for component in "${componentArray[@]}" {
-        message += "\n    ${component}"
         sh "kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace"
       }
 
