@@ -47,10 +47,9 @@ deploy-dev:
       echo "componentArray[0]=${componentArray[0]}"
       echo "componentArray[1]=${componentArray[1]}"
       
-      
-      for (i = 0;i < componentArray.length; i++) {
-        message += "\n    ${componentArray[i]}"
-        sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${ImageName}:${TAG} --record -n $namespace"
+      for component in "${componentArray[@]}" {
+        message += "\n    ${component}"
+        sh "kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace"
       }
 
 deploy-staging:
