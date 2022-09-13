@@ -32,7 +32,7 @@ deploy-dev:
   stage: deploy
   variables:
     GIT_STRATEGY: none
-    components: lobby-t10,lobby-t11
+    components: lobby-t10,lobby-t10
     namespace: dev
   needs:
     - build
