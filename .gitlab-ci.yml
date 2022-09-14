@@ -42,10 +42,12 @@ deploy-dev:
     - export KUBECONFIG=$kubeconfig_dev
   script:
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
-    - export dedicated=$(kubectl get cm tgs-settings -o jsonpath={.data.dedicated})
-    - echo ${dedicated}
-    - kubectl get pods -n $namespace
-
+    - kubectl set image deployment/lobby-t10 lobby-t10=${ImageName}:${TAG} --record -n $namespace
+    - |
+      IFS=',' read -r -a componentArray <<< "$components"
+      for component in "${componentArray[@]}" {
+         kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
+      }
 deploy-staging:
   stage: deploy
   variables:
@@ -60,8 +62,6 @@ deploy-staging:
     - export KUBECONFIG=$kubeconfig_staging
   script:
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
-    - export dedicated=$(kubectl get cm tgs-settings -o jsonpath={.data.dedicated})
-    - echo ${dedicated}
     - |
       IFS=',' read -r -a componentArray <<< "$components"
       
