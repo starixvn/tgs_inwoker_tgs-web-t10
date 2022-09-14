@@ -45,9 +45,10 @@ deploy-dev:
     - kubectl set image deployment/lobby-t10 lobby-t10=${ImageName}:${TAG} --record -n $namespace
     - |
       IFS=',' read -r -a componentArray <<< "$components"
-      for component in "${componentArray[@]}" {
+      for component in "${componentArray[@]}" 
+      do
          kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
-      }
+      done
 deploy-staging:
   stage: deploy
   variables:
