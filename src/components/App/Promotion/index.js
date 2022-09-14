@@ -228,87 +228,99 @@ class Promotion extends Component {
         <Wrap>
           <MContainer>
             <ThePromotion container>
-              {this.props.general.promotionList.items.map((data, index) => {
-                return (
-                  <ContainerForPromoList lg={6} key={index}>
-                    <ThePromotionContainer
-                      container
-                      direction="column"
-                      justify="space-between"
-                      alignItems="stretch"
+              {this.props.general.promotionList.items
+                .sort((a, b) => {
+                  return a.order - b.order;
+                })
+                .map((data, index) => {
+                  return (
+                    <ContainerForPromoList
+                      lg={6}
+                      key={index}
+                      order={data.order}
                     >
-                      <Grid item>
-                        <Grid container direction="column">
-                          {(() => {
-                            if (data.localization !== null) {
-                              var checkLocale =
-                                data.localization[i18n.language];
-                              return (
-                                <PromoImages
-                                  key={index}
-                                  img={
-                                    checkLocale
-                                      ? checkLocale.desktopBanner
-                                      : data.desktopBanner
-                                  }
-                                ></PromoImages>
-                              );
-                            } else {
-                              return (
-                                <PromoImages
-                                  key={index}
-                                  img={data.desktopBanner}
-                                ></PromoImages>
-                              );
-                            }
-                          })()}
-
-                          <EventTitle>
-                            【{i18n.t("promotion.promoDetail")}】
-                          </EventTitle>
-                          <EventLabel>
-                            {i18n.t("promotion.promoTarget")}:
-                          </EventLabel>
-                          <EventText>
-                            {data.vipLevels
-                              .sort((a, b) => {
-                                return a - b;
-                              })
-                              .map((a, index) => {
-                                return (
-                                  <span key={index}>
-                                    VIP{a}
-                                    {index < data.vipLevels.length - 1 && ", "}
-                                  </span>
-                                );
-                              })}
-                          </EventText>
-                          <br />
-                          <EventLabel>
-                            {i18n.t("promotion.promoDate")}：
-                          </EventLabel>
-                          <EventText>
-                            {moment(data.from).format("YYYY/MM/DD HH:mm:ss")}
-                            {" - "}
-                            {moment(data.to).format("YYYY/MM/DD HH:mm:ss")}
-                          </EventText>
-                        </Grid>
-                      </Grid>
-                      <PromoButtonContainer
-                        item
-                        onClick={() =>
-                          this.handlePromotionClick(data.id, data.promotionType)
-                        }
+                      <ThePromotionContainer
+                        container
+                        direction="column"
+                        justify="space-between"
+                        alignItems="stretch"
                       >
-                        <PromoButtonImg />
-                        <PromoButtonText>
-                          {i18n.t("promotion.details")}
-                        </PromoButtonText>
-                      </PromoButtonContainer>
-                    </ThePromotionContainer>
-                  </ContainerForPromoList>
-                );
-              })}
+                        <Grid item>
+                          <Grid container direction="column">
+                            {(() => {
+                              if (data.localization !== null) {
+                                var checkLocale =
+                                  data.localization[i18n.language];
+                                return (
+                                  <PromoImages
+                                    key={index}
+                                    img={
+                                      checkLocale
+                                        ? checkLocale.desktopBanner
+                                        : data.desktopBanner
+                                    }
+                                  ></PromoImages>
+                                );
+                              } else {
+                                return (
+                                  <PromoImages
+                                    key={index}
+                                    img={data.desktopBanner}
+                                  ></PromoImages>
+                                );
+                              }
+                            })()}
+
+                            <EventTitle>
+                              【{i18n.t("promotion.promoDetail")}】
+                            </EventTitle>
+                            <EventLabel>
+                              {i18n.t("promotion.promoTarget")}:
+                            </EventLabel>
+                            <EventText>
+                              {data.vipLevels
+                                .sort((a, b) => {
+                                  return a - b;
+                                })
+                                .map((a, index) => {
+                                  return (
+                                    <span key={index}>
+                                      VIP{a}
+                                      {index < data.vipLevels.length - 1 &&
+                                        ", "}
+                                    </span>
+                                  );
+                                })}
+                            </EventText>
+                            <br />
+                            <EventLabel>
+                              {i18n.t("promotion.promoDate")}：
+                            </EventLabel>
+                            <EventText>
+                              {moment(data.from).format("YYYY/MM/DD HH:mm:ss")}
+                              {" - "}
+                              {moment(data.to).format("YYYY/MM/DD HH:mm:ss")}
+                            </EventText>
+                          </Grid>
+                        </Grid>
+                        <PromoButtonContainer
+                          item
+                          onClick={() =>
+                            this.handlePromotionClick(
+                              data.id,
+                              data.promotionType
+                            )
+                          }
+                        >
+                          <PromoButtonImg />
+                          <PromoButtonText>
+                            {i18n.t("promotion.details")}
+                          </PromoButtonText>
+                        </PromoButtonContainer>
+                      </ThePromotionContainer>
+                    </ContainerForPromoList>
+                  );
+                })}
             </ThePromotion>
           </MContainer>
 
