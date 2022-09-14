@@ -42,6 +42,17 @@ deploy-dev:
     - export KUBECONFIG=$kubeconfig_dev
   script:
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
+    - echo "CI_SERVER_URL=$CI_SERVER_URL"
+    - echo "GITLAB_USER_LOGIN=$GITLAB_USER_LOGIN"
+    - echo "CI_REPOSITORY_URL=$CI_REPOSITORY_URL"
+    - echo "CI_PROJECT_URL=$CI_PROJECT_URL"
+    - echo "CI_PROJECT_TITLE=$CI_PROJECT_TITLE"
+    - echo "CI_PROJECT_PATH=$CI_PROJECT_PATH"
+    - echo "CI_PROJECT_NAME=$CI_PROJECT_NAME"
+    - echo "CI_PIPELINE_URL=$CI_PIPELINE_URL"
+    - echo "CI_PAGES_URL=$CI_PAGES_URL"
+    - echo "CI_JOB_URL=$CI_JOB_URL"
+    - echo "CI_JOB_STATUS=$CI_JOB_STATUS"
     - |
       IFS=',' read -r -a componentArray <<< "$components"
       for component in "${componentArray[@]}" 
