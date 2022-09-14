@@ -48,7 +48,7 @@ deploy-dev:
       IFS=',' read -r -a componentArray <<< "$components"
       
       for component in "${componentArray[@]}" {
-         $(kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace)
+         kubectl get pods -n $namespace
       }
 
 deploy-staging:
@@ -65,11 +65,13 @@ deploy-staging:
     - export KUBECONFIG=$kubeconfig_staging
   script:
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
+    - export dedicated=$(kubectl get cm tgs-settings -o jsonpath={.data.dedicated})
+    - echo ${dedicated}
     - |
-      componentArray = $components | cut -f2 -d","
-      for (i = 0;i < componentArray.length; i++) {
-        message += "\n    ${componentArray[i]}"
-        kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${ImageName}:${TAG} --record -n $namespace
+      IFS=',' read -r -a componentArray <<< "$components"
+      
+      for component in "${componentArray[@]}" {
+         $(kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace)
       }
 deploy-prod:
   stage: deploy
