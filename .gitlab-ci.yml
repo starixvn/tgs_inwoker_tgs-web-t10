@@ -107,9 +107,9 @@ notification:
   script: 
     - |
       curl --location --request POST 'https://api.telegram.org/bot1780137038:AAHDIVxs2somlHZ5QbZKq1X403NnWAPXVn4/sendMessage' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "chat_id": "-1001114115188",
-    "text": "<b><i>test by t10 </i></b>",
-    "parse_mode": "HTML"
-}'"
+      --header 'Content-Type: application/json' \
+      --data-raw '{
+          "chat_id": "-1001114115188",
+          "text": "<b><i>test by t10 </i></b>",
+          "parse_mode": "HTML"
+      }'"
