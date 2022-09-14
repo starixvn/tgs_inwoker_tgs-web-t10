@@ -42,7 +42,6 @@ deploy-dev:
     - export KUBECONFIG=$kubeconfig_dev
   script:
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
-    - kubectl set image deployment/lobby-t10 lobby-t10=${ImageName}:${TAG} --record -n $namespace
     - |
       IFS=',' read -r -a componentArray <<< "$components"
       for component in "${componentArray[@]}" 
@@ -65,10 +64,10 @@ deploy-staging:
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
     - |
       IFS=',' read -r -a componentArray <<< "$components"
-      
-      for component in "${componentArray[@]}" {
-         $(kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace)
-      }
+      for component in "${componentArray[@]}" 
+      do
+         kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
+      done
 deploy-prod:
   stage: deploy
   variables:
@@ -85,8 +84,8 @@ deploy-prod:
   script:
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
     - |
-      componentArray = $components | cut -f2 -d","
-      for (i = 0;i < componentArray.length; i++) {
-        message += "\n    ${componentArray[i]}"
-        sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${ImageName}:${TAG} --record -n $namespace"
-      }
+      IFS=',' read -r -a componentArray <<< "$components"
+      for component in "${componentArray[@]}" 
+      do
+         kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
+      done
