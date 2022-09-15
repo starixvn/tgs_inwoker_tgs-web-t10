@@ -60,6 +60,7 @@ deploy-dev:
     - echo "CI_JOB_NAME=$CI_JOB_NAME"
     - echo "CI_JOB_STAGE=$CI_JOB_STAGE"
     - echo "CI_MERGE_REQUEST_TARGET_BRANCH_NAME=$CI_MERGE_REQUEST_TARGET_BRANCH_NAME"
+    - echo "CI_COMMIT_BRANCH=$$CI_COMMIT_BRANCH"
     - |
       IFS=',' read -r -a componentArray <<< "$components"
       for component in "${componentArray[@]}" 
