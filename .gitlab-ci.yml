@@ -28,8 +28,11 @@ build:
     - docker build -t ${ImageName}:${TAG} .
     - docker push ${ImageName}:${TAG}
   artifacts:
-    untracked: true
-    expire_in: "1 days"
+    name: npm
+    untracked: false
+    expire_in: "30 days"
+    paths:
+      - node_modules/
 
 deploy-dev:
   stage: deploy
@@ -41,6 +44,8 @@ deploy-dev:
     - build
   only:
     - develop
+  dependencies: 
+    - build
   before_script:
     - export KUBECONFIG=$kubeconfig_dev
   script:
@@ -72,10 +77,10 @@ notification:
   stage: .post
   script: 
     - |
-      curl --location --request POST 'https://api.telegram.org/bot1780137038:AAHDIVxs2somlHZ5QbZKq1X403NnWAPXVn4/sendMessage' \
+      curl --location --request POST '$Telegram_Bot_Url' \
       --header 'Content-Type: application/json' \
       --data-raw '{
-          "chat_id": "-1001114115188",
+          "chat_id": $Telegram_Chat_Id,
           "text": "<b>" + $CI_PROJECT_TITLE + " (" + $CI_JOB_NAME + ")</b><b>Pipeline: " + $CI_PIPELINE_URL + "</b>",
           "parse_mode": "HTML"
       }'
