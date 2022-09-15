@@ -76,6 +76,6 @@ notification:
       --header 'Content-Type: application/json' \
       --data-raw '{
           "chat_id": "-1001114115188",
-          "text": "<b>$CI_PROJECT_TITLE ($CI_JOB_NAME)</b><b>Pipeline: $CI_PIPELINE_URL</b>",
+          "text": "<b>" + $CI_PROJECT_TITLE + " (" + $CI_JOB_NAME + ")</b><b>Pipeline: " + $CI_PIPELINE_URL + "</b>",
           "parse_mode": "HTML"
       }'
