@@ -23,8 +23,10 @@ build:
     - git submodule sync
     - git submodule update
   script:
+    - npm install
+    - npm run build
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
-    - docker build -t ${ImageName}:${TAG} .
+    - docker build -f Dockerfile2 -t ${ImageName}:${TAG} .
     - docker push ${ImageName}:${TAG}
   artifacts:
     name: npm
