@@ -56,5 +56,5 @@ notification:
       --data-raw '{ 
           "parse_mode": "HTML", \
           "chat_id": $Telegram_Chat_Id, \
-          "text": "test2"
+          "text": "test2" \
       }'
