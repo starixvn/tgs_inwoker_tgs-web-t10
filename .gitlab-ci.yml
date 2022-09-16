@@ -18,8 +18,6 @@ deploy-dev:
     namespace: dev
   only:
     - develop
-  dependencies: 
-    - build
   before_script:
     - export KUBECONFIG=$kubeconfig_dev
   script:
