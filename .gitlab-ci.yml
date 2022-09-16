@@ -49,12 +49,12 @@ notification:
     - echo "CI_JOB_NAME=$CI_JOB_NAME"
     - echo "CI_JOB_STAGE=$CI_JOB_STAGE"
     - echo "CI_MERGE_REQUEST_TARGET_BRANCH_NAME=$CI_MERGE_REQUEST_TARGET_BRANCH_NAME"
-    - echo "CI_COMMIT_BRANCH=$$CI_COMMIT_BRANCH"
+    - echo "CI_COMMIT_BRANCH=$CI_COMMIT_BRANCH"
     - |
       curl --location --request POST $Telegram_Bot_Url \
       --header 'Content-Type: application/json' \
       --data-raw '{
           "chat_id": $Telegram_Chat_Id,
-          "text": "$CI_PIPELINE_URL",
+          "text": "test",
           "parse_mode": "HTML"
       }'
