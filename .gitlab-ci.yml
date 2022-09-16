@@ -56,6 +56,6 @@ notification:
       --header 'Content-Type: application/json' \
       --data-raw "{
           \"chat_id\": $Telegram_Chat_Id,
-          \"text\": \"Project: $CI_PROJECT_NAME\nBranch: $CI_COMMIT_BRANCH\nPipeline: $CI_PIPELINE_URL\n\",
+          \"text\": \"Project: $CI_PROJECT_NAME\nBranch: $CI_COMMIT_BRANCH\nPipeline: $CI_PIPELINE_URL\nConmmit: $CI_PROJECT_URL/-/commit/$CI_COMMIT_SHA\",
           \"parse_mode\": \"HTML\"
       }"
