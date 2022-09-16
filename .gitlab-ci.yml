@@ -55,6 +55,6 @@ notification:
       --header 'Content-Type: application/json' \
       --data-raw '{ 
           "text": "test2", 
-          "chat_id": -1001114115188, 
+          "chat_id": "$Telegram_Chat_Id", 
           "parse_mode": "HTML"
       }'
