@@ -4,7 +4,6 @@ variables:
   message: ""
   
 stages:
-  - build
   - deploy
 
 cache:
@@ -49,7 +48,7 @@ deploy-dev:
   before_script:
     - export KUBECONFIG=$kubeconfig_dev
   script:
-    - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
+    - export TAG="20220915.57"
     - echo "CI_SERVER_URL=$CI_SERVER_URL"
     - echo "GITLAB_USER_LOGIN=$GITLAB_USER_LOGIN"
     - echo "CI_REPOSITORY_URL=$CI_REPOSITORY_URL"
