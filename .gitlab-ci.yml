@@ -39,8 +39,6 @@ deploy-dev:
     GIT_STRATEGY: none
     components: lobby-t10,lobby-t10
     namespace: dev
-  needs:
-    - build
   only:
     - develop
   dependencies: 
