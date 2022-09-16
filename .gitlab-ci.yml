@@ -4,7 +4,6 @@ variables:
   message: ""
   
 stages:
-  - build
   - deploy
 
 cache:
@@ -24,8 +23,10 @@ build:
     - git submodule sync
     - git submodule update
   script:
+    - npm install
+    - npm run build
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
-    - docker build -t ${ImageName}:${TAG} .
+    - docker build -f Dockerfile2 -t ${ImageName}:${TAG} .
     - docker push ${ImageName}:${TAG}
   artifacts:
     name: npm
@@ -42,14 +43,26 @@ deploy-dev:
     namespace: dev
   needs:
     - build
-  only:
-    - develop
   dependencies: 
     - build
+  only:
+    - develop
   before_script:
     - export KUBECONFIG=$kubeconfig_dev
   script:
-    - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
+    - export TAG="20220915.57"
+    - |
+      IFS=',' read -r -a componentArray <<< "$components"
+      for component in "${componentArray[@]}" 
+      do
+         kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
+      done
+
+notification:
+  stage: .post
+  script: 
+    - echo "Telegram_Bot_Url=$Telegram_Bot_Url"
+    - echo "Telegram_Chat_Id=$Telegram_Chat_Id"
     - echo "CI_SERVER_URL=$CI_SERVER_URL"
     - echo "GITLAB_USER_LOGIN=$GITLAB_USER_LOGIN"
     - echo "CI_REPOSITORY_URL=$CI_REPOSITORY_URL"
@@ -65,25 +78,13 @@ deploy-dev:
     - echo "CI_JOB_NAME=$CI_JOB_NAME"
     - echo "CI_JOB_STAGE=$CI_JOB_STAGE"
     - echo "CI_MERGE_REQUEST_TARGET_BRANCH_NAME=$CI_MERGE_REQUEST_TARGET_BRANCH_NAME"
-    - echo "CI_COMMIT_BRANCH=$$CI_COMMIT_BRANCH"
-    - |
-      IFS=',' read -r -a componentArray <<< "$components"
-      for component in "${componentArray[@]}" 
-      do
-         kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
-      done
-
-notification:
-  stage: .post
-  variables:
-    Telegram_Bot_Url: $Telegram_Bot_Url
-    Telegram_Chat_Id: $Telegram_Chat_Id
-  script: 
+    - echo "CI_COMMIT_BRANCH=$CI_COMMIT_BRANCH"
+    - printenv
     - |
       curl --location --request POST $Telegram_Bot_Url \
       --header 'Content-Type: application/json' \
-      --data-raw '{
-          "chat_id": $Telegram_Chat_Id,
-          "text": "<b>" + $CI_PROJECT_TITLE + " (" + $CI_JOB_NAME + ")</b><b>Pipeline: " + $CI_PIPELINE_URL + "</b>",
-          "parse_mode": "HTML"
-      }'
+      --data-raw "{
+          \"chat_id\": $Telegram_Chat_Id,
+          \"text\": \"Project: $CI_PROJECT_NAME\nBranch: $CI_COMMIT_BRANCH\nPipeline: $CI_PIPELINE_URL\nConmmit: $CI_PROJECT_URL/-/commit/$CI_COMMIT_SHA\",
+          \"parse_mode\": \"HTML\"
+      }"
