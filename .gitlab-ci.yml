@@ -53,8 +53,8 @@ notification:
     - |
       curl --location --request POST $Telegram_Bot_Url \
       --header 'Content-Type: application/json' \
-      --data-raw '{
-          "chat_id": -1001114115188,
-          "text": $CI_PIPELINE_URL,
-          "parse_mode": "HTML"
-      }'
+      --data-raw "{
+          \"chat_id\": -1001114115188,
+          \"text\": $CI_PIPELINE_URL,
+          \"parse_mode\": \"HTML\"
+      }"
