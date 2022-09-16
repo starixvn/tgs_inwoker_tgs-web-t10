@@ -4,6 +4,7 @@ variables:
   message: ""
   
 stages:
+  - build
   - deploy
 
 cache:
