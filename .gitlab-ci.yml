@@ -55,6 +55,6 @@ notification:
       --header 'Content-Type: application/json' \
       --data-raw '{
           "chat_id": -1001114115188,
-          "text": "$CI_PIPELINE_URL",
+          "text": $CI_PIPELINE_URL,
           "parse_mode": "HTML"
       }'
