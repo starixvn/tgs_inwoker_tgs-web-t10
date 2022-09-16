@@ -22,6 +22,18 @@ deploy-dev:
     - export KUBECONFIG=$kubeconfig_dev
   script:
     - export TAG="20220915.57"
+    - |
+      IFS=',' read -r -a componentArray <<< "$components"
+      for component in "${componentArray[@]}" 
+      do
+         kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
+      done
+
+notification:
+  stage: .post
+  script: 
+    - echo "Telegram_Bot_Url=$Telegram_Bot_Url"
+    - echo "Telegram_Chat_Id=$Telegram_Chat_Id"
     - echo "CI_SERVER_URL=$CI_SERVER_URL"
     - echo "GITLAB_USER_LOGIN=$GITLAB_USER_LOGIN"
     - echo "CI_REPOSITORY_URL=$CI_REPOSITORY_URL"
@@ -39,22 +51,10 @@ deploy-dev:
     - echo "CI_MERGE_REQUEST_TARGET_BRANCH_NAME=$CI_MERGE_REQUEST_TARGET_BRANCH_NAME"
     - echo "CI_COMMIT_BRANCH=$$CI_COMMIT_BRANCH"
     - |
-      IFS=',' read -r -a componentArray <<< "$components"
-      for component in "${componentArray[@]}" 
-      do
-         kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
-      done
-
-notification:
-  stage: .post
-  script: 
-    - echo "Telegram_Bot_Url=$Telegram_Bot_Url"
-    - echo "Telegram_Chat_Id=$Telegram_Chat_Id"
-    - |
       curl --location --request POST $Telegram_Bot_Url \
       --header 'Content-Type: application/json' \
       --data-raw '{
           "chat_id": $Telegram_Chat_Id,
-          "text": "<b>" + $CI_PROJECT_TITLE + " (" + $CI_JOB_NAME + ")</b><b>Pipeline: " + $CI_PIPELINE_URL + "</b>",
+          "text": "$CI_PIPELINE_URL",
           "parse_mode": "HTML"
       }'
