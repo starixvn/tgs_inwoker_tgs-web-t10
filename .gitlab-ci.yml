@@ -52,9 +52,4 @@ notification:
     - echo "CI_COMMIT_BRANCH=$CI_COMMIT_BRANCH"
     - |
       curl --location --request POST $Telegram_Bot_Url \
-      --header 'Content-Type: application/json' \
-      --data-raw '{
-          "text": "test2",
-          "chat_id": $Telegram_Chat_Id,
-          "parse_mode": "HTML"
-      }'
+      --header 'Content-Type: application/json'  --data-raw '{ "text": "test2", "chat_id": $Telegram_Chat_Id, "parse_mode": "HTML"}'
