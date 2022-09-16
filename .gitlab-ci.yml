@@ -75,10 +75,9 @@ deploy-dev:
 
 notification:
   stage: .post
-  variables:
-    Telegram_Bot_Url: $Telegram_Bot_Url
-    Telegram_Chat_Id: $Telegram_Chat_Id
   script: 
+    - echo "Telegram_Bot_Url=$Telegram_Bot_Url"
+    - echo "Telegram_Chat_Id=$Telegram_Chat_Id"
     - |
       curl --location --request POST $Telegram_Bot_Url \
       --header 'Content-Type: application/json' \
