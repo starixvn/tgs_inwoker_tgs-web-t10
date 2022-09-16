@@ -1,7 +1,6 @@
 variables:
   ImageName: pgtgs/lobby-t10
   GIT_SUBMODULE_STRATEGY: recursive # 會把submodule中的submodule也引進到項目中
-  message: ""
   
 stages:
   - build
@@ -66,6 +65,6 @@ notification:
       --header 'Content-Type: application/json' \
       --data-raw "{
           \"chat_id\": $Telegram_Chat_Id,
-          \"text\": \"Project: $CI_PROJECT_NAME\nBranch: $CI_COMMIT_BRANCH\nPipeline: $CI_PIPELINE_URL\nConmmit: $CI_PROJECT_URL/-/commit/$CI_COMMIT_SHA\",
+          \"text\": \"Project: $CI_PROJECT_NAME\nBranch: $CI_COMMIT_BRANCH\nPipeline: $CI_PIPELINE_URL\nConmmit: $CI_PROJECT_URL/-/commit/$CI_COMMIT_SHA\nStart By: $CI_COMMIT_AUTHOR\",
           \"parse_mode\": \"HTML\"
       }"
