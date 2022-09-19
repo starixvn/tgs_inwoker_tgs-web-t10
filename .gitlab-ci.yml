@@ -6,9 +6,6 @@ stages:
   - build
   - deploy
 
-cache:
-  paths:
-    - node_modules/
 build:
   stage: build
   only:
@@ -39,9 +36,9 @@ deploy-dev:
     GIT_STRATEGY: none
     components: lobby-t10,lobby-t10
     namespace: dev
+  environment:
+    name: dev
   needs:
-    - build
-  dependencies: 
     - build
   only:
     - develop
@@ -56,6 +53,53 @@ deploy-dev:
          kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
       done
 
+deploy-staging:
+  stage: deploy
+  variables:
+    GIT_STRATEGY: none
+    components: lobby-t10,lobby-t10
+    namespace: staging
+  environment:
+    name: staging
+  needs:
+    - build
+  only:
+    - staging
+  before_script:
+    - export KUBECONFIG=$kubeconfig_staging
+  script:
+    - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
+    - |
+      IFS=',' read -r -a componentArray <<< "$components"
+      for component in "${componentArray[@]}" 
+      do
+         kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
+      done
+      
+
+deploy-prod:
+  stage: deploy
+  variables:
+    GIT_STRATEGY: none
+    components: lobby=gpi-t10,lobby-gpi-t10
+    namespace: prod
+  environment:
+    name: prod
+  needs:
+    - build
+  only:
+    - develop
+  before_script:
+    - export KUBECONFIG=$kubeconfig_staging
+  script:
+    - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
+    - |
+      IFS=',' read -r -a componentArray <<< "$components"
+      for component in "${componentArray[@]}" 
+      do
+         kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
+      done
+      
 notification:
   stage: .post
   script: 
