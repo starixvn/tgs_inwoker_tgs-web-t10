@@ -65,7 +65,7 @@ deploy-staging:
   needs:
     - build
   only:
-    - staging
+    - release/current
   before_script:
     - export KUBECONFIG=$kubeconfig_staging
   script:
