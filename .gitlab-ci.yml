@@ -1,6 +1,9 @@
 variables:
   ImageName: pgtgs/lobby-t10
   GIT_SUBMODULE_STRATEGY: recursive # 會把submodule中的submodule也引進到項目中
+  components_dev: lobby-t10
+  components_staging: lobby-gpi-t10,lobby-pb2
+  components_prod: lobby-gpi-t10,lobby-pb2
   
 stages:
   - build
@@ -34,7 +37,6 @@ deploy-dev:
   stage: deploy
   variables:
     GIT_STRATEGY: none
-    components: lobby-t10,lobby-t10
     namespace: dev
   environment:
     name: dev
@@ -47,7 +49,7 @@ deploy-dev:
   script:
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
     - |
-      IFS=',' read -r -a componentArray <<< "$components"
+      IFS=',' read -r -a componentArray <<< "$components_dev"
       for component in "${componentArray[@]}" 
       do
          kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
@@ -57,7 +59,6 @@ deploy-staging:
   stage: deploy
   variables:
     GIT_STRATEGY: none
-    components: lobby-t10,lobby-t10
     namespace: staging
   environment:
     name: staging
@@ -70,7 +71,7 @@ deploy-staging:
   script:
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
     - |
-      IFS=',' read -r -a componentArray <<< "$components"
+      IFS=',' read -r -a componentArray <<< "$components_staging"
       for component in "${componentArray[@]}" 
       do
          kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
@@ -81,20 +82,20 @@ deploy-prod:
   stage: deploy
   variables:
     GIT_STRATEGY: none
-    components: lobby=gpi-t10,lobby-gpi-t10
     namespace: prod
   environment:
     name: prod
   needs:
     - build
   only:
-    - develop
+    - master
   before_script:
-    - export KUBECONFIG=$kubeconfig_staging
+    - export KUBECONFIG=$kubeconfig_prod
+  when: manual
   script:
     - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
     - |
-      IFS=',' read -r -a componentArray <<< "$components"
+      IFS=',' read -r -a componentArray <<< "$components_prod"
       for component in "${componentArray[@]}" 
       do
          kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
