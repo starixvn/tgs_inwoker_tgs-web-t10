@@ -1,5 +1,7 @@
 include:
-  - remote: 'https://gitlab.com/inwoker/tgs/tgs-gitlab-ci-jobs/-/raw/main/templates/lobby-deployment.yaml'
+  - project: 'tgs/tgs-gitlab-ci-jobs'
+    ref: main
+    file: '/templates/lobby-deployment.yaml'
 
 variables:
   ImageName: pgtgs/lobby-t10
