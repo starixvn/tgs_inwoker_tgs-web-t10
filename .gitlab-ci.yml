@@ -1,7 +1,7 @@
 include:
   - project: 'tgs/tgs-gitlab-ci-jobs'
     ref: main
-    file: 'lobby-deployment.yaml'
+    file: 'templates/lobby-deployment.yaml'
 
 variables:
   ImageName: pgtgs/lobby-t10
