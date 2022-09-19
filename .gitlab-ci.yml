@@ -1,5 +1,5 @@
 include:
-  - project: 'tgs/tgs-gitlab-ci-jobs'
+  - project: 'tgs-gitlab-ci-jobs'
     ref: main
     file: 'templates/lobby-deployment.yaml'
 
