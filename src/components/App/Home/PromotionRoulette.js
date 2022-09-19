@@ -4,9 +4,11 @@ import { connect } from "react-redux";
 import DynamicFont from "react-dynamic-font";
 import { Textfit } from "react-textfit";
 import { generalAction } from "../../../api-services/actions/generalAction";
+import { GeneralService } from "../../../api-services/services/GeneralService";
 import BtnRoulettePNG from "../../../assets/images/roulette/btn-roulette.png";
 import RoulettePointer from "../../../assets/images/roulette/roulette-pointer.png";
 import RouletteTurntable6 from "../../../assets/images/roulette/roulette-turntable-6.png";
+import RouletteTurntable12 from "../../../assets/images/roulette/roulette-turntable-12.png";
 import ModalBackgroundPNG from "../../../assets/images/roulette/bg-modal.png";
 import BtnClose from "../../../assets/images/roulette/btn-close.png";
 import TabActivePNG from "../../../assets/images/roulette/tab-active.png";
@@ -25,23 +27,12 @@ import {
 } from "../../../api-services/constant/actionType";
 
 const moment = require("moment");
+const RouletteEnum = {
+  SIE: "ROULETTE",
+  DAR: "DEPOSITACCUMULATEROULETTE"
+};
 
 const Container = styled.div`
-  height: auto;
-  position: fixed;
-  left: 2%;
-  top: 40%
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform: translateY(-50%);
-  overflow: visible;
-  color: white;
-  border-radius: 8px;
-
-  :hover {
-  }
 `;
 
 const BtnRoulette = styled.div`
@@ -206,7 +197,7 @@ const RouletteWrapper = styled.div`
 const Turntable = styled.div`
   width: 385px;
   height: 385px;
-  background: url(${RouletteTurntable6}) no-repeat;
+  background: url(${(props) => props.turntableBG}) no-repeat;
   background-size: cover;
   margin: 0 auto;
 `;
@@ -292,11 +283,271 @@ const EventText = styled.div`
   line-height: 16px;
   margin-bottom: 12px;
 `;
+const ROULETTE_AREA_DEG_6 = [
+  [326, 393],
+  [36, 87],
+  [91, 145],
+  [149, 211],
+  [215, 268],
+  [272, 323],
+];
+const ROULETTE_ITEM_6 = [
+  {
+    label: "",
+    style: {
+      span: {
+        top: "255px",
+        right: "30px",
+        transform: "rotate(46deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%)",
+      },
+    },
+  },
+  {
+    label: "",
+    style: {
+      span: {
+        top: "28px",
+        left: "0px",
+        transform: "rotate(25deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%) rotate(185deg)",
+      },
+    },
+  },
+  {
+    label: "",
+    style: {
+      span: {
+        top: "-21px",
+        left: "182px",
+        transform: "rotate(9deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%) rotate(-85deg)",
+      },
+    },
+  },
+  {
+    label: "",
+    style: {
+      span: {
+        bottom: "-33px",
+        left: "103px",
+        transform: "rotate(0deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%) rotate(-270deg)",
+      },
+    },
+  },
+  {
+    label: "",
+    style: {
+      span: {
+        top: "145px",
+        left: "-35px",
+        transform: "rotate(-20deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%) rotate(185deg)",
+      },
+    },
+  },
+  {
+    label: "",
+    style: {
+      span: {
+        top: "67px",
+        right: "-24px",
+        transform: "rotate(-29deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%)",
+      },
+    },
+  },
+];
+const ROULETTE_AREA_DEG_12 = [
+  [343, 373],
+  [17, 41],
+  [45, 74],
+  [78, 102],
+  [106, 134],
+  [138, 161],
+  [165, 194],
+  [198, 221],
+  [225, 252],
+  [256, 279],
+  [283, 312],
+  [316, 339],
+];
+const ROULETTE_ITEM_12 = [
+  { //1
+    label: "",
+    style: {
+      span: {
+        top: "255px",
+        right: "30px",
+        transform: "rotate(46deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%)",
+      },
+    },
+  },
+  { //2
+    label: "",
+    style: {
+      span: {
+        top: "-23px",
+        right: "180px",
+        transform: "rotate(242deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%)",
+      },
+    },
+  },
+  { //3
+    label: "",
+    style: {
+      span: {
+        top: "106px",
+        left: "275px",
+        transform: "rotate(160deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%) rotate(185deg)",
+      },
+    },
+  },
+  { //4
+    label: "",
+    style: {
+      span: {
+        top: "102px",
+        left: "-27px",
+        transform: "rotate(-3deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%) rotate(185deg)",
+      },
+    },
+  },
+  { //5
+    label: "",
+    style: {
+      span: {
+        top: "-21px",
+        left: "182px",
+        transform: "rotate(9deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%) rotate(-85deg)",
+      },
+    },
+  },
+  { //6
+    label: "",
+    style: {
+      span: {
+        top: "258px",
+        left: "19px",
+        transform: "rotate(208deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%) rotate(-85deg)",
+      },
+    },
+  },
+  { //7 
+    label: "",
+    style: {
+      span: {
+        bottom: "257px",
+        left: "30px",
+        transform: "rotate(137deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%) rotate(-270deg)",
+      },
+    },
+  },
+  { //8
+    label: "",
+    style: {
+      span: {
+        bottom: "-29px",
+        left: "183px",
+        transform: "rotate(-26deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%) rotate(-270deg)",
+      },
+    },
+  },
+  { //9
+    label: "",
+    style: {
+      span: {
+        top: "145px",
+        left: "-35px",
+        transform: "rotate(-20deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%) rotate(185deg)",
+      },
+    },
+  },
+  { //10
+    label: "",
+    style: {
+      span: {
+        top: "152px",
+        left: "290px",
+        transform: "rotate(175deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%) rotate(185deg)",
+      },
+    },
+  },
+  { //11
+    label: "",
+    style: {
+      span: {
+        top: "275px",
+        right: "190px",
+        transform: "rotate(104deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%)",
+      },
+    },
+  },
+  { //12
+    label: "",
+    style: {
+      span: {
+        top: "-4px",
+        right: "23px",
+        transform: "rotate(-58deg)",
+      },
+      label: {
+        transform: "translate(-50%, -50%)",
+      },
+    },
+  },
+];
 
 const Roulette = (props) => {
   const [startRotateDeg, setStartRotateDeg] = useState(0);
   useEffect(() => {
-    if (props.itemIndex !== null) {
+    if (props.itemIndex !== null && props.itemIndex >=0 ) {
       handleSpinResult();
     }
   }, [props.itemIndex]);
@@ -373,33 +624,33 @@ const Roulette = (props) => {
     props.handleOnSpinDisable();
     const el = document.getElementById("roulette-turntable");
     const el2 = document.getElementById("roulette-label");
-
-    const rouletteSpin = [{ transform: "rotate(1800deg)" }];
+    const rouletteSpin =
+      props.rouletteType === RouletteEnum.DAR && startRotateDeg >= 1800
+        ? [{ transform: `rotate(${startRotateDeg + 1800}deg)` }]
+        : [{ transform: "rotate(1800deg)" }];
     const rouletteTime = {
       duration: 1000,
       iterations: 30,
     };
     el.animate(rouletteSpin, rouletteTime);
     el2.animate(rouletteSpin, rouletteTime);
-
-    setStartRotateDeg(1800);
+    if(props.rouletteType === RouletteEnum.DAR && startRotateDeg >= 1800)
+    {
+      setStartRotateDeg(startRotateDeg+1800)
+    }
+    else
+    {
+      setStartRotateDeg(1800);
+    }
   };
 
   const handleSpinResult = () => {
-    const ROULETTE_AREA_DEG_6 = [
-      [326, 393],
-      [36, 87],
-      [91, 145],
-      [149, 211],
-      [215, 268],
-      [272, 323],
-    ];
-    const giftIndex = props.itemIndex; //  result-1 index
+    const ROULETTE_AREA_DEG = props.getRouletteSetting().rouletteAreaDeg;
+    const giftIndex =  props.itemIndex; //  result-1 index
     const targetDegree = randomNum(
-      ROULETTE_AREA_DEG_6[giftIndex][0],
-      ROULETTE_AREA_DEG_6[giftIndex][1]
+      ROULETTE_AREA_DEG[giftIndex][0],
+      ROULETTE_AREA_DEG[giftIndex][1]
     );
-
     let rotateDeg = 0;
 
     let i = 0;
@@ -429,13 +680,24 @@ const Roulette = (props) => {
       }
     };
     _fn();
+    if(props.rouletteType === RouletteEnum.DAR)
+    {
+      setStartRotateDeg(rotateDeg+360);
+    }
     turntableEl.style.transform = `rotate(${rotateDeg + 360}deg)`;
     turntableEl.style.transition = `all 1000ms ease-out`;
     labelEl.style.transform = `rotate(${rotateDeg + 360}deg)`;
     labelEl.style.transition = `all 1000ms ease-out`;
     turntableEl.ontransitionend = () => {
       setTimeout(() => {
-        props.performCloseRouletteModal();
+        if(props.rouletteType === RouletteEnum.SIE)
+        {
+          props.performCloseRouletteModal();
+        }
+        else if(props.rouletteType === RouletteEnum.DAR)
+        {
+          props.updateRouletteCount();
+        }
         props.performOpenEmptyModal(
           i18n.t("promoRoulette.dialogRewardTitle1"),
           props.items[giftIndex].label
@@ -449,7 +711,10 @@ const Roulette = (props) => {
 
   return (
     <RouletteWrapper>
-      <Turntable id="roulette-turntable"></Turntable>
+      <Turntable
+        id="roulette-turntable"
+        turntableBG={props.getRouletteSetting().turntableBG}
+      ></Turntable>
       <RouletteLabelContainer>
         <RouletteItemContainer id="roulette-label">
           {generateLabels()}
@@ -470,13 +735,58 @@ const PromotionRoulette = (props) => {
   const [tabIndex, setTabIndex] = useState(0);
   const [disableOnSpin, setDisableOnSpin] = useState(false);
   const [dialogContent, setDialogContent] = useState({});
+  const [rouletteCount, setRouletteCount] = useState(null);
+  const getRouletteSetting = () => {
+    switch (props.rouletteType) {
+      case RouletteEnum.SIE:
+        return {
+          turntableBG: RouletteTurntable6,
+          rouletteAreaDeg: ROULETTE_AREA_DEG_6,
+          rouletteItems: ROULETTE_ITEM_6,
+        };
+      case RouletteEnum.DAR:
+        return {
+          turntableBG: RouletteTurntable12,
+          rouletteAreaDeg: ROULETTE_AREA_DEG_12,
+          rouletteItems: ROULETTE_ITEM_12,
+        };
+      default:
+        return {
+          turntableBG: RouletteTurntable6,
+          rouletteAreaDeg: ROULETTE_AREA_DEG_6,
+          rouletteItems: ROULETTE_ITEM_6,
+        };
+    }
+  };
+
+  const mapRouletteItems = ({ items, rouletteItems, rouletteitems }) => {
+    const itemList = getRouletteSetting().rouletteItems;
+    itemList.map((item, index) => {
+      if (items) {
+        item.label = items[index].title;
+        item.id = items[index].id;
+      } else if (rouletteItems) {
+        item.label = rouletteItems[index].title;
+        item.id = rouletteItems[index].title;
+      } else if (rouletteitems) {
+        item.label = rouletteitems[index].title;
+        item.id = rouletteitems[index].title;
+      }
+      return item;
+    });
+    return itemList;
+  };
+  const [items, setItems] = useState(
+    mapRouletteItems(props.promotionDetail.campaignDetail)
+  );
+
   useEffect(() => {
-    if (props.general.isRouletteAvailable != null) {
-      if (props.general.isRouletteAvailable && rouletteModal) {
+    if ((!config.features.RouletteNewFlow && props.general.isRouletteAvailable != null) || rouletteCount !==null ) {
+      if (((!config.features.RouletteNewFlow && props.general.isRouletteAvailable) || rouletteCount > 0) && rouletteModal) {
         if (disableOnSpin) {
           setDisableOnSpin(false);
         }
-      } else if (!props.general.isRouletteAvailable && rouletteModal) {
+      } else if (((!config.features.RouletteNewFlow && !props.general.isRouletteAvailable ) || rouletteCount <= 0) && rouletteModal) {
         setRouletteModal(false);
         setDisableOnSpin(false);
         performOpenEmptyModal(
@@ -486,7 +796,26 @@ const PromotionRoulette = (props) => {
         );
       }
     }
-  }, [props.general.isRouletteAvailable, rouletteModal]);
+    else if(rouletteCount === null && props.account.token !==null)
+    {
+      if (!disableOnSpin) {
+        setDisableOnSpin(true);
+      }
+    }
+  }, [props.general.isRouletteAvailable, rouletteModal, rouletteCount]);
+
+  useEffect(() => {
+    if (props.general.rouletteCount.length > 0) {
+      let index = props.general.rouletteCount.findIndex(
+        (item) =>{
+          return item.promotionid === props.promotionDetail.id &&
+          item.promotiontype.toUpperCase() === RouletteEnum.DAR}
+      );
+      if (index > 0) {
+        setRouletteCount(props.general.rouletteCount[index].roulettecount);
+      }
+    }
+  }, [props.general.rouletteCount, rouletteCount, props.promotionDetail.id]);
 
   const performOpenRouletteModal = () => {
     setRouletteModal(true);
@@ -538,102 +867,62 @@ const PromotionRoulette = (props) => {
   };
 
   const getRouletteResult = () => {
-    props.getPromotionRouletteResult(props.promotionDetail.id);
+    if(props.rouletteType===RouletteEnum.SIE)
+    {
+      props.getPromotionRouletteResult(props.promotionDetail.id);
+    }
+    else if(props.rouletteType===RouletteEnum.DAR)
+    {
+      props.getDepositAccumulateRouletteResult(props.promotionDetail.id);
+    }
   };
 
-  const getRouletteStatus = () => {
-    props.getPromotionRouletteStatus(props.promotionDetail.id);
+  const getRouletteStatus = async() => {
+    if(props.rouletteType===RouletteEnum.SIE)
+    {
+      if(config.features.RouletteNewFlow)
+      {
+        await updateRouletteCount();
+      }
+      else
+      {
+        props.getPromotionRouletteStatus(props.promotionDetail.id);
+      }
+    }
+    else if(props.rouletteType===RouletteEnum.DAR)
+    {
+      await updateRouletteCount();
+      await props.getDepositAccumulateRoulette(props.promotionDetail.id).then((response)=>{
+        if(response.data!==null)
+        {
+          setItems(mapRouletteItems(response.data))
+        }
+      });
+    }
   };
 
-  const mapRouletteItems = (items) => {
-    const rouletteItems6 = [
+  const updateRouletteCount = async()=> {
+    await GeneralService.GetPromotionRouletteCount().then((response)=>{
+      if(response.IsSuccess)
       {
-        label: "",
-        style: {
-          span: {
-            top: "255px",
-            right: "30px",
-            transform: "rotate(46deg)",
-          },
-          label: {
-            transform: "translate(-50%, -50%)",
-          },
-        },
-      },
-      {
-        label: "",
-        style: {
-          span: {
-            top: "28px",
-            left: "0px",
-            transform: "rotate(25deg)",
-          },
-          label: {
-            transform: "translate(-50%, -50%) rotate(185deg)",
-          },
-        },
-      },
-      {
-        label: "",
-        style: {
-          span: {
-            top: "-21px",
-            left: "182px",
-            transform: "rotate(9deg)",
-          },
-          label: {
-            transform: "translate(-50%, -50%) rotate(-85deg)",
-          },
-        },
-      },
-      {
-        label: "",
-        style: {
-          span: {
-            bottom: "-33px",
-            left: "103px",
-            transform: "rotate(0deg)",
-          },
-          label: {
-            transform: "translate(-50%, -50%) rotate(-270deg)",
-          },
-        },
-      },
-      {
-        label: "",
-        style: {
-          span: {
-            top: "145px",
-            left: "-35px",
-            transform: "rotate(-20deg)",
-          },
-          label: {
-            transform: "translate(-50%, -50%) rotate(185deg)",
-          },
-        },
-      },
-      {
-        label: "",
-        style: {
-          span: {
-            top: "67px",
-            right: "-24px",
-            transform: "rotate(-29deg)",
-          },
-          label: {
-            transform: "translate(-50%, -50%)",
-          },
-        },
-      },
-    ];
-    rouletteItems6.map((item, index) => {
-      item.label = items[index].title;
-      item.id = items[index].id;
-      item.bonus = items[index].bonus;
-      return null;
-    });
-    return rouletteItems6;
-  };
+        if(response.data.length>0)
+        {
+          let index = response.data.findIndex(
+            (item) =>{
+              return item.promotionid === props.promotionDetail.id &&
+              item.promotiontype.toUpperCase() === props.rouletteType.toUpperCase() }
+          );
+          if (index >= 0) {
+            setRouletteCount(response.data[index].roulettecount);
+          }
+          else
+          {
+            setRouletteCount(null);
+          }
+        }
+      }
+    })
+  }
 
   const tabMenu = [
     {
@@ -647,9 +936,10 @@ const PromotionRoulette = (props) => {
     },
   ];
 
+
   return (
-    <div>
-      <Container>
+    <React.Fragment>
+      <Container rouletteType={props.rouletteType}>
         <BtnRoulette
           onClick={() => {
             getRouletteStatus();
@@ -663,8 +953,9 @@ const PromotionRoulette = (props) => {
             <LoadingIcon src={LoadingGIF}></LoadingIcon>
           </LoadingContainer>
           <Roulette
+            rouletteType={props.rouletteType}
             itemIndex={props.general.itemIndex}
-            items={mapRouletteItems(props.promotionDetail.campaignDetail.items)}
+            items={items}
             account={props.account}
             showLogin={props.showLogin}
             disableOnSpin={disableOnSpin}
@@ -673,6 +964,8 @@ const PromotionRoulette = (props) => {
             performOpenEmptyModal={performOpenEmptyModal}
             performCloseRouletteModal={performCloseRouletteModal}
             handlePhoneVerifyClick={handlePhoneVerifyClick}
+            getRouletteSetting={getRouletteSetting}
+            updateRouletteCount={updateRouletteCount}
           ></Roulette>
           <TabContainer>
             {tabMenu.map((item, index) => {
@@ -807,7 +1100,7 @@ const PromotionRoulette = (props) => {
         )}
         {/* <CloseButton onClick={performCloseEmptyModal}></CloseButton> */}
       </CustomModal>
-    </div>
+    </React.Fragment>
   );
 };
 
@@ -828,6 +1121,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(generalAction.getPromotionRouletteStatus(id)),
     getPromotionRouletteResult: (id) =>
       dispatch(generalAction.getPromotionRouletteResult(id)),
+    getPromotionRouletteCount: () => dispatch(generalAction.getPromotionRouletteCount()),
+    getDepositAccumulateRoulette: (promotionId) => dispatch(generalAction.getDepositAccumulateRoulette(promotionId)),
+    getDepositAccumulateRouletteResult: (promotionId) => dispatch(generalAction.getDepositAccumulateRouletteResult(promotionId)),
     resetPromoRoulette: () => dispatch({ type: RESET_PROMOROULETTE }),
   };
 };

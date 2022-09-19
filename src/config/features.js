@@ -109,6 +109,7 @@ const featureList = {
     },
     Wap_DisplayButton: false,
     MergeEVORTNT: true,
+    RouletteNewFlow: false,
   },
 };
 export default featureList;
