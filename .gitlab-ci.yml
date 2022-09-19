@@ -1,114 +1,11 @@
+include:
+  - project: 'cidevops/tgs-gitlab-ci-jobs'
+    ref: main
+    file: 'lobby-deployment.yaml'
+
 variables:
   ImageName: pgtgs/lobby-t10
   GIT_SUBMODULE_STRATEGY: recursive # 會把submodule中的submodule也引進到項目中
   components_dev: lobby-t10
   components_staging: lobby-gpi-t10,lobby-pb2
   components_prod: lobby-gpi-t10
-  
-stages:
-  - build
-  - deploy
-
-build:
-  stage: build
-  only:
-    - master
-    - release/current
-    - develop
-  before_script:
-    - echo "branch:$CI_COMMIT_BRANCH"
-    - git config --file=.gitmodules submodule.src/components/Wap.branch $CI_COMMIT_BRANCH
-    - git config --file=.gitmodules submodule.src/components/App/Account.branch $CI_COMMIT_BRANCH
-    - git config --file=.gitmodules submodule.src/api-services.branch $CI_COMMIT_BRANCH
-    - git submodule sync
-    - git submodule update
-  script:
-    - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
-    - docker build -t ${ImageName}:${TAG} .
-    - docker push ${ImageName}:${TAG}
-  artifacts:
-    name: npm
-    untracked: false
-    expire_in: "7 days"
-    paths:
-      - node_modules/
-
-deploy-dev:
-  stage: deploy
-  variables:
-    GIT_STRATEGY: none
-    namespace: dev
-  environment:
-    name: dev
-  needs:
-    - build
-  only:
-    - develop
-  before_script:
-    - export KUBECONFIG=$kubeconfig_dev
-  script:
-    - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
-    - |
-      IFS=',' read -r -a componentArray <<< "$components_dev"
-      for component in "${componentArray[@]}" 
-      do
-         kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
-      done
-
-deploy-staging:
-  stage: deploy
-  variables:
-    GIT_STRATEGY: none
-    namespace: staging
-  environment:
-    name: staging
-  needs:
-    - build
-  only:
-    - release/current
-  before_script:
-    - export KUBECONFIG=$kubeconfig_staging
-  script:
-    - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
-    - |
-      IFS=',' read -r -a componentArray <<< "$components_staging"
-      for component in "${componentArray[@]}" 
-      do
-         kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
-      done
-      
-deploy-prod:
-  stage: deploy
-  variables:
-    GIT_STRATEGY: none
-    namespace: prod
-  environment:
-    name: prod
-  needs:
-    - build
-  only:
-    - master
-  before_script:
-    - export KUBECONFIG=$kubeconfig_prod
-  when: manual
-  script:
-    - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
-    - |
-      IFS=',' read -r -a componentArray <<< "$components_prod"
-      for component in "${componentArray[@]}" 
-      do
-         kubectl set image deployment/${component} ${component}=${ImageName}:${TAG} --record -n $namespace
-      done
-      
-notification:
-  stage: .post
-  script: 
-    - printenv
-    - |
-      curl --location --request POST $Telegram_Bot_Url \
-      --header 'Content-Type: application/json' \
-      --data-raw "{
-          \"chat_id\": $Telegram_Chat_Id,
-          \"text\": \"Project: $CI_PROJECT_NAME\nBranch: $CI_COMMIT_BRANCH\nPipeline: $CI_PIPELINE_URL\nConmmit: $CI_PROJECT_URL/-/commit/$CI_COMMIT_SHA\nStarted by: $GITLAB_USER_LOGIN\",
-          \"parse_mode\": \"HTML\"
-      }"

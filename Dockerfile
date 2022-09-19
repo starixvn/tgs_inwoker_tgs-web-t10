@@ -3,10 +3,6 @@ FROM node:14.15.1-stretch-slim AS build
 WORKDIR /src
 COPY . .
 
-RUN apt-get update && \
-    apt-get install -y git
-
-
 RUN npm ci
 RUN npm run build
 
