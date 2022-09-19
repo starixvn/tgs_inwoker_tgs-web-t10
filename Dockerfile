@@ -3,7 +3,7 @@ FROM node:14.15.1-stretch-slim AS build
 WORKDIR /src
 COPY . .
 
-RUN npm ci
+RUN npm install
 RUN npm run build
 
 FROM caddy:2.1.1-alpine
