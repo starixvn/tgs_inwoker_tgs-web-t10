@@ -3,9 +3,36 @@ include:
     ref: main
     file: '/templates/.lobby-deployment.yaml'
 
+stages:
+  - build
+  - deploy
+  
 variables:
   ImageName: pgtgs/lobby-t10
   GIT_SUBMODULE_STRATEGY: recursive # 會把submodule中的submodule也引進到項目中
   components_dev: lobby-t10
   components_staging: lobby-gpi-t10,lobby-pb2
   components_prod: lobby-gpi-t10
+
+build:
+  stage: build
+  only:
+    - master
+    - release/current
+    - develop
+  before_script:
+    - printenv
+    - echo "branch:$CI_COMMIT_BRANCH"
+    - git config --file=.gitmodules submodule.src/components/Wap.branch $CI_COMMIT_BRANCH
+    - git config --file=.gitmodules submodule.src/components/App/Account.branch $CI_COMMIT_BRANCH
+    - git config --file=.gitmodules submodule.src/api-services.branch $CI_COMMIT_BRANCH
+    - git submodule sync
+    - git submodule update
+  script:
+    - export TAG="$(date -d $CI_PIPELINE_CREATED_AT +%Y%m%d).$CI_PIPELINE_IID"
+    - docker build -t ${ImageName}:${TAG} .
+    - docker push ${ImageName}:${TAG}
+  artifacts:
+    name: npm
+    untracked: false
+    expire_in: "7 days"
