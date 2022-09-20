@@ -13,7 +13,7 @@ build:
   extends: .build
 
 deploy-dev:
-  extends: .deploy
+  extends: .deploy-dev
 
 deploy-staging:
   extends: .deploy-staging
