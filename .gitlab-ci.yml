@@ -5,7 +5,18 @@ include:
 
 variables:
   ImageName: pgtgs/lobby-t10
-  GIT_SUBMODULE_STRATEGY: recursive # 會把submodule中的submodule也引進到項目中
   components_dev: lobby-t10
   components_staging: lobby-gpi-t10,lobby-pb2
   components_prod: lobby-gpi-t10
+  
+build:
+  extends: .build
+
+deploy-dev:
+  extends: .deploy-dev
+
+deploy-staging:
+  extends: .deploy-staging
+      
+deploy-prod:
+  extends: .deploy-prod
