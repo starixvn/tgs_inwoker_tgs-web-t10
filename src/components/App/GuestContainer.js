@@ -552,7 +552,7 @@ class GuestContainer extends Component {
             this.props.getGameBalance(a.abbreviation);
           });
         this.props.getPromotion();
-        //this.props.getPromotionRouletteCount();
+        this.props.getPromotionRouletteCount();
       }
       // this.props.getIDCardNo();
       // this.props.getInviteLink();
