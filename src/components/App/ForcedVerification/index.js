@@ -349,7 +349,7 @@ const ForcedVerification = ({ forcedverify }) => {
         }
       );
     } else {
-      smsVerification(securityKey, "123456");
+      smsVerification(securityKey, code);
     }
   };
 
