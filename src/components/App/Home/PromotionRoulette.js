@@ -762,13 +762,13 @@ const PromotionRoulette = (props) => {
   const mapRouletteItems = ({ items, rouletteItems, rouletteitems }) => {
     const itemList = getRouletteSetting().rouletteItems;
     itemList.map((item, index) => {
-      if (items) {
+      if (items && items[index]) {
         item.label = items[index].title;
         item.id = items[index].id;
-      } else if (rouletteItems) {
+      } else if (rouletteItems && rouletteItems[index]) {
         item.label = rouletteItems[index].title;
         item.id = rouletteItems[index].title;
-      } else if (rouletteitems) {
+      } else if (rouletteitems && rouletteitems[index]) {
         item.label = rouletteitems[index].title;
         item.id = rouletteitems[index].title;
       }

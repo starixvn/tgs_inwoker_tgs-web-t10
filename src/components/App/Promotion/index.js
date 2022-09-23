@@ -189,7 +189,7 @@ class Promotion extends Component {
     else {
       this.props.joinPromotion(id);
       if (
-        ["FirstDeposit", "DailySecondDeposit", "DailyFirstDeposit"].indexOf(
+        ["FirstDeposit", "DailySecondDeposit", "DailyFirstDeposit", "DepositReward"].indexOf(
           promotionType
         ) >= 0
       ) {
