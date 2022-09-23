@@ -20,3 +20,13 @@ deploy-staging:
       
 deploy-prod:
   extends: .deploy-prod
+  
+inherit:
+  default: 
+    - namespace
+  variables:
+    - ImageName
+    - components_dev
+    - components_staging
+    - components_prod
+    
