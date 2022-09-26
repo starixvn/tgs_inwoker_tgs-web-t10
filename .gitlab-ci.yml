@@ -11,7 +11,7 @@ variables:
   GIT_STRATEGY: clone
   GIT_SUBMODULE_STRATEGY: normal
   GIT_SUBMODULE_UPDATE_FLAGS: "--remote --checkout --no-single-branch"
-  
+  API_BRANCH_VARIABLE: $CI_COMMIT_BRANCH
 build:
   extends: .build
   stage: build
@@ -20,9 +20,15 @@ build:
     - release/current
     - develop
   before_script:
+    - |
+      if [ "$CI_COMMIT_BRANCH" == "release/current" ]; then
+        API_BRANCH_VARIABLE="develop"
+      else
+        API_BRANCH_VARIABLE=$CI_COMMIT_BRANCH
+      fi
     - echo "branch:$CI_COMMIT_BRANCH"
     - git submodule sync --recursive
-    - git config --file=.gitmodules submodule.src/api-services.branch $CI_COMMIT_BRANCH
+    - git config --file=.gitmodules submodule.src/api-services.branch $API_BRANCH_VARIABLE
     - git config --file=.gitmodules submodule.src/components/Wap.branch $CI_COMMIT_BRANCH
     - git config --file=.gitmodules submodule.src/components/App/Account.branch $CI_COMMIT_BRANCH
     - git submodule update --init --remote
