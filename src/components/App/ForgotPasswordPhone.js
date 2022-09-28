@@ -254,10 +254,16 @@ class ForgotPasswordPhone extends Component {
     this.setState({ ...this.state, phone: e.target.value });
   };
   onhandleGetCodeClick = () => {
-    if (this.state.phone.length < config.features.MAX_PHONE_LENGTH || 10) {
-      this.props.enqueueSnackbar(i18n.t("common.noReachMin"), {
-        variant: "error",
-      });
+    var expr = new RegExp(`^[0-9]{8,${config.features.MAX_PHONE_LENGTH || 10}}`);
+    if (!expr.test(this.state.phone)) {
+      this.props.enqueueSnackbar(
+        i18n
+          .t("common.noReachMin")
+          .replace(/{maxlength}/g, config.features.MAX_PHONE_LENGTH),
+        {
+          variant: "warning",
+        }
+      );
       return;
     }
     if (this.state.countdown <= 0) {
