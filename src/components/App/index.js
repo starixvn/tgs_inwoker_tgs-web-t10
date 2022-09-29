@@ -347,8 +347,20 @@ class App extends Component {
       this.props.general.promotionList.items &&
       this.props.general.promotionList.items.length > 0 &&
       this.props.general.promotionList.items.findIndex(
+        (item) => item.promotionType.toUpperCase() === "ROULETTE"
+      ) >= 0
+    );
+  };
+
+  isDARAvailable = (roulette) => {
+    return (
+      this.props.general.promotionList.items &&
+      this.props.general.promotionList.items.length > 0 &&
+      this.props.general.promotionList.items.findIndex(
         (item) =>
-          item.promotionType.toUpperCase() === "ROULETTE"
+          item.promotionType.toUpperCase() ===
+            roulette.promotiontype.toUpperCase() &&
+          item.id === roulette.promotionid
       ) >= 0
     );
   };
@@ -593,7 +605,7 @@ class App extends Component {
                   <RouletteFloatingPanel>
                     {
                       this.props.general.promotionList.items.length > 0 &&
-                      this.props.general.rouletteCount.length > 0 &&
+                        this.props.general.rouletteCount.length > 0 &&
                         this.props.general.rouletteCount
                           .filter(
                             (item) =>
@@ -601,7 +613,9 @@ class App extends Component {
                               "DEPOSITACCUMULATEROULETTE"
                           )
                           .map((roulette, index) => {
-                            return roulette.roulettecount > 0 && index === 0 ? (
+                            return this.isDARAvailable(roulette) &&
+                              roulette.roulettecount > 0 &&
+                              index === 0 ? (
                               <PromotionRoulette
                                 rouletteType={roulette.promotiontype.toUpperCase()}
                                 promotionDetail={
@@ -631,7 +645,7 @@ class App extends Component {
                       // })
                     }
                     {config.features.HomePage_PromoRoulette &&
-                      !config.features.RouletteNewFlow && 
+                      !config.features.RouletteNewFlow &&
                       this.isRouletteAvailable() && (
                         <PromotionRoulette
                           rouletteType="ROULETTE"

@@ -29,11 +29,10 @@ import {
 const moment = require("moment");
 const RouletteEnum = {
   SIE: "ROULETTE",
-  DAR: "DEPOSITACCUMULATEROULETTE"
+  DAR: "DEPOSITACCUMULATEROULETTE",
 };
 
-const Container = styled.div`
-`;
+const Container = styled.div``;
 
 const BtnRoulette = styled.div`
   cursor: pointer;
@@ -386,7 +385,8 @@ const ROULETTE_AREA_DEG_12 = [
   [316, 339],
 ];
 const ROULETTE_ITEM_12 = [
-  { //1
+  {
+    //1
     label: "",
     style: {
       span: {
@@ -399,7 +399,8 @@ const ROULETTE_ITEM_12 = [
       },
     },
   },
-  { //2
+  {
+    //2
     label: "",
     style: {
       span: {
@@ -412,7 +413,8 @@ const ROULETTE_ITEM_12 = [
       },
     },
   },
-  { //3
+  {
+    //3
     label: "",
     style: {
       span: {
@@ -425,7 +427,8 @@ const ROULETTE_ITEM_12 = [
       },
     },
   },
-  { //4
+  {
+    //4
     label: "",
     style: {
       span: {
@@ -438,7 +441,8 @@ const ROULETTE_ITEM_12 = [
       },
     },
   },
-  { //5
+  {
+    //5
     label: "",
     style: {
       span: {
@@ -451,7 +455,8 @@ const ROULETTE_ITEM_12 = [
       },
     },
   },
-  { //6
+  {
+    //6
     label: "",
     style: {
       span: {
@@ -464,7 +469,8 @@ const ROULETTE_ITEM_12 = [
       },
     },
   },
-  { //7 
+  {
+    //7
     label: "",
     style: {
       span: {
@@ -477,7 +483,8 @@ const ROULETTE_ITEM_12 = [
       },
     },
   },
-  { //8
+  {
+    //8
     label: "",
     style: {
       span: {
@@ -490,7 +497,8 @@ const ROULETTE_ITEM_12 = [
       },
     },
   },
-  { //9
+  {
+    //9
     label: "",
     style: {
       span: {
@@ -503,7 +511,8 @@ const ROULETTE_ITEM_12 = [
       },
     },
   },
-  { //10
+  {
+    //10
     label: "",
     style: {
       span: {
@@ -516,7 +525,8 @@ const ROULETTE_ITEM_12 = [
       },
     },
   },
-  { //11
+  {
+    //11
     label: "",
     style: {
       span: {
@@ -529,7 +539,8 @@ const ROULETTE_ITEM_12 = [
       },
     },
   },
-  { //12
+  {
+    //12
     label: "",
     style: {
       span: {
@@ -547,7 +558,7 @@ const ROULETTE_ITEM_12 = [
 const Roulette = (props) => {
   const [startRotateDeg, setStartRotateDeg] = useState(0);
   useEffect(() => {
-    if (props.itemIndex !== null && props.itemIndex >=0 ) {
+    if (props.itemIndex !== null && props.itemIndex >= 0) {
       handleSpinResult();
     }
   }, [props.itemIndex]);
@@ -634,19 +645,16 @@ const Roulette = (props) => {
     };
     el.animate(rouletteSpin, rouletteTime);
     el2.animate(rouletteSpin, rouletteTime);
-    if(props.rouletteType === RouletteEnum.DAR && startRotateDeg >= 1800)
-    {
-      setStartRotateDeg(startRotateDeg+1800)
-    }
-    else
-    {
+    if (props.rouletteType === RouletteEnum.DAR && startRotateDeg >= 1800) {
+      setStartRotateDeg(startRotateDeg + 1800);
+    } else {
       setStartRotateDeg(1800);
     }
   };
 
   const handleSpinResult = () => {
     const ROULETTE_AREA_DEG = props.getRouletteSetting().rouletteAreaDeg;
-    const giftIndex =  props.itemIndex; //  result-1 index
+    const giftIndex = props.itemIndex; //  result-1 index
     const targetDegree = randomNum(
       ROULETTE_AREA_DEG[giftIndex][0],
       ROULETTE_AREA_DEG[giftIndex][1]
@@ -680,9 +688,8 @@ const Roulette = (props) => {
       }
     };
     _fn();
-    if(props.rouletteType === RouletteEnum.DAR)
-    {
-      setStartRotateDeg(rotateDeg+360);
+    if (props.rouletteType === RouletteEnum.DAR) {
+      setStartRotateDeg(rotateDeg + 360);
     }
     turntableEl.style.transform = `rotate(${rotateDeg + 360}deg)`;
     turntableEl.style.transition = `all 1000ms ease-out`;
@@ -690,12 +697,9 @@ const Roulette = (props) => {
     labelEl.style.transition = `all 1000ms ease-out`;
     turntableEl.ontransitionend = () => {
       setTimeout(() => {
-        if(props.rouletteType === RouletteEnum.SIE)
-        {
+        if (props.rouletteType === RouletteEnum.SIE) {
           props.performCloseRouletteModal();
-        }
-        else if(props.rouletteType === RouletteEnum.DAR)
-        {
+        } else if (props.rouletteType === RouletteEnum.DAR) {
           props.updateRouletteCount();
         }
         props.performOpenEmptyModal(
@@ -781,23 +785,47 @@ const PromotionRoulette = (props) => {
   );
 
   useEffect(() => {
-    if ((!config.features.RouletteNewFlow && props.general.isRouletteAvailable != null) || rouletteCount !==null ) {
-      if (((!config.features.RouletteNewFlow && props.general.isRouletteAvailable) || rouletteCount > 0) && rouletteModal) {
+    if (
+      (!config.features.RouletteNewFlow &&
+        props.general.isRouletteAvailable != null) ||
+      rouletteCount !== null
+    ) {
+      if (
+        ((!config.features.RouletteNewFlow &&
+          props.general.isRouletteAvailable) ||
+          rouletteCount > 0) &&
+        rouletteModal
+      ) {
         if (disableOnSpin) {
           setDisableOnSpin(false);
         }
-      } else if (((!config.features.RouletteNewFlow && !props.general.isRouletteAvailable ) || rouletteCount <= 0) && rouletteModal) {
-        setRouletteModal(false);
-        setDisableOnSpin(false);
-        performOpenEmptyModal(
-          i18n.t("promoRoulette.dialogUnavailableTitle1"),
-          i18n.t("promoRoulette.dialogUnavailableTitle2"),
-          i18n.t("promoRoulette.dialogUnavailableTitle3")
-        );
+      } else if (
+        ((!config.features.RouletteNewFlow &&
+          !props.general.isRouletteAvailable) ||
+          rouletteCount <= 0) &&
+        rouletteModal
+      ) {
+        if (props.rouletteType === RouletteEnum.SIE) {
+          setRouletteModal(false);
+          setDisableOnSpin(false);
+          performOpenEmptyModal(
+            i18n.t("promoRoulette.dialogUnavailableTitle1"),
+            i18n.t("promoRoulette.dialogUnavailableTitle2"),
+            i18n.t("promoRoulette.dialogUnavailableTitle3")
+          );
+        } else if (props.rouletteType === RouletteEnum.DAR) {
+          setTimeout(() => {
+            setRouletteModal(false);
+            setDisableOnSpin(true);
+            performOpenEmptyModal(
+              i18n.t("promoRoulette.dialogDARUnavailableTitle"),
+              "",
+              i18n.t("promoRoulette.dialogUnavailableTitle3")
+            );
+          }, 2000);
+        }
       }
-    }
-    else if(rouletteCount === null && props.account.token !==null)
-    {
+    } else if (rouletteCount === null && props.account.token !== null) {
       if (!disableOnSpin) {
         setDisableOnSpin(true);
       }
@@ -806,11 +834,12 @@ const PromotionRoulette = (props) => {
 
   useEffect(() => {
     if (props.general.rouletteCount.length > 0) {
-      let index = props.general.rouletteCount.findIndex(
-        (item) =>{
-          return item.promotionid === props.promotionDetail.id &&
-          item.promotiontype.toUpperCase() === RouletteEnum.DAR}
-      );
+      let index = props.general.rouletteCount.findIndex((item) => {
+        return (
+          item.promotionid === props.promotionDetail.id &&
+          item.promotiontype.toUpperCase() === RouletteEnum.DAR
+        );
+      });
       if (index > 0) {
         setRouletteCount(props.general.rouletteCount[index].roulettecount);
       }
@@ -864,65 +893,60 @@ const PromotionRoulette = (props) => {
 
   const handleNavigateToPromotion = () => {
     AppHistory.push("/" + i18n.language + "/promotion");
+    performCloseEmptyModal();
   };
 
   const getRouletteResult = () => {
-    if(props.rouletteType===RouletteEnum.SIE)
-    {
+    if (props.rouletteType === RouletteEnum.SIE) {
       props.getPromotionRouletteResult(props.promotionDetail.id);
-    }
-    else if(props.rouletteType===RouletteEnum.DAR)
-    {
+    } else if (props.rouletteType === RouletteEnum.DAR) {
       props.getDepositAccumulateRouletteResult(props.promotionDetail.id);
     }
   };
 
-  const getRouletteStatus = async() => {
-    if(props.rouletteType===RouletteEnum.SIE)
-    {
-      if(config.features.RouletteNewFlow)
-      {
+  const getRouletteStatus = async () => {
+    if (props.rouletteType === RouletteEnum.SIE) {
+      if (config.features.RouletteNewFlow) {
         await updateRouletteCount();
-      }
-      else
-      {
+      } else {
         props.getPromotionRouletteStatus(props.promotionDetail.id);
       }
-    }
-    else if(props.rouletteType===RouletteEnum.DAR)
-    {
+    } else if (props.rouletteType === RouletteEnum.DAR) {
       await updateRouletteCount();
-      await props.getDepositAccumulateRoulette(props.promotionDetail.id).then((response)=>{
-        if(response.data!==null)
-        {
-          setItems(mapRouletteItems(response.data))
-        }
-      });
+      await props
+        .getDepositAccumulateRoulette(props.promotionDetail.id)
+        .then((response) => {
+          if (response.data !== null) {
+            setItems(mapRouletteItems(response.data));
+          }
+        });
     }
   };
 
-  const updateRouletteCount = async()=> {
-    await GeneralService.GetPromotionRouletteCount().then((response)=>{
-      if(response.IsSuccess)
-      {
-        if(response.data.length>0)
-        {
-          let index = response.data.findIndex(
-            (item) =>{
-              return item.promotionid === props.promotionDetail.id &&
-              item.promotiontype.toUpperCase() === props.rouletteType.toUpperCase() }
-          );
+  const updateRouletteCount = async () => {
+    await GeneralService.GetPromotionRouletteCount().then((response) => {
+      if (response.IsSuccess) {
+        if (response.data.length > 0) {
+          let index = response.data.findIndex((item) => {
+            return (
+              item.promotionid === props.promotionDetail.id &&
+              item.promotiontype.toUpperCase() ===
+                props.rouletteType.toUpperCase()
+            );
+          });
           if (index >= 0) {
             setRouletteCount(response.data[index].roulettecount);
+          } else {
+            setRouletteCount(0);
           }
-          else
-          {
-            setRouletteCount(null);
-          }
+        } else {
+          setRouletteCount(0);
         }
+      } else {
+        setRouletteCount(0);
       }
-    })
-  }
+    });
+  };
 
   const tabMenu = [
     {
@@ -935,7 +959,6 @@ const PromotionRoulette = (props) => {
       label: i18n.t("promoRoulette.terms"),
     },
   ];
-
 
   return (
     <React.Fragment>
@@ -1121,9 +1144,12 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(generalAction.getPromotionRouletteStatus(id)),
     getPromotionRouletteResult: (id) =>
       dispatch(generalAction.getPromotionRouletteResult(id)),
-    getPromotionRouletteCount: () => dispatch(generalAction.getPromotionRouletteCount()),
-    getDepositAccumulateRoulette: (promotionId) => dispatch(generalAction.getDepositAccumulateRoulette(promotionId)),
-    getDepositAccumulateRouletteResult: (promotionId) => dispatch(generalAction.getDepositAccumulateRouletteResult(promotionId)),
+    getPromotionRouletteCount: () =>
+      dispatch(generalAction.getPromotionRouletteCount()),
+    getDepositAccumulateRoulette: (promotionId) =>
+      dispatch(generalAction.getDepositAccumulateRoulette(promotionId)),
+    getDepositAccumulateRouletteResult: (promotionId) =>
+      dispatch(generalAction.getDepositAccumulateRouletteResult(promotionId)),
     resetPromoRoulette: () => dispatch({ type: RESET_PROMOROULETTE }),
   };
 };
