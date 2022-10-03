@@ -824,7 +824,7 @@ const PromotionRoulette = (props) => {
               "",
               i18n.t("promoRoulette.dialogUnavailableTitle3")
             );
-          }, 1500);
+          }, 2000);
         }
       }
     } else if (rouletteCount === null && props.account.token !== null) {
