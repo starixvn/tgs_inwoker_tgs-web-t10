@@ -22,7 +22,7 @@ pipeline {
                     {
                         case ['master', 'origin/master']:
                             env.kube_ns = "prod";
-                            env.k8s_config = 'stag-k8s-config';
+                            env.k8s_config = 'prod-k8s-config';
                             sh "git config --file=.gitmodules submodule.src/components/Wap.branch master";
                             sh "git config --file=.gitmodules submodule.src/components/App/Account.branch master";
                             sh "git config --file=.gitmodules submodule.src/api-services.branch master";
