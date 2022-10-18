@@ -63,6 +63,7 @@ const featureList = {
     MenuItem_Sorting_SKY: false,
     MenuItem_Sorting_PB: false,
     MenuItem_Sorting_GMO: false,
+    MenuItem_Sorting_BUNNY: false,
     VIP_CustomLevel_BUNNY: false,
 
     LiveGame_Sorting_SKY: false,
@@ -110,6 +111,7 @@ const featureList = {
     Wap_DisplayButton: false,
     MergeEVORTNT: true,
     RouletteNewFlow: false,
+    HaveVIPFeature: true,
   },
 };
 export default featureList;
