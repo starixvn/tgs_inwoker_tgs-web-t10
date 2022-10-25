@@ -387,6 +387,13 @@ function formatNumberWithThousand(x) {
   if (isNaN(x)) return x;
   return x.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
+function formatNumberWithCommasNoRounding(x) {
+  if (isNaN(x)) return x;
+  return parseFloat(x)
+    .toFixed(6)
+    .slice(0, -4)
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+}
 function loadScript(url, cb) {
   var scr = document.createElement("script");
   scr.type = "text/javascript";
@@ -427,6 +434,7 @@ const Common = {
   GetBonusCategory,
   formatNumberWithCommas,
   formatNumberWithThousand,
+  formatNumberWithCommasNoRounding,
   PopupCenter,
   closePreviousPopup,
   bankImageMapping,
