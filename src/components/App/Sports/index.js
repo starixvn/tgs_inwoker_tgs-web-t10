@@ -222,7 +222,7 @@ class Sports extends Component {
         this.props.performBalanceRefresh();
       } else {
         this.props.history.push(
-          "/" + i18n.language + "/sports/play/" + params + "/" + type
+          "/" + i18n.language + "/sports/play/" + params + "/" + 1
         );
       }
     }
@@ -251,7 +251,7 @@ class Sports extends Component {
                     maintenance={item.status !== 0}
                     key={index}
                     onClick={() => {
-                      this.handleJoinGameClick(item.abbreviation);
+                      this.handleJoinGameClick(item.gpcode);
                     }}
                   >
                     <Maintenance>{i18n.t("transfer.maintenance")}</Maintenance>
