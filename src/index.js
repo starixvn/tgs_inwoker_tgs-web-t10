@@ -49,6 +49,7 @@ import JoinLotteryGame from "./components/Share/JoinLotteryGame";
 import featureList from "./config/features";
 import FeatureGetter from "./components/Share/feature-getter";
 import AudioPlayer from "./components/Share/audioplayer";
+import config from "./config/config";
 
 require("es6-promise").polyfill();
 const store = createStore(rootReducer, applyMiddleware(thunk));
@@ -107,17 +108,6 @@ document
 //   Config.baseUrl = baseUrl;
 // }
 
-var fontFamily = "Tahoma, Helvetica, Arial, sans-serif";
-if (i18n.language === "zh-CN") {
-  fontFamily =
-    "'Noto Sans SC', Microsoft Yahei, '微软雅黑', STXihei, '华文细黑'";
-} else if (i18n.language === "zh-TW") {
-  fontFamily =
-    "'Noto Sans TC', Tahoma, Helvetica, Arial, sans-serif, '微軟正黑粗'";
-} else if (i18n.language === "th-TH") {
-  fontFamily = "'Sarabun', sans-serif";
-}
-document.getElementById("root").style.fontFamily = fontFamily;
 var muiThemeMode = isMobileOnly
   ? themeList[Config.brand] || themeList[Config.theme]
   : themeList[Config.theme];
@@ -142,8 +132,6 @@ const muiTheme = createMuiTheme({
     type: "light",
   },
   typography: {
-    fontFamily: fontFamily,
-
     fontWeightLight: 300,
     fontWeightRegular: 400,
     fontWeightMedium: 500,
