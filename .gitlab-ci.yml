@@ -6,8 +6,8 @@ include:
 variables:
   ImageName: pgtgs/lobby-t10
   components_dev: lobby-t10
-  components_staging: lobby-gpi-t10,lobby-pb2
-  components_prod: lobby-gpi-t10,lobby-pb2
+  components_staging: lobby-gpi-t10,lobby-pb2,lobby-tiger
+  components_prod: lobby-gpi-t10,lobby-pb2,lobby-tiger
   GIT_STRATEGY: clone
   GIT_SUBMODULE_STRATEGY: normal
   GIT_SUBMODULE_UPDATE_FLAGS: "--remote --checkout --no-single-branch"
