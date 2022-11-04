@@ -112,6 +112,7 @@ const featureList = {
     MergeEVORTNT: true,
     RouletteNewFlow: false,
     HaveVIPFeature: true,
+    TIGER_CustomTranslation: false,
   },
 };
 export default featureList;
