@@ -17,7 +17,7 @@ const languageSwitcher = (language, brand) => {
     }
   } else if (language === "zh-TW") {
     if (brand === "TIGER") {
-      return `PingFang SC`;
+      return `PingFang TC`;
     } else {
       return `'Noto Sans TC', Tahoma, Helvetica, Arial, sans-serif, '微軟正黑粗'`;
     }
