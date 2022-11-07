@@ -557,6 +557,66 @@ export const wapT10 = {
   accent: "#d772ff",
 };
 
+export const TIGER = {
+  pcAppBar: "#fff",
+  appbar: `url(${
+    process.env.PUBLIC_URL + `/assets/images/wapp/resource/T10TIGER/appbar.png`
+  })`,
+  loginBody: `url(${
+    process.env.PUBLIC_URL + `/assets/images/wapp/resource/T10TIGER/bodybg.png`
+  })`,
+  loginText: "#fff",
+  body: `url(${
+    process.env.PUBLIC_URL + `/assets/images/wapp/resource/T10TIGER/bodybg.png`
+  })`,
+  bodyBackground: "#F0EFF5",
+  variant: "TIGER",
+  primary: "#F0DE81",
+  primaryRgb: "101, 138, 248",
+  primaryText: "#fff",
+  primaryGradient: "#B0803A",
+  primaryGradientRgb: "101, 138, 248",
+  primaryHightlight: "#fde73f",
+  secondary: "#fff",
+  secondaryText: "rgba(0,0,0,0.5)",
+  tertiary: "rgba(255, 255, 255, 1)",
+  tertiaryText: "rgba(255, 255, 255, 0.5)",
+  buttonText: "#ffffff",
+  buttonBackground: `linear-gradient(180deg, #F0DE81, #B0803A);`,
+  buttonText2: "#fff",
+  bottomnav: `linear-gradient(180deg, #F0DE81, #B0803A);`,
+  bottomNavAction: "#404040",
+  bottomNavActionSelected: "#fff",
+  balance: "#F0DE81",
+  tabbar: "#000",
+  cardText: "#676767",
+  supportBg: `url(${
+    process.env.PUBLIC_URL + `/assets/images/wapp/resource/T5/supportbg.png`
+  })
+  no-repeat center,  linear-gradient(180deg, rgb(5 30 74) 40%, rgba(12,21,37,1) 100%)`,
+  gameTab: "#fff",
+  gamelisterBg: `url(${
+    process.env.PUBLIC_URL + `/assets/images/wapp/resource/T10TIGER/gamelisterbg.png`
+  }) no-repeat center center / 750px 72px`,
+  gamelisterOriginalColor: "#9fa3b4",
+  gamelisterOriginalText: "#000",
+  gamelisterBorder: "none",
+  gamelisterSelectedText: "#fff",
+  gamelisterSelectedIcon: "#fff",
+  gamelisterSelectedButton: " rgb(140,166,241)",
+
+  popoverBackground: "rgba(255,255,255,0.95)",
+  popoverGameTypeText: "#F0DE81",
+  popoverSubWalletText: "#000",
+  
+  downloadButtonBg: `linear-gradient(120deg, #F0DE81, #B0803A)`,
+  downloadButtonBorder: "solid 5px #ffffff",
+  downloadButtonBorderRad: "50px",
+  downloadButtonText: "#fff",
+  downloadButtonIcon: "#fff",
+
+};
+
 export const themeList = {
   red: themeRed,
   blue: themeBlue,
@@ -573,4 +633,5 @@ export const themeList = {
   GMO: GMO,
   PB: PB,
   wapT10: wapT10,
+  TIGER: TIGER,
 };

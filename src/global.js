@@ -10,9 +10,17 @@ const languageSwitcher = (language, brand) => {
       return `Roboto`;
     }
   } else if (language === "zh-CN") {
-    return `'Noto Sans SC', Microsoft Yahei, '微软雅黑', STXihei, '华文细黑'`;
+    if (brand === "TIGER") {
+      return `PingFang SC`;
+    } else {
+      return `'Noto Sans SC', Microsoft Yahei, '微软雅黑', STXihei, '华文细黑'`;
+    }
   } else if (language === "zh-TW") {
-    return `'Noto Sans TC', Tahoma, Helvetica, Arial, sans-serif, '微軟正黑粗'`;
+    if (brand === "TIGER") {
+      return `PingFang TC`;
+    } else {
+      return `'Noto Sans TC', Tahoma, Helvetica, Arial, sans-serif, '微軟正黑粗'`;
+    }
   } else {
     return `Tahoma, Helvetica, Arial, sans-serif`;
   }
