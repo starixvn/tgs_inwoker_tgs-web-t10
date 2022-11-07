@@ -132,7 +132,7 @@ const LogoContainer = styled.div`
   background-image: url("${(props) => props.img}");
   background-repeat: no-repeat;
   background-size: 75%;
-  background-position:  center;
+  background-position: center;
   height: 90px;
   ${(props) => {
     if (props.headerCustom === true) {
@@ -146,7 +146,6 @@ const LogoContainer = styled.div`
   &:hover {
     cursor: pointer;
   }
-
 `;
 
 const RightMenuContainer = styled.div`
@@ -240,8 +239,6 @@ const GameImg = styled.div`
     justify-content: center;
     height: 50px;
   }
-
- 
 `;
 const breatheAnimation = keyframes`
 
@@ -1006,7 +1003,8 @@ class Header extends Component {
                                             {i18n.t("transfer.maintenance")}
                                           </Maintenance>
                                           {(() => {
-                                            var gameCode = game.abbreviation.toLowerCase();
+                                            var gameCode =
+                                              game.abbreviation.toLowerCase();
                                             if (gameCode === "joker") {
                                               return (
                                                 <HotGameIcon></HotGameIcon>
@@ -1014,7 +1012,8 @@ class Header extends Component {
                                             }
                                           })()}
                                           {(() => {
-                                            var gameCode = game.abbreviation.toLowerCase();
+                                            var gameCode =
+                                              game.abbreviation.toLowerCase();
                                             if (
                                               config.features.SportsHideLogo
                                             ) {
@@ -1069,7 +1068,8 @@ class Header extends Component {
                                               {i18n.t("transfer.maintenance")}
                                             </Maintenance>
                                             {(() => {
-                                              var gameCode = game.abbreviation.toLowerCase();
+                                              var gameCode =
+                                                game.abbreviation.toLowerCase();
                                               if (gameCode === "joker") {
                                                 return (
                                                   <HotGameIcon></HotGameIcon>
@@ -1077,7 +1077,8 @@ class Header extends Component {
                                               }
                                             })()}
                                             {(() => {
-                                              var gameCode = game.abbreviation.toLowerCase();
+                                              var gameCode =
+                                                game.abbreviation.toLowerCase();
                                               if (
                                                 config.features.SportsHideLogo
                                               ) {

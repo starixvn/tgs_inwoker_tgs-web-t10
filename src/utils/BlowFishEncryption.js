@@ -1,25 +1,5 @@
-import config from "../config/config";
-
-function Encrypt(str) {
-  const Blowfish = require("javascript-blowfish");
-
-  const key = config.blowFishSecretKey;
-  const bf = new Blowfish(key, "ecb");
-
-  const encrypted = bf.encrypt(str);
-  const encryptedMime = bf.base64Encode(encrypted);
-  return Base64toHex(encryptedMime);
-}
-function Decrypt(str) {
-  const Blowfish = require("javascript-blowfish");
-
-  const key = config.blowFishSecretKey;
-  const bf = new Blowfish(key, "ecb");
-
-  const decryptedToken = bf.decrypt(bf.base64Decode(HexToBase64(str)));
-
-  return decryptedToken.replace(//g, "");
-}
+function Encrypt(str) {}
+function Decrypt(str) {}
 function Base64toHex(str) {
   for (
     var i = 0, bin = atob(str.replace(/[ \r\n]+$/, "")), hex = [];
@@ -50,6 +30,6 @@ const BlowFishEncryption = {
   Decrypt,
   Base64toHex,
   HexToBase64,
-  Encrypt
+  Encrypt,
 };
 export default BlowFishEncryption;

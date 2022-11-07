@@ -82,32 +82,6 @@ const Icon = styled.img`
 Config.from = isMobileOnly ? "h5" : "h5";
 Config.isPC = isMobileOnly ? 1 : 0;
 
-document.getElementById("title").innerHTML = i18n
-  .t("common.title")
-  .replace(/{brand}/g, Config.brandName);
-document
-  .getElementById("description")
-  .setAttribute(
-    "content",
-    i18n.t("common.title").replace(/{brand}/g, Config.brandName)
-  );
-// if (
-//   process.env.REACT_APP_CUSTOM_NODE_ENV !== "development" &&
-//   (process.env.REACT_APP_CUSTOM_NODE_ENV !== "qa" || Config.baseUrl === "") &&
-//   (process.env.REACT_APP_CUSTOM_NODE_ENV !== "staging" || Config.baseUrl === "")
-// ) {
-//   let url = window.location.hostname;
-//   let new_sub = "service";
-//   let baseUrl = "";
-//   if (url.split(/[\/\.]+/).length >= 3) {
-//     baseUrl = url.replace(url.split(/[\/\.]+/)[0], new_sub);
-//   } else {
-//     baseUrl = new_sub + "." + url;
-//   }
-//   baseUrl = window.location.protocol + "//" + baseUrl + "/";
-//   Config.baseUrl = baseUrl;
-// }
-
 var muiThemeMode = isMobileOnly
   ? themeList[Config.brand] || themeList[Config.theme]
   : themeList[Config.theme];
@@ -186,6 +160,20 @@ const muiTheme = createMuiTheme({
 });
 const AppWrapper = () => {
   const classes = useStyles();
+  const languageFromLocalStorage = localStorage.getItem("i18nextLng");
+  useEffect(() => {
+    i18n.on("languageChanged", (lng) => {
+      document.getElementById("title").innerHTML = i18n
+        .t("common.title")
+        .replace(/{brand}/g, Config.brandName);
+      document
+        .getElementById("description")
+        .setAttribute(
+          "content",
+          i18n.t("common.title").replace(/{brand}/g, Config.brandName)
+        );
+    });
+  }, []);
 
   return (
     <Provider store={store}>
@@ -267,7 +255,13 @@ const AppWrapper = () => {
                     path={Common.baseRouteUrl + "/"}
                     render={(props) => (isMobileOnly ? <Wap /> : <Web />)}
                   />
-                  <Redirect to={`/${i18n.language}`} />
+                  <Redirect
+                    to={`/${
+                      languageFromLocalStorage ||
+                      i18n.language ||
+                      Config.defaultLanguage
+                    }`}
+                  />
                 </Switch>
               </Router>
             </SnackbarProvider>

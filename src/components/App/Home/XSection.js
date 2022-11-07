@@ -5,7 +5,7 @@ import BackgroundPng from "../../../assets/images/home/game/background.jpg";
 import StartGamePNG from "../../../assets/images/start-game.png";
 import StartGameHoverPNG from "../../../assets/images/start-game-hover.png";
 
-import {GameEnum,GameTypeEnum} from "../../../api-services/utils/Enum";
+import { GameEnum, GameTypeEnum } from "../../../api-services/utils/Enum";
 import i18n from "../../../utils/i18n";
 
 import ScrollAnimation from "react-animate-on-scroll";
