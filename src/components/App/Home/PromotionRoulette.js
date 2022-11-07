@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { connect } from "react-redux";
 import DynamicFont from "react-dynamic-font";
 import { Textfit } from "react-textfit";
@@ -14,7 +14,7 @@ import BtnClose from "../../../assets/images/roulette/btn-close.png";
 import TabActivePNG from "../../../assets/images/roulette/tab-active.png";
 import TabPNG from "../../../assets/images/roulette/tab.png";
 import EmptyBackgroundPNG from "../../../assets/images/roulette/bg-empty.png";
-import LoadingGIF from "../../../assets/images/loading.gif";
+
 import RouletteStandPNG from "../../../assets/images/roulette/roulette-stand.png";
 
 import i18n from "../../../utils/i18n";
@@ -120,27 +120,6 @@ const RouletteContainer = styled.div`
   background: url(${ModalBackgroundPNG});
   background-size: 602px 458px;
   background-position-x: -2px;
-`;
-
-const LoadingIcon = styled.img`
-  margin: 0 auto;
-  display: block;
-  margin-top: 200px;
-`;
-const LoadingContainer = styled.div`
-  position: absolute;
-  width: 600px;
-  height: 458px;
-  transition: opacity 0.2s linear, height 0.02s linear 0.2s;
-  z-index: 9;
-  background-color: rgba(
-    0,
-    0,
-    0,
-    ${(props) => (props.opacity ? props.opacity : 0.8)}
-  );
-  ${(props) =>
-    props.isLoading ? "opacity:1;height: 100%;" : "opacity:0;height:0px;"};
 `;
 
 const TabContainer = styled.div`

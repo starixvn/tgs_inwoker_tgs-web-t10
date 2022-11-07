@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import QRCode from "qrcode.react";
 import { connect } from "react-redux";
 
 import { generalAction } from "../../../api-services/actions/generalAction";

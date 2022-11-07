@@ -10,7 +10,7 @@ import UserIconPNG from "../../assets/images/user-icon.png";
 import Password1IconPNG from "../../assets/images/password1-icon.png";
 import IconLoginClosePNG from "../../assets/images/icon-login-close.png";
 import i18n from "../../utils/i18n";
-import config from "../../config/config";
+
 const Container = styled.div`
   width: 506px;
   background: url(${LoginBGPNG});

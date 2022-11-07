@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React from "react";
+
 import styled, { keyframes } from "styled-components";
 import InboxIconPNG from "../../assets/images/inbox-icon.png";
 import IconRefreshBalancePNG from "../../assets/images/icon-refresh-balance.png";
-import IconRefreshBalanceHoverPNG from "../../assets/images/icon-refresh-balance-hover.png";
+
 import { Link } from "react-router-dom";
 import i18n from "../../utils/i18n";
 import Common from "../../utils/Common";

@@ -4,8 +4,6 @@ import styled from "styled-components";
 import i18n from "../../../utils/i18n";
 
 import { connect } from "react-redux";
-import OnlineUserDisplayer from "../../Share/online-user-displayer";
-import config from "../../../config/config";
 
 const AnnounceContainer = styled.div`
   width: 1280px;
