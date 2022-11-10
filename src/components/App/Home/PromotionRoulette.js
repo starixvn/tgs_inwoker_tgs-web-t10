@@ -56,7 +56,7 @@ const RouletteModal = styled(Dialog)`
     border-radius: 50px;
     min-height: ${({ rouletteType }) =>
       rouletteType === RouletteEnum.DAR ? `485px` : `458px`};
-    margin-top: 150px;
+    margin-top: 100px;
   }
 `;
 
@@ -1241,21 +1241,25 @@ const PromotionRoulette = (props) => {
                   </tr>
                   {items.length > 0 &&
                     rouletteHistory.length > 0 &&
-                    rouletteHistory.map((row) => {
-                      return (
-                        <tr>
-                          <StyledTableData>{row.id}</StyledTableData>
-                          <StyledTableData>
-                            {moment(row.createdon)
-                              .utc()
-                              .format("YYYY-MM-DD HH:mm:ss")}
-                          </StyledTableData>
-                          <StyledTableData>
-                            {items[row.itemindex].label}
-                          </StyledTableData>
-                        </tr>
-                      );
-                    })}
+                    rouletteHistory
+                      .sort(
+                        (a, b) => new Date(b.createdon) - new Date(a.createdon)
+                      )
+                      .map((row) => {
+                        return (
+                          <tr>
+                            <StyledTableData>{row.id}</StyledTableData>
+                            <StyledTableData>
+                              {moment(row.createdon)
+                                .utcOffset("+0800")
+                                .format("HH:mm:ss DD/MM/YYYY")}
+                            </StyledTableData>
+                            <StyledTableData>
+                              {items[row.itemindex].label}
+                            </StyledTableData>
+                          </tr>
+                        );
+                      })}
                 </StyledTable>
               </TableContent>
             )}
