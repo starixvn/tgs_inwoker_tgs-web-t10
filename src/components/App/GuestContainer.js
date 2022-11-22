@@ -314,7 +314,12 @@ class GuestContainer extends Component {
       });
     }
   };
-  handleLoginClickWithHp = async (username, password, phone) => {
+  handleLoginClickWithHp = async (
+    username,
+    password,
+    phone,
+    setPhoneDontCareDuplicate
+  ) => {
     if (username === "") {
       this.props.enqueueSnackbar(i18n.t("web.login.errorMsg.emptyUsername"), {
         variant: "warning",
@@ -330,50 +335,42 @@ class GuestContainer extends Component {
 
     const result = await this.props.accountLogin(username, password);
     if (result.IsSuccess) {
-      //  AccountService.Activation(
-      //    username,
-      //    password,
-      //    this.state.areaCode,
-      //    phone
-      //  ).then(async (response) => {
-      //    if (response.IsSuccess) {
-      //      this.state.securityKey = response.data;
-      //      AccountService.VerifyActivation(
-      //        this.state.securityKey,
-      //        "123456"
-      //      ).then(async (response) => {
-      //        this.handleLoginSuccess(result.data);
-      //      });
-      //    } else {
-      //      this.handleLoginSuccess(result.data);
-      //    }
-      //  });
-
-      this.props
-        .newRegister("InitPhone", {
-          input: "Init",
-          data: {
+      if (setPhoneDontCareDuplicate) {
+        await this.props
+          .newRegister("SetPhoneDontCareDuplicate", {
             areacode: this.state.areaCode,
             phone: phone,
-          },
-        })
-        .then(async (response) => {
-          if (response.IsSuccess) {
-            this.props
-              .newRegister("InitPhone", {
-                input: "Valid",
-                data: {
-                  securitykey: response.data.stepResponse,
-                  validatecode: "123456",
-                },
-              })
-              .then(async (response) => {
-                this.handleLoginSuccess(result.data);
-              });
-          } else {
+          })
+          .then(async (response) => {
             this.handleLoginSuccess(result.data);
-          }
-        });
+          });
+      } else {
+        this.props
+          .newRegister("InitPhone", {
+            input: "Init",
+            data: {
+              areacode: this.state.areaCode,
+              phone: phone,
+            },
+          })
+          .then(async (response) => {
+            if (response.IsSuccess) {
+              this.props
+                .newRegister("InitPhone", {
+                  input: "Valid",
+                  data: {
+                    securitykey: response.data.stepResponse,
+                    validatecode: "123456",
+                  },
+                })
+                .then(async (response) => {
+                  this.handleLoginSuccess(result.data);
+                });
+            } else {
+              this.handleLoginSuccess(result.data);
+            }
+          });
+      }
     }
   };
   handleLoginClickWithHpEmail = async (username, password, phone, email) => {
