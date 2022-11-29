@@ -33,13 +33,12 @@ const RouletteEnum = {
 
 const Container = styled.div``;
 
-const BtnRoulette = styled.div`
+const BtnRoulette = styled.img`
   cursor: pointer;
-  width: 200px;
-  height: 150px;
-  background: url(${BtnRoulettePNG}) no-repeat;
-  background-size: contain;
-  filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.2));
+  width: auto;
+  height: ${({ size }) => {
+    return size ? size : 200;
+  }}px;
 `;
 
 const RouletteModal = styled(Dialog)`
@@ -314,6 +313,23 @@ const RouletteCounterContainer = styled.div`
   color: #fff;
   padding: 3px 0;
   margin-top: 5px;
+`;
+
+const RouletteButtonWrapper = styled.div`
+  position: relative;
+`;
+
+const CloseIcon = styled.div`
+  position: absolute;
+  padding: 0.5px 5px;
+  border-radius: 50px;
+  border: solid 1px #000;
+  font-size: 12px;
+  top: 0px;
+  right: 0px;
+  line-height: 19px;
+  cursor: pointer;
+  user-select: none;
 `;
 
 const ROULETTE_AREA_DEG_6 = [
@@ -771,6 +787,9 @@ const PromotionRoulette = (props) => {
   const [dialogContent, setDialogContent] = useState({});
   const [rouletteCount, setRouletteCount] = useState(null);
   const [rouletteHistory, setRouletteHistory] = useState([]);
+
+  const [displayRoulette, setDisplayRoulette] = useState(true);
+
   const getRouletteSetting = () => {
     switch (props.rouletteType) {
       case RouletteEnum.SIE:
@@ -900,13 +919,17 @@ const PromotionRoulette = (props) => {
   }, [props.general.rouletteHistory, rouletteHistory]);
 
   const isIdenticalArray = (arr1, arr2) => {
-    var sortedArr1 = arr1.sort(function (a, b) {
-      return new Date(a.createdon) - new Date(b.createdon);
-    });
-    var sortedArr2 = arr2.sort(function (a, b) {
-      return new Date(a.createdon) - new Date(b.createdon);
-    });
-    return JSON.stringify(sortedArr1) === JSON.stringify(sortedArr2);
+    if (arr1 && arr2) {
+      var sortedArr1 = arr1.sort(function (a, b) {
+        return new Date(a.createdon) - new Date(b.createdfon);
+      });
+      var sortedArr2 = arr2.sort(function (a, b) {
+        return new Date(a.createdon) - new Date(b.createdon);
+      });
+      return JSON.stringify(sortedArr1) === JSON.stringify(sortedArr2);
+    } else {
+      return "";
+    }
   };
 
   const performOpenRouletteModal = () => {
@@ -1076,13 +1099,37 @@ const PromotionRoulette = (props) => {
 
   return (
     <React.Fragment>
-      <Container rouletteType={props.rouletteType}>
-        <BtnRoulette
-          onClick={() => {
-            getRouletteStatus();
-            performOpenRouletteModal();
-          }}
-        ></BtnRoulette>
+      <Container
+        rouletteType={props.rouletteType}
+        position={
+          config.features.RouletteSetting &&
+          config.features.RouletteSetting.web &&
+          config.features.RouletteSetting.web.position
+        }
+      >
+        {displayRoulette && (
+          <RouletteButtonWrapper>
+            <CloseIcon
+              onClick={() => {
+                setDisplayRoulette(false);
+              }}
+            >
+              ✖
+            </CloseIcon>
+            <BtnRoulette
+              size={
+                config.features.RouletteSetting &&
+                config.features.RouletteSetting.web &&
+                config.features.RouletteSetting.web.size
+              }
+              src={BtnRoulettePNG}
+              onClick={() => {
+                getRouletteStatus();
+                performOpenRouletteModal();
+              }}
+            ></BtnRoulette>
+          </RouletteButtonWrapper>
+        )}
       </Container>
       <RouletteModal
         open={rouletteModal}
