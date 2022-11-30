@@ -921,7 +921,7 @@ const PromotionRoulette = (props) => {
   const isIdenticalArray = (arr1, arr2) => {
     if (arr1 && arr2) {
       var sortedArr1 = arr1.sort(function (a, b) {
-        return new Date(a.createdon) - new Date(b.createdfon);
+        return new Date(a.createdon) - new Date(b.createdon);
       });
       var sortedArr2 = arr2.sort(function (a, b) {
         return new Date(a.createdon) - new Date(b.createdon);
@@ -1041,7 +1041,10 @@ const PromotionRoulette = (props) => {
         await updateRouletteCount();
       } else {
         setItems(mapRouletteItems(promotionDetail.campaignDetail));
-        props.getPromotionRouletteStatus(promotionDetail.id);
+        if(props.account.token!=null)
+        {
+          props.getPromotionRouletteStatus(promotionDetail.id);
+        }
       }
     } else if (props.rouletteType === RouletteEnum.DAR) {
       await updateRouletteCount();
