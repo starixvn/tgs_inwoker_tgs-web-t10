@@ -632,7 +632,7 @@ class App extends Component {
                             );
                           })
                           .map((roulette, index) => {
-                            return roulette.roulettecount === 0 &&
+                            return roulette.roulettecount >= 0 &&
                               index === 0 ? (
                               <PromotionRoulette
                                 rouletteType={roulette.promotiontype.toUpperCase()}
