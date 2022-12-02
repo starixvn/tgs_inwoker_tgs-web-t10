@@ -543,7 +543,7 @@ function Register(props) {
             ) {
               props.doLoginWithHpEmail(username, password, phone, email, setPhoneDontCareDuplicate);
             } else if (config.features.Register_ShowPhone) {
-              props.doLoginWithHp(username, password, phone);
+              props.doLoginWithHp(username, password, phone, setPhoneDontCareDuplicate);
             } else {
               props.doLogin(username, password);
             }
