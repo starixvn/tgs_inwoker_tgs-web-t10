@@ -111,7 +111,7 @@ const CloseButton = styled.div`
   background: url(${BtnClose}) no-repeat;
   width: 31px;
   height: 31px;
-  z-index: 2;
+  z-index: 5;
 `;
 
 const RouletteContainer = styled.div`
@@ -132,7 +132,7 @@ const TabContainer = styled.div`
   justify-content: center;
   align-items: self-end;
   position: relative;
-  z-index: 2;
+  z-index: 5;
 `;
 
 const Stand = styled.div`
@@ -607,6 +607,27 @@ const ROULETTE_ITEM_12 = [
   },
 ];
 
+const BackgroundOverlay = styled.div`
+  width: 100%;
+  border-radius: 50px;
+  height: 500px;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 3;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const NewTitle1 = styled(ModalTitleH1)`
+  color: #fff;
+  font-size: 2.5rem;
+`;
+
 const Roulette = (props) => {
   const [startRotateDeg, setStartRotateDeg] = useState(0);
   useEffect(() => {
@@ -883,9 +904,7 @@ const PromotionRoulette = (props) => {
           );
         } else if (props.rouletteType === RouletteEnum.DAR) {
           setTimeout(() => {
-            setRouletteModal(false);
             setDisableOnSpin(true);
-            performOpenEmptyModal("", "", "", true);
           }, 100);
         }
       }
@@ -938,6 +957,8 @@ const PromotionRoulette = (props) => {
     props.resetPromoRoulette();
     setDisableOnSpin(false);
     setRouletteModal(false);
+    setTabIndex(0);
+    setIsTabOpen(false);
   };
 
   const performOpenEmptyModal = (title1, title2, title3, history) => {
@@ -1182,6 +1203,16 @@ const PromotionRoulette = (props) => {
         rouletteType={props.rouletteType}
       >
         <RouletteContainer rouletteType={props.rouletteType}>
+          {props.rouletteType === RouletteEnum.DAR && rouletteCount === 0 && (
+            <BackgroundOverlay>
+              <NewTitle1>
+                <Textfit min={38} max={48}>
+                  {i18n.t("promoRoulette.outOfCount")}
+                </Textfit>
+              </NewTitle1>
+            </BackgroundOverlay>
+          )}
+
           <Roulette
             rouletteType={props.rouletteType}
             itemIndex={props.general.itemIndex}
