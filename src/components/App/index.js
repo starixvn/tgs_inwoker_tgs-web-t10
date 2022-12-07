@@ -45,12 +45,12 @@ import i18n from "../../utils/i18n";
 import Maintenance from "../Share/Maintenance";
 import Banned from "./Banned";
 import AnotherFloatPanel from "./Home/AnotherFloatPanel";
-import PromotionRoulette from "./Home/PromotionRoulette";
 import ESports from "./eSports";
+import PromotionRoulette from "./Home/PromotionRoulette";
 
 import LiveChat from "../Share/live-chat";
 import config from "../../config/config";
-import CustomLibrary from "./Sports/CustomLibrary";
+import CustomLibrary from "./Sports/CustomLibrary.js";
 import ForcedVerification from "./ForcedVerification";
 
 const baseRouteUrl = Common.baseRouteUrl;
@@ -58,16 +58,29 @@ const Main = styled.div`
   min-height: 600px;
 `;
 const EmptyHeader = styled.div`
-  height: 185px;
+  height: 160px;
+  background: #000103;
 `;
 const RouletteFloatingPanel = styled.div`
   position: fixed;
-  top: 0;
-  left: 0;
-  padding-top: 16%;
-  padding-left: 2%;
+  z-index: 1300;
+
+  ${({ position }) => {
+    //for each item in position object, map accordingly
+    return position !== undefined
+      ? Object.keys(position).map((key) => {
+          return `${key}: ${position[key]}px;`;
+        })
+      : `  top: 0;
+    left: 0;
+    padding-top: 16%;
+    padding-left: 2%;`;
+  }}
+
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ orientation }) => {
+    return orientation ? orientation : "column";
+  }};
 `;
 
 class App extends Component {
@@ -77,6 +90,11 @@ class App extends Component {
     inbox: "",
   };
   async componentDidMount() {
+    // try {
+    //   bc.onmessage = (eventMessage) => {
+    //     this.performBalanceRefresh();
+    //   }
+    // }catch{};
     if (this.props.general.token === "") {
       this.props.getSiteToken();
     } else {
@@ -340,6 +358,7 @@ class App extends Component {
     this.props.updateBalanceList();
     this.props.game.providerList
       .filter((item) => item.status === 0 && item.transferwallet === true)
+      .filter((item) => item.gpcode !== "NTTF" && item.gpcode !== "RTTF")
       .map((a) => this.props.getGameBalance(a.gpcode));
   };
 
@@ -349,19 +368,6 @@ class App extends Component {
       this.props.general.promotionList.items.length > 0 &&
       this.props.general.promotionList.items.findIndex(
         (item) => item.promotionType.toUpperCase() === "ROULETTE"
-      ) >= 0
-    );
-  };
-
-  isDARAvailable = (roulette) => {
-    return (
-      this.props.general.promotionList.items &&
-      this.props.general.promotionList.items.length > 0 &&
-      this.props.general.promotionList.items.findIndex(
-        (item) =>
-          item.promotionType.toUpperCase() ===
-            roulette.promotiontype.toUpperCase() &&
-          item.id === roulette.promotionid
       ) >= 0
     );
   };
@@ -567,7 +573,6 @@ class App extends Component {
                     <Redirect to={"/" + i18n.language} />
                   </Switch>
                 </Main>
-
                 {config.features.LiveChatVendor.brand &&
                   config.features.LiveChatVendor.license && (
                     <LiveChat
@@ -583,7 +588,6 @@ class App extends Component {
                 <AnotherFloatPanel
                   onhandleShowCSClick={this.handleShowCSClick}
                 ></AnotherFloatPanel>
-
                 <ForcedVerification
                   forcedverify={
                     config.features.SMSVerification &&
@@ -605,66 +609,55 @@ class App extends Component {
                       }}
                     />
                   )}
-
-                {config.features.HomePage_PromoRoulette && this.isInHomePage() && (
-                  <RouletteFloatingPanel>
-                    {
-                      this.props.general.promotionList.items.length > 0 &&
-                        this.props.general.rouletteCount.length > 0 &&
+                {config.features.HomePage_PromoRoulette &&
+                  this.isInHomePage() && (
+                    <RouletteFloatingPanel
+                      position={
+                        config.features.RouletteSetting &&
+                        config.features.RouletteSetting.web &&
+                        config.features.RouletteSetting.web.position
+                      }
+                      orientation={
+                        config.features.RouletteSetting &&
+                        config.features.RouletteSetting.web &&
+                        config.features.RouletteSetting.web.orientation
+                      }
+                    >
+                      {this.props.general.rouletteCount.length > 0 &&
                         this.props.general.rouletteCount
-                          .filter(
-                            (item) =>
+                          .filter((item) => {
+                            return (
                               item.promotiontype.toUpperCase() ===
                               "DEPOSITACCUMULATEROULETTE"
-                          )
+                            );
+                          })
                           .map((roulette, index) => {
-                            return this.isDARAvailable(roulette) &&
-                              roulette.roulettecount > 0 &&
+                            return roulette.roulettecount >= 0 &&
                               index === 0 ? (
                               <PromotionRoulette
                                 rouletteType={roulette.promotiontype.toUpperCase()}
-                                promotionDetail={
-                                  this.props.general.promotionList.items.filter(
-                                    (item) =>
-                                      item.promotionType.toUpperCase() ===
-                                        roulette.promotiontype.toUpperCase() &&
-                                      item.id === roulette.promotionid
-                                  )[0]
-                                }
+                                promotionDetail={{ id: roulette.promotionid }}
                               ></PromotionRoulette>
                             ) : (
                               <React.Fragment></React.Fragment>
                             );
-                          })
-                      // this.props.general.promotionList.items.map((item) => {
-                      //   return (
-                      //     ((item.promotionType.toUpperCase() === "ROULETTE" && config.features.RouletteNewFlow) ||
-                      //       item.promotionType.toUpperCase() ===
-                      //         "DEPOSITACCUMULATEROULETTE") && (
-                      //       <PromotionRoulette
-                      //         rouletteType={item.promotionType.toUpperCase()}
-                      //         promotionDetail={item}
-                      //       ></PromotionRoulette>
-                      //     )
-                      //   );
-                      // })
-                    }
-                    {config.features.HomePage_PromoRoulette &&
-                      !config.features.RouletteNewFlow &&
-                      this.isRouletteAvailable() && (
-                        <PromotionRoulette
-                          rouletteType="ROULETTE"
-                          promotionDetail={
-                            this.props.general.promotionList.items.filter(
-                              (item) =>
-                                item.promotionType.toUpperCase() === "ROULETTE"
-                            )[0]
-                          }
-                        ></PromotionRoulette>
-                      )}
-                  </RouletteFloatingPanel>
-                )}
-
+                          })}
+                      {config.features.HomePage_PromoRoulette &&
+                        !config.features.RouletteNewFlow &&
+                        this.isRouletteAvailable() && (
+                          <PromotionRoulette
+                            rouletteType="ROULETTE"
+                            promotionDetail={
+                              this.props.general.promotionList.items.filter(
+                                (item) =>
+                                  item.promotionType.toUpperCase() ===
+                                  "ROULETTE"
+                              )[0]
+                            }
+                          ></PromotionRoulette>
+                        )}
+                    </RouletteFloatingPanel>
+                  )}
                 <Footer target={"_blank"}></Footer>
               </>
             );
@@ -726,6 +719,7 @@ const mapDispatchToProps = (dispatch) => {
       ),
     getWithdrawalChannel: () => dispatch(walletAction.getWithdrawalChannel()),
     //  getVIP: () => dispatch(generalAction.getVIP()),
+
     updateBalanceList: (loading) => dispatch(walletAction.updateBalanceList()),
     getPromotion: () => dispatch(generalAction.getPromotion()),
     getPromotionRouletteCount: () =>
