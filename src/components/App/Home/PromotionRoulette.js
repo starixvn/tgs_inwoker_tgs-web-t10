@@ -1302,21 +1302,15 @@ const PromotionRoulette = (props) => {
                     __html:
                       "<div>" +
                       (() => {
-                        if (
-                          promotionDetail.localization &&
-                          promotionDetail.content &&
-                          promotionDetail.localization !== null &&
-                          promotionDetail.localization[i18n.language] !==
-                            undefined &&
-                          promotionDetail.localization[i18n.language]
-                            .content !== undefined
-                        ) {
-                          return promotionDetail.localization[i18n.language]
-                            .content;
-                        } else {
-                          return promotionDetail.content;
-                        }
+                        return (
+                          (promotionDetail.localization &&
+                            promotionDetail.localization[i18n.language]
+                              .content) ||
+                          promotionDetail.content ||
+                          ""
+                        );
                       })() +
+                      
                       "</div>",
                   }}
                 ></EventText>
@@ -1329,20 +1323,13 @@ const PromotionRoulette = (props) => {
                     __html:
                       "<div>" +
                       (() => {
-                        if (
-                          promotionDetail.localization &&
-                          promotionDetail.terms &&
-                          promotionDetail.localization !== null &&
-                          promotionDetail.localization[i18n.language] !==
-                            undefined &&
-                          promotionDetail.localization[i18n.language].terms !==
-                            undefined
-                        ) {
-                          return promotionDetail.localization[i18n.language]
-                            .terms;
-                        } else {
-                          return promotionDetail.terms;
-                        }
+                        return (
+                          (promotionDetail.localization &&
+                            promotionDetail.localization[i18n.language]
+                              .terms) ||
+                          promotionDetail.terms ||
+                          ""
+                        );
                       })() +
                       "</div>",
                   }}
