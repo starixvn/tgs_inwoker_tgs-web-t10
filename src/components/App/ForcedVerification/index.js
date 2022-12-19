@@ -261,39 +261,90 @@ const ForcedVerification = ({ forcedverify }) => {
         return;
       }
 
-      AccountService.Activation("", "", areacode, phone).then(
-        async (response) => {
-          if (response.IsSuccess) {
-            setSecurityKey(response.data);
-            enqueueSnackbar(i18n.t("common.msgTokenSent"), {
-              variant: "info",
-            });
-            setCountdown(60);
-          } else {
-            enqueueSnackbar(response.info, {
-              variant: "warning",
-            });
-          }
-        }
-      );
-    }
-  };
-
-  function smsVerification(securityKey, code) {
-    AccountService.VerifyActivation(securityKey, code).then(
-      async (response) => {
+      AccountService.NewRegister("InitPhone", {
+        input: "Init",
+        data: {
+          areacode: areacode,
+          phone: phone,
+        },
+      }).then(async (response) => {
         if (response.IsSuccess) {
-          enqueueSnackbar(i18n.t("common.msgTokenVerified"), {
-            variant: "success",
+          setSecurityKey(response.data.stepResponse);
+          enqueueSnackbar(i18n.t("common.msgTokenSent"), {
+            variant: "info",
           });
-          setOpen(false);
+          setCountdown(60);
         } else {
           enqueueSnackbar(response.info, {
             variant: "warning",
           });
         }
+      });
+
+      // AccountService.Activation("", "", areacode, phone).then(
+      //   async (response) => {
+      //     if (response.IsSuccess) {
+      //       setSecurityKey(response.data);
+      //       enqueueSnackbar(i18n.t("common.msgTokenSent"), {
+      //         variant: "info",
+      //       });
+      //       setCountdown(60);
+      //     } else {
+      // enqueueSnackbar(response.info, {
+      //   variant: "warning",
+      // });
+      //     }
+      //   }
+      // );
+    }
+  };
+
+  function smsVerification(securityKey, code) {
+    AccountService.NewRegister("InitPhone", {
+      input: "Valid",
+      data: {
+        securitykey: securityKey,
+        validatecode: code,
+      },
+    }).then(async (response) => {
+      if (response.IsSuccess) {
+        enqueueSnackbar(i18n.t("common.msgTokenVerified"), {
+          variant: "success",
+        });
+        setOpen(false);
+      } else {
+        enqueueSnackbar(response.info, {
+          variant: "warning",
+        });
       }
-    );
+      // this.props.getAccountInfo().then(async (response) => {
+
+      // if (
+      //   response.data.email === null &&
+      //   !response.data.registercompleted
+      // ) {
+      //   AppHistory.push(
+      //     "/" + i18n.language + "/account/profile/member_email"
+      //   );
+      // } else {
+      //   this.props.handleCloseDialog();
+      // }
+      // });
+    });
+    // AccountService.VerifyActivation(securityKey, code).then(
+    //   async (response) => {
+    //     if (response.IsSuccess) {
+    //       enqueueSnackbar(i18n.t("common.msgTokenVerified"), {
+    //         variant: "success",
+    //       });
+    //       setOpen(false);
+    //     } else {
+    //       enqueueSnackbar(response.info, {
+    //         variant: "warning",
+    //       });
+    //     }
+    //   }
+    // );
   }
 
   const handleActivationClick = async () => {
@@ -323,17 +374,21 @@ const ForcedVerification = ({ forcedverify }) => {
     }
 
     if (config.features.SkipSMSVerification) {
-      AccountService.Activation("", "", areacode, phone).then(
-        async (response) => {
-          if (response.IsSuccess) {
-            smsVerification(response.data, "123456");
-          } else {
-            enqueueSnackbar(response.info, {
-              variant: "warning",
-            });
-          }
+      AccountService.NewRegister("InitPhone", {
+        input: "Init",
+        data: {
+          areacode: areacode,
+          phone: phone,
+        },
+      }).then(async (response) => {
+        if (response.IsSuccess) {
+          smsVerification(response.data, "123456");
+        } else {
+          enqueueSnackbar(response.info, {
+            variant: "warning",
+          });
         }
-      );
+      });
     } else {
       smsVerification(securityKey, code);
     }
