@@ -459,7 +459,7 @@ function Activation(props) {
 
           .then(async (response) => {
             if (response.IsSuccess) {
-              setSecurityKey(response.data);
+              setSecurityKey(response.data.stepResponse);
               props.enqueueSnackbar(i18n.t("common.msgTokenSent"), {
                 variant: "info",
               });
@@ -625,7 +625,7 @@ const mapDispatchToProps = (dispatch) => {
         accountAction.registerAccount(username, pwd, confirmpwd, invitationcode)
       ),
     accountLogin: (username, password) =>
-      dispatch(accountAction.accountLogin(username, password)),  
+      dispatch(accountAction.accountLogin(username, password)),
     newRegister: (type, input) =>
       dispatch(accountAction.newRegister(type, input)),
   };
