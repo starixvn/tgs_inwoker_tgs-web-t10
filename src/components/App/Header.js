@@ -804,8 +804,10 @@ class Header extends Component {
     });
   };
 
-  consolidateJoinGame = (game, item) => {
-    if (game.type === GameTypeEnum.COCKFIGHT) {
+  handleCockfight = (item) => {
+    if (!this.props.account.token) {
+      this.props.showLogin(true);
+    } else {
       if (item.include.indexOf("SM01") >= 0) {
         this.popup = window.open("", "Cockfight");
         GameService.GetCockfight()
@@ -818,6 +820,12 @@ class Header extends Component {
             this.popup.close();
           });
       }
+    }
+  };
+
+  consolidateJoinGame = (game, item) => {
+    if (game.type === GameTypeEnum.COCKFIGHT) {
+      this.handleCockfight(item);
     } else if (
       game.type === GameTypeEnum.LOTTERYLOBBY ||
       game.type === GameTypeEnum.LOBBY
