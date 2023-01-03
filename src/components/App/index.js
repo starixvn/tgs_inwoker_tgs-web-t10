@@ -382,7 +382,9 @@ class App extends Component {
     }
   };
 
-  render() {
+  render() { 
+    const languageDetector = i18n.language || localStorage.getItem("i18nextLng") || config.defaultLanguage;
+
     return (
       <Router history={AppHistory}>
         {(() => {
@@ -570,7 +572,7 @@ class App extends Component {
                       path={baseRouteUrl + "/download"}
                       component={Download}
                     />
-                    <Redirect to={"/" + i18n.language} />
+                    <Redirect to={"/" + languageDetector} />
                   </Switch>
                 </Main>
                 {config.features.LiveChatVendor.brand &&
