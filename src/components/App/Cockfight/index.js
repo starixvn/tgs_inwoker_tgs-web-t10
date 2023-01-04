@@ -8,6 +8,7 @@ import { GameTypeEnum } from "../../../api-services/utils/Enum";
 import { SHOW_LOGIN } from "../../../api-services/constant/actionType";
 import Common from "../../../utils/Common";
 import { GameService } from "../../../api-services/services/GameService";
+import { AppHistory } from "../../../history/History";
 const Container = styled.div`
   width: 100%;
   height: auto;
@@ -203,21 +204,32 @@ class Cockfight extends Component {
   }
   handleJoinGameClick = (params) => {
     if (this.props.account.token != null) {
-      if (document.getElementById("audio") != null)
-        document.getElementById("audio").volume = 0.0;
-      this.props.performBalanceRefresh();
-      Common.closePreviousPopup();
+      if (params === "SM01") {
+        if (document.getElementById("audio") != null)
+          document.getElementById("audio").volume = 0.0;
+        this.props.performBalanceRefresh();
+        Common.closePreviousPopup();
 
-      this.popup = window.open("", "Cockfight");
-      GameService.GetCockfight()
-        .then((e) => {
-          this.popup.document.write(e.data);
-          this.popup.document.close();
-          this.popup.focus();
-        })
-        .catch((e) => {
-          this.popup.close();
-        });
+        this.popup = window.open("", "Cockfight");
+        GameService.GetCockfight()
+          .then((e) => {
+            this.popup.document.write(e.data);
+            this.popup.document.close();
+            this.popup.focus();
+          })
+          .catch((e) => {
+            this.popup.close();
+          });
+      } else {
+        AppHistory.push(
+          "/" +
+            i18n.language +
+            "/sports/play/" +
+            params +
+            "/" +
+            GameTypeEnum.SPORTS
+        );
+      }
     } else {
       this.props.showLogin(true);
     }
