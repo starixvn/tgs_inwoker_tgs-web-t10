@@ -51,17 +51,10 @@
   "scripts": {
     "wap:get": "git submodule update --init --recursive",
     "wap:update": "git submodule update --remote",
-    "start": "env-cmd -f .env react-scripts start",
-    "build": "env-cmd -f .env react-scripts build",
+    "start": "SET NODE_OPTIONS=--openssl-legacy-provider && env-cmd -f .env react-scripts start",
+    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && env-cmd -f .env react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "test:build": "env-cmd -f .env react-scripts build",
-    "test:hk28": "env-cmd -f .env.hk28 react-scripts build",
-    "test:hkjp": "env-cmd -f .env.hkjp react-scripts build",
-    "test:wlghk": "env-cmd -f .env.wlghk react-scripts build",
-    "test:mess8": "env-cmd -f .env.mess8 react-scripts build",
-    "test:mgm": "env-cmd -f .env.mgm react-scripts build",
-    "test:28bet": "env-cmd -f .env.28bet react-scripts build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
