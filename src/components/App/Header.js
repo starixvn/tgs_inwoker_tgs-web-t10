@@ -823,9 +823,28 @@ class Header extends Component {
     }
   };
 
+  handleOtherCockfightGame = (game) => {
+    if (!this.props.account.token) {
+      this.props.showLogin(true);
+    } else {
+      AppHistory.push(
+        "/" +
+          i18n.language +
+          "/sports/play/" +
+          game.name +
+          "/" +
+          GameTypeEnum.SPORTS
+      );
+    }
+  };
+
   consolidateJoinGame = (game, item) => {
-    if (game.type === GameTypeEnum.COCKFIGHT && game.name === "SM01") {
-      this.handleCockfight(item);
+    if (game.type === GameTypeEnum.COCKFIGHT) {
+      if (game.name === "SM01") {
+        this.handleCockfight(item);
+      } else {
+        this.handleOtherCockfightGame(game);
+      }
     } else if (
       game.type === GameTypeEnum.LOTTERYLOBBY ||
       game.type === GameTypeEnum.LOBBY

@@ -40,14 +40,14 @@
     "styled-components": "^4.4.1"
   },
   "scripts": {
-    "wap:get": "git submodule update --init --recursive",
-    "wap:update": "git submodule update --remote",
+    "get:submodule": "git submodule update --init --recursive",
+    "update:submodule": "git submodule update --remote",
     "start": "env-cmd -f .env react-scripts start",
     "build": "env-cmd -f .env react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "start:legacyprovider": "SET NODE_OPTIONS=--openssl-legacy-provider && env-cmd -f .env react-scripts start",
-    "build:legacyprovider": "SET NODE_OPTIONS=--openssl-legacy-provider && env-cmd -f .env react-scripts build"
+    "build:legacyprovider": "SET NODE_OPTIONS=--openssl-legacy-provider && env-cmd -f .env react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
