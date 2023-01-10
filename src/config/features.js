@@ -113,6 +113,9 @@ const featureList = {
     RouletteNewFlow: false,
     HaveVIPFeature: true,
     TIGER_CustomTranslation: false,
+    DepositCustomPaymentNames: [
+    ], 
+    Withdrawal_WalletTransfer: false,
   },
 };
 export default featureList;
