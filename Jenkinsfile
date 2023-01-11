@@ -115,7 +115,32 @@ pipeline {
                     }
                 }
             }
-        }	
+        }
+        stage('Undo') {
+            steps {
+                script {
+                    input message: 'Ready to Undo?', ok: 'yes';
+                }
+                
+                sh "echo start deploy"
+            }
+        }
+        stage('Undo Deployment') {   
+            steps {   
+                script {            
+                    withKubeConfig([credentialsId: env.k8s_config]) {
+                        message += "\nComponent:"
+
+                        if (env.tgs_lobby_t10_components!="") {
+                            for (i = 0;i < componentArray.length; i++) {
+                                message += "\n    ${componentArray[i]}"
+                                sh "kubectl rollout undo deployment/${componentArray[i]} -n $env.kube_ns"
+                            }
+                        }
+                    }
+                }
+            }
+        }   
     }
     post {
         success {
