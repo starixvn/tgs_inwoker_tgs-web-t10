@@ -116,7 +116,7 @@ pipeline {
                 }
             }
         }
-        stage('Undo') {.
+        stage('Undo') {
             when {
                 expression {
                     return env.kube_ns == 'prod';
