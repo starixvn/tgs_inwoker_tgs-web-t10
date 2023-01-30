@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import {GameService} from "../../../api-services/services/GameService";
+import { GameService } from "../../../api-services/services/GameService";
 import Maintenance from "../../Share/Maintenance";
 import { withSnackbar } from "notistack";
 const Container = styled.iframe`

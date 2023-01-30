@@ -9,8 +9,6 @@ import LoginBGPNG from "../../assets/images/login-bg.png";
 
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import UserIconPNG from "../../assets/images/user-icon.png";
-import Password1IconPNG from "../../assets/images/password1-icon.png";
 import IconMobilePNG from "../../assets/images/icon-mobile.png";
 import IconInboxSelectedPNG from "../../assets/images/icon-inbox-selected.png";
 import IconInputVerifyCodePNG from "../../assets/images/icon-input-verifycode.png";

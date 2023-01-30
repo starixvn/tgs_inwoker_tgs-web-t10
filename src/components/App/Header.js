@@ -31,6 +31,7 @@ import ErrorSwitcher from "../../utils/ErrorSwitcher";
 import { AppHistory } from "../../history/History";
 import { SortedMenuList } from "../../utils/HeaderSorting";
 import OnlineUserDisplayer from "../Share/online-user-displayer";
+import { GameService } from "../../api-services/services/GameService";
 const moment = require("moment");
 
 const InnerWrap = styled.div`
@@ -132,7 +133,7 @@ const LogoContainer = styled.div`
   background-image: url("${(props) => props.img}");
   background-repeat: no-repeat;
   background-size: 75%;
-  background-position:  center;
+  background-position: center;
   height: 90px;
   ${(props) => {
     if (props.headerCustom === true) {
@@ -146,7 +147,6 @@ const LogoContainer = styled.div`
   &:hover {
     cursor: pointer;
   }
-
 `;
 
 const RightMenuContainer = styled.div`
@@ -240,8 +240,6 @@ const GameImg = styled.div`
     justify-content: center;
     height: 50px;
   }
-
- 
 `;
 const breatheAnimation = keyframes`
 
@@ -806,8 +804,48 @@ class Header extends Component {
     });
   };
 
+  handleCockfight = (item) => {
+    if (!this.props.account.token) {
+      this.props.showLogin(true);
+    } else {
+      if (item.include.indexOf("SM01") >= 0) {
+        this.popup = window.open("", "Cockfight");
+        GameService.GetCockfight()
+          .then((e) => {
+            this.popup.document.write(e.data);
+            this.popup.document.close();
+            this.popup.focus();
+          })
+          .catch((e) => {
+            this.popup.close();
+          });
+      }
+    }
+  };
+
+  handleOtherCockfightGame = (game) => {
+    if (!this.props.account.token) {
+      this.props.showLogin(true);
+    } else {
+      AppHistory.push(
+        "/" +
+          i18n.language +
+          "/sports/play/" +
+          game.name +
+          "/" +
+          GameTypeEnum.SPORTS
+      );
+    }
+  };
+
   consolidateJoinGame = (game, item) => {
-    if (
+    if (game.type === GameTypeEnum.COCKFIGHT) {
+      if (game.name === "SM01") {
+        this.handleCockfight(item);
+      } else {
+        this.handleOtherCockfightGame(game);
+      }
+    } else if (
       game.type === GameTypeEnum.LOTTERYLOBBY ||
       game.type === GameTypeEnum.LOBBY
     ) {
@@ -820,6 +858,21 @@ class Header extends Component {
         "/" + i18n.language + "/joingame/" + game.type + "/" + game.gpcode
       );
     }
+  };
+
+  filterGameList = (item) => {
+    if (item.include && item.include !== undefined) {
+      this.props.game.homePageGameList.map((game) => {
+        if (item.include.indexOf(game.game_platform_name) >= 0) {
+          game.type = item.gameType[0];
+        }
+        return item;
+      });
+    }
+
+    return this.props.game.homePageGameList.filter((game) => {
+      return item.gameType.indexOf(game.type) >= 0;
+    });
   };
 
   render() {
@@ -944,17 +997,15 @@ class Header extends Component {
                 </CustomVIPHeaderButton>
 
                 {SortedMenuList.map((item, index) => {
-                  var gameList = this.props.game.homePageGameList
-                    .filter((game) => item.gameType.indexOf(game.type) >= 0)
-                    .sort((a, b) => {
-                      if (config.features.LiveGame_Sorting_SKY) {
-                        var sortDGFirst = ["DG"];
-                        return (
-                          sortDGFirst.indexOf(b.abbreviation) -
-                          sortDGFirst.indexOf(a.abbreviation)
-                        );
-                      } else return b - a;
-                    });
+                  var gameList = this.filterGameList(item).sort((a, b) => {
+                    if (config.features.LiveGame_Sorting_SKY) {
+                      var sortDGFirst = ["DG"];
+                      return (
+                        sortDGFirst.indexOf(b.abbreviation) -
+                        sortDGFirst.indexOf(a.abbreviation)
+                      );
+                    } else return b - a;
+                  });
                   return (
                     gameList.length !== 0 && (
                       <RightMenuLI
@@ -1006,7 +1057,8 @@ class Header extends Component {
                                             {i18n.t("transfer.maintenance")}
                                           </Maintenance>
                                           {(() => {
-                                            var gameCode = game.abbreviation.toLowerCase();
+                                            var gameCode =
+                                              game.abbreviation.toLowerCase();
                                             if (gameCode === "joker") {
                                               return (
                                                 <HotGameIcon></HotGameIcon>
@@ -1014,7 +1066,8 @@ class Header extends Component {
                                             }
                                           })()}
                                           {(() => {
-                                            var gameCode = game.abbreviation.toLowerCase();
+                                            var gameCode =
+                                              game.abbreviation.toLowerCase();
                                             if (
                                               config.features.SportsHideLogo
                                             ) {
@@ -1069,7 +1122,8 @@ class Header extends Component {
                                               {i18n.t("transfer.maintenance")}
                                             </Maintenance>
                                             {(() => {
-                                              var gameCode = game.abbreviation.toLowerCase();
+                                              var gameCode =
+                                                game.abbreviation.toLowerCase();
                                               if (gameCode === "joker") {
                                                 return (
                                                   <HotGameIcon></HotGameIcon>
@@ -1077,7 +1131,8 @@ class Header extends Component {
                                               }
                                             })()}
                                             {(() => {
-                                              var gameCode = game.abbreviation.toLowerCase();
+                                              var gameCode =
+                                                game.abbreviation.toLowerCase();
                                               if (
                                                 config.features.SportsHideLogo
                                               ) {

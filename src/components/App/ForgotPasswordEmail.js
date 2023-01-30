@@ -7,7 +7,7 @@ import IconLoginClosePNG from "../../assets/images/icon-login-close.png";
 
 import TextField from "@material-ui/core/TextField";
 import { withSnackbar } from "notistack";
-import {AccountService} from "../../api-services/services/AccountService";
+import { AccountService } from "../../api-services/services/AccountService";
 import i18n from "../../utils/i18n";
 import ErrorSwitcher from "../../utils/ErrorSwitcher";
 const Container = styled.div`

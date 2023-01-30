@@ -66,7 +66,9 @@ const LanguageChanger = ({ language, changeLanguage }) => {
                 i18n.changeLanguage(data.culturecode);
                 AppHistory.replace(data.culturecode);
                 changeLanguage(data.culturecode);
+
                 setAnchorEl(null);
+                window.location.reload();
               }}
             >
               {

@@ -152,6 +152,19 @@ const MenuItemList = [
     sortingWLGHK: 5,
     sortingBUNNY: 8,
   },
+  {
+    path: `cockfight`,
+    title: "common.cockfight",
+    gameType: [GameTypeEnum.COCKFIGHT],
+    sorting: 9,
+    sortingGMO: 9,
+    sortingHK28: 9,
+    sortingPB: 9,
+    sortingSKY: 9,
+    sortingWLGHK: 9,
+    sortingBUNNY: 9,
+    include: ["SM01", "AWC_COCKFIGHT"],
+  },
 ];
 
 export const SortedMenuList = MenuItemList.sort((a, b) => {

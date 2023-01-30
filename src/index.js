@@ -49,6 +49,7 @@ import JoinLotteryGame from "./components/Share/JoinLotteryGame";
 import featureList from "./config/features";
 import FeatureGetter from "./components/Share/feature-getter";
 import AudioPlayer from "./components/Share/audioplayer";
+import config from "./config/config";
 
 require("es6-promise").polyfill();
 const store = createStore(rootReducer, applyMiddleware(thunk));
@@ -81,43 +82,6 @@ const Icon = styled.img`
 Config.from = isMobileOnly ? "h5" : "h5";
 Config.isPC = isMobileOnly ? 1 : 0;
 
-document.getElementById("title").innerHTML = i18n
-  .t("common.title")
-  .replace(/{brand}/g, Config.brandName);
-document
-  .getElementById("description")
-  .setAttribute(
-    "content",
-    i18n.t("common.title").replace(/{brand}/g, Config.brandName)
-  );
-// if (
-//   process.env.REACT_APP_CUSTOM_NODE_ENV !== "development" &&
-//   (process.env.REACT_APP_CUSTOM_NODE_ENV !== "qa" || Config.baseUrl === "") &&
-//   (process.env.REACT_APP_CUSTOM_NODE_ENV !== "staging" || Config.baseUrl === "")
-// ) {
-//   let url = window.location.hostname;
-//   let new_sub = "service";
-//   let baseUrl = "";
-//   if (url.split(/[\/\.]+/).length >= 3) {
-//     baseUrl = url.replace(url.split(/[\/\.]+/)[0], new_sub);
-//   } else {
-//     baseUrl = new_sub + "." + url;
-//   }
-//   baseUrl = window.location.protocol + "//" + baseUrl + "/";
-//   Config.baseUrl = baseUrl;
-// }
-
-var fontFamily = "Tahoma, Helvetica, Arial, sans-serif";
-if (i18n.language === "zh-CN") {
-  fontFamily =
-    "'Noto Sans SC', Microsoft Yahei, '微软雅黑', STXihei, '华文细黑'";
-} else if (i18n.language === "zh-TW") {
-  fontFamily =
-    "'Noto Sans TC', Tahoma, Helvetica, Arial, sans-serif, '微軟正黑粗'";
-} else if (i18n.language === "th-TH") {
-  fontFamily = "'Sarabun', sans-serif";
-}
-document.getElementById("root").style.fontFamily = fontFamily;
 var muiThemeMode = isMobileOnly
   ? themeList[Config.brand] || themeList[Config.theme]
   : themeList[Config.theme];
@@ -142,8 +106,6 @@ const muiTheme = createMuiTheme({
     type: "light",
   },
   typography: {
-    fontFamily: fontFamily,
-
     fontWeightLight: 300,
     fontWeightRegular: 400,
     fontWeightMedium: 500,
@@ -198,96 +160,125 @@ const muiTheme = createMuiTheme({
 });
 const AppWrapper = () => {
   const classes = useStyles();
+  const languageDetector =
+    i18n.language ||
+    localStorage.getItem("i18nextLng") ||
+    config.defaultLanguage;
 
-  return (
-    <Provider store={store}>
-      <FeatureGetter />
-      {Config.features.BackgroundMusic && <AudioPlayer />}
-      <StylesProvider injectFirst>
-        <MuiThemeProvider theme={muiTheme}>
-          <ThemeProvider theme={muiThemeMode}>
-            <GlobalStyles />
-            <SnackbarProvider
-              classes={{
-                variantSuccess: classes.success,
-                variantError: classes.error,
-                variantWarning: classes.warning,
-                variantInfo: classes.info,
-              }}
-              iconVariant={{
-                success: <Icon src={SuccessPNG}></Icon>,
-                error: <Icon src={DangerPNG}></Icon>,
-                warning: <Icon src={DangerPNG}></Icon>,
-                info: <Icon src={InfoPNG}></Icon>,
-              }}
-              action={(key) => (
-                <Dismiss onClick={onClickDismiss(key)}>x</Dismiss>
-              )}
-              maxSnack={3}
-              autoHideDuration={3000}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "center",
-              }}
-              ref={notistackRef}
-            >
-              <Router history={AppHistory}>
-                <Switch>
-                  <Route
-                    exact
-                    path={
-                      Common.baseRouteUrl +
-                      "/deposit/:paymentcode/:methodcode/:channelid/:amount/:promotion/:name/:account?"
-                    }
-                    component={Deposit}
-                  />
-                  <Route
-                    exact
-                    path={
-                      Common.baseRouteUrl + "/joingame/:type/:params/:params2?"
-                    }
-                    component={JoinGame}
-                  />
-                  <Route
-                    exact
-                    path={Common.baseRouteUrl + "/redirect/:url"}
-                    component={RedirectPage}
-                  />
-                  <Route
-                    exact
-                    path={Common.baseRouteUrl + "/joinlottery/:brand"}
-                    component={JoinLotteryGame}
-                  />
-                  <Route
-                    exact
-                    path={Common.baseRouteUrl + "/joinlobbygame/:type/:params"}
-                    component={JoinLobbyGame}
-                  />
+  const [isReady, setIsReady] = React.useState(false);
+  useEffect(() => {
+    i18n.on("languageChanged", (lng) => {
+      document.getElementById("title").innerHTML = i18n
+        .t("common.title")
+        .replace(/{brand}/g, Config.brandName);
+      document
+        .getElementById("description")
+        .setAttribute(
+          "content",
+          i18n.t("common.title").replace(/{brand}/g, Config.brandName)
+        );
+    });
+    i18n.on("loaded", function (options) {
+      setIsReady(true);
+    });
+  }, []);
 
-                  {(() => {
-                    if (!isMobileOnly) {
-                      return (
-                        <Route
-                          exact
-                          path={Common.baseRouteUrl + "/maintenance"}
-                          render={(props) => <Maintenance />}
-                        />
-                      );
-                    }
-                  })()}
-                  <Route
-                    path={Common.baseRouteUrl + "/"}
-                    render={(props) => (isMobileOnly ? <Wap /> : <Web />)}
-                  />
-                  <Redirect to={`/${i18n.language}`} />
-                </Switch>
-              </Router>
-            </SnackbarProvider>
-          </ThemeProvider>
-        </MuiThemeProvider>
-      </StylesProvider>
-    </Provider>
-  );
+  if (isReady) {
+    return (
+      <Provider store={store}>
+        <FeatureGetter />
+        {Config.features.BackgroundMusic && <AudioPlayer />}
+        <StylesProvider injectFirst>
+          <MuiThemeProvider theme={muiTheme}>
+            <ThemeProvider theme={muiThemeMode}>
+              <GlobalStyles />
+              <SnackbarProvider
+                classes={{
+                  variantSuccess: classes.success,
+                  variantError: classes.error,
+                  variantWarning: classes.warning,
+                  variantInfo: classes.info,
+                }}
+                iconVariant={{
+                  success: <Icon src={SuccessPNG}></Icon>,
+                  error: <Icon src={DangerPNG}></Icon>,
+                  warning: <Icon src={DangerPNG}></Icon>,
+                  info: <Icon src={InfoPNG}></Icon>,
+                }}
+                action={(key) => (
+                  <Dismiss onClick={onClickDismiss(key)}>x</Dismiss>
+                )}
+                maxSnack={3}
+                autoHideDuration={3000}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+                ref={notistackRef}
+              >
+                <Router history={AppHistory}>
+                  <Switch>
+                    <Route
+                      exact
+                      path={
+                        Common.baseRouteUrl +
+                        "/deposit/:paymentcode/:methodcode/:channelid/:amount/:promotion/:name/:account?"
+                      }
+                      component={Deposit}
+                    />
+                    <Route
+                      exact
+                      path={
+                        Common.baseRouteUrl +
+                        "/joingame/:type/:params/:params2?"
+                      }
+                      component={JoinGame}
+                    />
+                    <Route
+                      exact
+                      path={Common.baseRouteUrl + "/redirect/:url"}
+                      component={RedirectPage}
+                    />
+                    <Route
+                      exact
+                      path={Common.baseRouteUrl + "/joinlottery/:brand"}
+                      component={JoinLotteryGame}
+                    />
+                    <Route
+                      exact
+                      path={
+                        Common.baseRouteUrl + "/joinlobbygame/:type/:params"
+                      }
+                      component={JoinLobbyGame}
+                    />
+
+                    {(() => {
+                      if (!isMobileOnly) {
+                        return (
+                          <Route
+                            exact
+                            path={Common.baseRouteUrl + "/maintenance"}
+                            render={(props) => <Maintenance />}
+                          />
+                        );
+                      }
+                    })()}
+                    <Route
+                      path={Common.baseRouteUrl + "/"}
+                      render={(props) => (isMobileOnly ? <Wap /> : <Web />)}
+                    />
+                    <Redirect to={`/${languageDetector}`} />
+                  </Switch>
+                </Router>
+              </SnackbarProvider>
+            </ThemeProvider>
+          </MuiThemeProvider>
+        </StylesProvider>
+      </Provider>
+    );
+  } else {
+    return <div></div>;
+  }
 };
 
 ReactDOM.render(<AppWrapper></AppWrapper>, document.getElementById("root"));

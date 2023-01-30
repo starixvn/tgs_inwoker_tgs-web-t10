@@ -262,9 +262,13 @@ class PromotionDetails extends Component {
   performRedirect = (id, promotionType) => {
     this.props.joinPromotion(id);
     if (
-      ["FirstDeposit", "DailySecondDeposit", "DailyFirstDeposit", "DepositReward", "DepositAccumulateRoulette"].indexOf(
-        promotionType
-      ) >= 0
+      [
+        "FirstDeposit",
+        "DailySecondDeposit",
+        "DailyFirstDeposit",
+        "DepositReward",
+        "DepositAccumulateRoulette",
+      ].indexOf(promotionType) >= 0
     ) {
       AppHistory.push({
         pathname: "/" + i18n.language + "/account/deposit/" + id,
@@ -278,9 +282,13 @@ class PromotionDetails extends Component {
       this.props.joinPromotion(id);
 
       if (
-        ["FirstDeposit", "DailySecondDeposit", "DailyFirstDeposit", "DepositReward", "DepositAccumulateRoulette"].indexOf(
-          promotionType
-        ) >= 0
+        [
+          "FirstDeposit",
+          "DailySecondDeposit",
+          "DailyFirstDeposit",
+          "DepositReward",
+          "DepositAccumulateRoulette",
+        ].indexOf(promotionType) >= 0
       ) {
         AppHistory.push({
           pathname: "/" + i18n.language + "/account/deposit/" + id,
@@ -311,9 +319,8 @@ class PromotionDetails extends Component {
             <PromoDetailImage
               img={(() => {
                 if (this.state.details.localization !== null) {
-                  var checkLocale = this.state.details.localization[
-                    i18n.language
-                  ];
+                  var checkLocale =
+                    this.state.details.localization[i18n.language];
                   if (checkLocale) {
                     return checkLocale.desktopBanner;
                   } else {
@@ -358,11 +365,13 @@ class PromotionDetails extends Component {
                           this.state.details.localization[i18n.language] !==
                             null)
                       ) {
-                        return (this.state.details.localization[i18n.language]
-                          .content
-                          ? this.state.details.localization[i18n.language]
-                              .content
-                          : this.state.details.content) ?? "";
+                        return (
+                          (this.state.details.localization[i18n.language]
+                            .content
+                            ? this.state.details.localization[i18n.language]
+                                .content
+                            : this.state.details.content) ?? ""
+                        );
                       } else {
                         return this.state.details.content ?? "";
                       }

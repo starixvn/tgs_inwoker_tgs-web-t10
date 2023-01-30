@@ -230,20 +230,6 @@ const TitleContainer = styled.div`
   color: ${({ theme }) => theme.secondary};
 `;
 
-const CloseIconContainer = styled.div`
-  background: url(${IconLoginClosePNG}) no-repeat;
-  width: 28px;
-  height: 28px;
-  float: right;
-  margin: 10px 10px 0 0;
-  &:hover {
-    cursor: pointer;
-  }
-  position: absolute;
-  right: 10px;
-  top: 20px;
-`;
-
 const ForcedVerification = ({ forcedverify }) => {
   const [areacode, setAreacode] = useState(config.features.PhonePrefix);
   const [phone, setPhone] = useState("");

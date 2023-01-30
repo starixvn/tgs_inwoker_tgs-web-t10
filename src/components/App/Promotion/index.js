@@ -189,9 +189,13 @@ class Promotion extends Component {
     else {
       this.props.joinPromotion(id);
       if (
-        ["FirstDeposit", "DailySecondDeposit", "DailyFirstDeposit", "DepositReward", "DepositAccumulateRoulette"].indexOf(
-          promotionType
-        ) >= 0
+        [
+          "FirstDeposit",
+          "DailySecondDeposit",
+          "DailyFirstDeposit",
+          "DepositReward",
+          "DepositAccumulateRoulette",
+        ].indexOf(promotionType) >= 0
       ) {
         AppHistory.push({
           pathname: "/" + i18n.language + "/account/deposit/" + id,

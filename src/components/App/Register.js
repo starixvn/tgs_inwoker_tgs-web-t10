@@ -362,113 +362,6 @@ function Register(props) {
   }, []);
 
   const [tnc, setTnc] = React.useState(true);
-  const handleRegisterClick = async () => {
-    var expr = /^[a-zA-Z0-9]{6,16}$/;
-    if (!expr.test(username)) {
-      props.enqueueSnackbar(i18n.t("common.msgRegisterUserNameInvalid"), {
-        variant: "warning",
-      });
-      return;
-    }
-    expr = /^.{6,20}$/;
-    if (!expr.test(password)) {
-      props.enqueueSnackbar(i18n.t("common.msgRegisterPassInvalid"), {
-        variant: "warning",
-      });
-      return;
-    }
-    if (password !== password2) {
-      props.enqueueSnackbar(i18n.t("common.msgRegisterPassMatchInvalid"), {
-        variant: "warning",
-      });
-      return;
-    }
-    expr = new RegExp(`^[0-9]{8,${config.features.MAX_PHONE_LENGTH || 10}}`);
-    if (config.features.Register_ShowPhone) {
-      if (!expr.test(phone)) {
-        props.enqueueSnackbar(
-          i18n
-            .t("common.noReachMin")
-            .replace(/{maxlength}/g, config.features.MAX_PHONE_LENGTH || 10),
-          {
-            variant: "warning",
-          }
-        );
-        return;
-      }
-    }
-
-    expr = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (config.features.Register_ShowEmail) {
-      if (!expr.test(email)) {
-        props.enqueueSnackbar(i18n.t("common.msgInvalidEmail"), {
-          variant: "warning",
-        });
-        return;
-      }
-    }
-
-    if (tnc) {
-      // user_account,
-      // user_password,
-      // pay_password,
-      // mobile,
-      // recommend_code,
-      // mobile_code_id
-      props
-        .register(username, password, password2, promotionId, upper)
-        .then(async (response) => {
-          if (response.IsSuccess && response.data.isnew === false) {
-            props.enqueueSnackbar(i18n.t("common.msgAlreadyExist"), {
-              variant: "warning",
-            });
-          } else if (response.IsSuccess) {
-            // let urlParams = new URLSearchParams(props.location.search);
-            // if (urlParams.has("return_url")) {
-            //   const returnValue = urlParams.get("return_url");
-            //   if (returnValue) {
-            //     window.location.href =
-            //       returnValue +
-            //       "?token=" +
-            //       BlowFishEncryption.Encrypt(response.data);
-            //   }
-            // }
-            if (config.features.SMSVerification) {
-              props.onRegisterSuccess(username, password);
-            } else if (
-              config.features.Register_ShowEmail &&
-              config.features.Register_ShowPhone
-            ) {
-              props.doLoginWithHpEmail(username, password, phone, email);
-            } else if (config.features.Register_ShowPhone) {
-              props.doLoginWithHp(username, password, phone);
-            } else {
-              props.doLogin(username, password);
-              // await props.getAccountInfo(response.data);
-              // await props.getAccountProfile(response.data);
-            }
-          } else {
-            props.enqueueSnackbar(ErrorSwitcher.getTranslation(response.info), {
-              variant: "warning",
-            });
-            // if (response.code === 206) {
-            //   props.enqueueSnackbar(i18n.t("common.msgInvalidInvitationCode"), {
-            //     variant: "warning",
-            //   });
-            // } else {
-            //   props.enqueueSnackbar(response.info, {
-            //     variant: "warning",
-            //   });
-            // }
-          }
-        });
-    } else {
-      props.enqueueSnackbar(i18n.t("common.msgRegisterTermAndCondition"), {
-        variant: "warning",
-      });
-      return;
-    }
-  };
 
   const performNewRegister = async () => {
     var expr = /^[a-zA-Z0-9]{6,16}$/;
@@ -506,7 +399,8 @@ function Register(props) {
       }
     }
 
-    expr = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    expr =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (config.features.Register_ShowEmail) {
       if (!expr.test(email)) {
         props.enqueueSnackbar(i18n.t("common.msgInvalidEmail"), {
@@ -521,7 +415,6 @@ function Register(props) {
         .newRegister("CreatePlayer", {
           username: username,
           pwd: password,
-          upper: upper,
           invitationcode: promotionId,
         })
         .then(async (response) => {
@@ -533,7 +426,8 @@ function Register(props) {
               variant: "warning",
             });
           } else if (response.IsSuccess) {
-            let setPhoneDontCareDuplicate = response.data.nextStepType === "SetPhoneDontCareDuplicate";
+            let setPhoneDontCareDuplicate =
+              response.data.nextStepType === "SetPhoneDontCareDuplicate";
 
             if (config.features.SMSVerification) {
               props.onRegisterSuccess(username, password);
@@ -541,7 +435,13 @@ function Register(props) {
               config.features.Register_ShowEmail &&
               config.features.Register_ShowPhone
             ) {
-              props.doLoginWithHpEmail(username, password, phone, email, setPhoneDontCareDuplicate);
+              props.doLoginWithHpEmail(
+                username,
+                password,
+                phone,
+                email,
+                setPhoneDontCareDuplicate
+              );
             } else if (config.features.Register_ShowPhone) {
               props.doLoginWithHp(username, password, phone, setPhoneDontCareDuplicate);
             } else {
