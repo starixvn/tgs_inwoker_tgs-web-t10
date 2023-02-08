@@ -429,6 +429,10 @@ function arrayValidator(array) {
   return array && Array.isArray(array) && array.length > 0;
 }
 
+function truncateString(str, n){
+  return (str.length > n) ? str.slice(0, n) + '…' : str;
+};
+
 const Common = {
   baseRouteUrl,
   ConvertSlotGameParentIdToString,
@@ -451,5 +455,6 @@ const Common = {
   getCDNLanguagePrefix,
   addComma,
   arrayValidator,
+  truncateString,
 };
 export default Common;
