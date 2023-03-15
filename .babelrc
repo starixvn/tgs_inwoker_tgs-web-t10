@@ -1,0 +1,9 @@
+/* .babelrc */
+{
+    "presets": [],
+    "env": {
+      "development": {
+        "plugins": ["@babel/syntax-dynamic-import"]
+      }
+    }
+  }
