@@ -563,6 +563,6 @@ div[class*=" SnackbarItem-variantInfo-"]:before {
   float: left;
 }
 
-.MuiSelect-outlined.MuiSelect-outlined {
+.fix-text-cut.MuiSelect-outlined.MuiSelect-outlined {
   height: 25px;
 }
