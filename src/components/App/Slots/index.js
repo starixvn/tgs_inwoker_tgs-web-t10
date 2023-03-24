@@ -673,15 +673,7 @@ class Slots extends Component {
                       selected={this.state.platform === row.abbreviation}
                       onClick={() => this.handleParentClick(row.abbreviation)}
                     >
-                      {i18n.t(
-                        `${row.abbreviation}.${
-                          this.props.match.url.indexOf("fish") >= 0
-                            ? "fish"
-                            : this.props.match.url.indexOf("slots") >= 0
-                            ? "slots"
-                            : "electron"
-                        }`
-                      )}
+                      {row.name}
                     </TabButton>
                   </GameButtonBlock>
                 );
