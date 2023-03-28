@@ -8,7 +8,7 @@ pipeline {
         TAG = sh(script: "echo `date +%Y-%m%d-%H%M`", returnStdout: true).trim()
         Registry = "pgtgs/"
         GitUrl = "gitlab.com/inwoker/tgs/tgs-web-t10.git"
-        dockerhub = credentials('dockerhub2')
+        dockerhub = credentials('dockerhub')
         Image = "lobby-t10"
     }
 	
