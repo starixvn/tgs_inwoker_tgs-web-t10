@@ -6,6 +6,7 @@ COPY . .
 RUN apt-get update && \
     apt-get install -y git
 	
+RUN npm cache clear --force
 RUN npm ci
 RUN npm run build
 
