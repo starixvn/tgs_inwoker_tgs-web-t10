@@ -43,7 +43,9 @@
     "get:submodule": "git submodule update --init --recursive",
     "update:submodule": "git submodule update --remote",
     "start": "env-cmd -f .env react-scripts start",
-    "build": "env-cmd -f .env react-scripts build",
+    "start:webpack": "webpack-dev-server --mode development",
+    "build": "webpack --mode production",
+    "build:standard": "env-cmd -f .env react-scripts build",
     "start:legacyprovider": "SET NODE_OPTIONS=--openssl-legacy-provider && env-cmd -f .env react-scripts start",
     "build:legacyprovider": "SET NODE_OPTIONS=--openssl-legacy-provider && env-cmd -f .env react-scripts build",
     "test": "react-scripts test",
@@ -66,8 +68,18 @@
     ]
   },
   "devDependencies": {
+    "base64-inline-loader": "^2.0.1",
+    "brotli-webpack-plugin": "^1.1.0",
+    "compression-webpack-plugin": "^10.0.0",
+    "copy-webpack-plugin": "^11.0.0",
     "env-cmd": "^10.1.0",
+    "html-webpack-plugin": "^5.5.0",
+    "object-hash": "^3.0.0",
     "promise": "^8.1.0",
-    "react-scripts": "^4.0.3"
+    "react-scripts": "^4.0.3",
+    "webpack": "^5.76.3",
+    "webpack-bundle-analyzer": "^4.8.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
   }
 }
