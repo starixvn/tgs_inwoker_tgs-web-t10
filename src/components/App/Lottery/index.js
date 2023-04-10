@@ -219,7 +219,7 @@ class Lottery extends Component {
       Common.closePreviousPopup();
       this.props.performBalanceRefresh();
       Common.PopupCenter(
-        "/" + i18n.language + "/joinlottery/" + params,
+        "/joinlottery/" + params,
         params.toUpperCase(),
         1280,
         720

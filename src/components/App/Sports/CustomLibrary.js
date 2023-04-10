@@ -395,7 +395,7 @@ class CustomLibrary extends Component {
     if (this.props.token) {
       Common.closePreviousPopup();
       this.props.performBalanceRefresh();
-      this.props.history.push(`/${i18n.language}/sports/c/${gpcode}/${gpid}`);
+      this.props.history.push(`/sports/c/${gpcode}/${gpid}`);
     } else {
       this.props.showLogin(true);
     }
