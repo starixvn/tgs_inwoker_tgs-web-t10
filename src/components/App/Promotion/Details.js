@@ -158,7 +158,7 @@ class PromotionDetails extends Component {
       }
     }
     if (index === -1) {
-      AppHistory.replace("/" + i18n.language + "/promotion");
+      AppHistory.replace("/promotion");
     }
     var term = "";
     if (details) {
@@ -186,10 +186,10 @@ class PromotionDetails extends Component {
 
   componentDidMount() {
     if (this.props.match.params.id == null) {
-      AppHistory.replace("/" + i18n.language + "/promotion");
+      AppHistory.replace("/promotion");
     }
     if (this.props.general.promotionList.items.length <= 0) {
-      AppHistory.replace("/" + i18n.language + "/promotion");
+      AppHistory.replace("/promotion");
     }
   }
 
@@ -215,7 +215,7 @@ class PromotionDetails extends Component {
       }
     }
     if (prevProps.account.token !== this.props.account.token) {
-      AppHistory.replace("/" + i18n.language + "/promotion");
+      AppHistory.replace("/promotion");
     }
   }
 
@@ -230,7 +230,7 @@ class PromotionDetails extends Component {
       selectedPromoTitle: "",
       selectedBospId: 0,
     });
-    this.props.history.push("/" + i18n.language + "/promotion");
+    this.props.history.push("/promotion");
   };
   handleCloseDialog = () => {
     this.ResetPopup();
@@ -248,9 +248,7 @@ class PromotionDetails extends Component {
     e.preventDefault();
     if (targetLink.href.indexOf("/promotion/") >= 0) {
       this.props.history.push(
-        "/" +
-          i18n.language +
-          "/promotion/" +
+        "/promotion/" +
           targetLink.href.substring(
             targetLink.href.indexOf("/promotion/") + 11,
             targetLink.href.length
@@ -271,7 +269,7 @@ class PromotionDetails extends Component {
       ].indexOf(promotionType) >= 0
     ) {
       AppHistory.push({
-        pathname: "/" + i18n.language + "/account/deposit/" + id,
+        pathname: "/account/deposit/" + id,
       });
     }
   };
@@ -291,7 +289,7 @@ class PromotionDetails extends Component {
         ].indexOf(promotionType) >= 0
       ) {
         AppHistory.push({
-          pathname: "/" + i18n.language + "/account/deposit/" + id,
+          pathname: "/account/deposit/" + id,
         });
       }
     }
@@ -304,7 +302,7 @@ class PromotionDetails extends Component {
   };
 
   goBack() {
-    AppHistory.replace("/" + i18n.language + "/promotion");
+    AppHistory.replace("/promotion");
   }
   render() {
     if (this.state.details === null) return <></>;
