@@ -316,10 +316,36 @@ class App extends Component {
           (a) => a.culturecode === i18n.language
         ).length <= 0
       ) {
-        window.location.href = window.location.pathname.replace(
-          i18n.language,
-          this.props.general.brandLanguage[0].culturecode
-        );
+        if (
+          this.props.general.brandLanguage.filter((a) => {
+            return a.culturecode === i18n.language;
+          })
+        ) {
+          i18n.changeLanguage(this.props.general.brandLanguage[0].culturecode);
+          AppHistory.push(
+            "/" + this.props.general.brandLanguage[0].culturecode
+          );
+
+          window.location.reload();
+        }
+      } else {
+        if (
+          this.props.general.brandLanguage.filter(
+            (a) => a.culturecode === i18n.language
+          )
+        ) {
+          if (
+            window.location.pathname.split("/")[1] !== i18n.language ||
+            window.location.pathname.split("/").length > 3
+          ) {
+            i18n.changeLanguage(i18n.language);
+            AppHistory.push(
+              "/" +
+                i18n.language +
+                window.location.pathname.split("/").slice(2).join("/")
+            );
+          }
+        }
       }
     }
   }
@@ -624,52 +650,55 @@ class App extends Component {
                       }}
                     />
                   )}
-                {config.features.HomePage_PromoRoulette && this.isInHomePage() && (
-                  <RouletteFloatingPanel
-                    position={
-                      config.features.RouletteSetting &&
-                      config.features.RouletteSetting.web &&
-                      config.features.RouletteSetting.web.position
-                    }
-                    orientation={
-                      config.features.RouletteSetting &&
-                      config.features.RouletteSetting.web &&
-                      config.features.RouletteSetting.web.orientation
-                    }
-                  >
-                    {this.props.general.rouletteCount.length > 0 &&
-                      this.props.general.rouletteCount
-                        .filter((item) => {
-                          return (
-                            item.promotiontype.toUpperCase() ===
-                            "DEPOSITACCUMULATEROULETTE"
-                          );
-                        })
-                        .map((roulette, index) => {
-                          return roulette.roulettecount >= 0 && index === 0 ? (
-                            <PromotionRoulette
-                              rouletteType={roulette.promotiontype.toUpperCase()}
-                              promotionDetail={{ id: roulette.promotionid }}
-                            ></PromotionRoulette>
-                          ) : (
-                            <React.Fragment></React.Fragment>
-                          );
-                        })}
-                    {config.features.HomePage_PromoRoulette &&
-                      !config.features.RouletteNewFlow &&
-                      this.isRouletteAvailable() && (
-                        <PromotionRoulette
-                          rouletteType="ROULETTE"
-                          promotionDetail={
-                            this.props.general.promotionList.items.filter(
-                              (item) =>
-                                item.promotionType.toUpperCase() === "ROULETTE"
-                            )[0]
-                          }
-                        ></PromotionRoulette>
-                      )}
-                  </RouletteFloatingPanel>
-                )}
+                {config.features.HomePage_PromoRoulette &&
+                  this.isInHomePage() && (
+                    <RouletteFloatingPanel
+                      position={
+                        config.features.RouletteSetting &&
+                        config.features.RouletteSetting.web &&
+                        config.features.RouletteSetting.web.position
+                      }
+                      orientation={
+                        config.features.RouletteSetting &&
+                        config.features.RouletteSetting.web &&
+                        config.features.RouletteSetting.web.orientation
+                      }
+                    >
+                      {this.props.general.rouletteCount.length > 0 &&
+                        this.props.general.rouletteCount
+                          .filter((item) => {
+                            return (
+                              item.promotiontype.toUpperCase() ===
+                              "DEPOSITACCUMULATEROULETTE"
+                            );
+                          })
+                          .map((roulette, index) => {
+                            return roulette.roulettecount >= 0 &&
+                              index === 0 ? (
+                              <PromotionRoulette
+                                rouletteType={roulette.promotiontype.toUpperCase()}
+                                promotionDetail={{ id: roulette.promotionid }}
+                              ></PromotionRoulette>
+                            ) : (
+                              <React.Fragment></React.Fragment>
+                            );
+                          })}
+                      {config.features.HomePage_PromoRoulette &&
+                        !config.features.RouletteNewFlow &&
+                        this.isRouletteAvailable() && (
+                          <PromotionRoulette
+                            rouletteType="ROULETTE"
+                            promotionDetail={
+                              this.props.general.promotionList.items.filter(
+                                (item) =>
+                                  item.promotionType.toUpperCase() ===
+                                  "ROULETTE"
+                              )[0]
+                            }
+                          ></PromotionRoulette>
+                        )}
+                    </RouletteFloatingPanel>
+                  )}
                 <Footer target={"_blank"}></Footer>
               </>
             );
