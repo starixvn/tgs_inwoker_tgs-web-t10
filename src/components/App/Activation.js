@@ -337,9 +337,7 @@ function Activation(props) {
           });
           props.doLogin(username, password);
 
-          props.history.push(
-            "/" + i18n.language + "/registersuccess/" + username
-          );
+          props.history.push("/registersuccess/" + username);
         } else {
           props.enqueueSnackbar(response.info, {
             variant: "warning",

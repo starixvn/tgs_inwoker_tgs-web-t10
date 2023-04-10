@@ -76,7 +76,7 @@ const TheButton = styled.div`
 class PopupAnnouncement extends Component {
   handlePromotionClick = (id) => {
     AppHistory.push({
-      pathname: "/" + i18n.language + "/promotion/" + id,
+      pathname: "/promotion/" + id,
     });
   };
 

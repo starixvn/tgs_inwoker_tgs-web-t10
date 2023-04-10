@@ -71,14 +71,7 @@ class Fishing extends Component {
   handleJoinGameClick = (gid) => {
     if (this.props.token) {
       Common.PopupCenter(
-        "/" +
-          i18n.language +
-          "/joingame/" +
-          GameTypeEnum.FISH +
-          "/" +
-          GameEnum.JDB +
-          "/" +
-          gid,
+        "/joingame/" + GameTypeEnum.FISH + "/" + GameEnum.JDB + "/" + gid,
         1280,
         720
       );

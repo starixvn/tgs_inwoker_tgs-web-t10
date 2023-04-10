@@ -209,21 +209,19 @@ class Sports extends Component {
     } else {
       Common.closePreviousPopup();
       if (type === GameTypeEnum.RNGSPORTS) {
-        this.props.history.push("/" + i18n.language + "/sports/" + params);
+        this.props.history.push("/sports/" + params);
       } else if (params === "WGFM" || params === "WGVIA") {
         if (document.getElementById("audio") != null)
           document.getElementById("audio").volume = 0.0;
         Common.PopupCenter(
-          `/${i18n.language}/joinlobbygame/${type}/${params}`,
+          `/joinlobbygame/${type}/${params}`,
           params,
           1280,
           720
         );
         this.props.performBalanceRefresh();
       } else {
-        this.props.history.push(
-          "/" + i18n.language + "/sports/play/" + params + "/" + 1
-        );
+        this.props.history.push("/sports/play/" + params + "/" + 1);
       }
     }
   };
