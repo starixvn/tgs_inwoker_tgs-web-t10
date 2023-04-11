@@ -583,7 +583,7 @@ class App extends Component {
                       )}
                     />
 
-                    <Redirect to={"/" + languageDetector} />
+                    <Redirect to={"/"} />
                   </Switch>
                 </Main>
                 {config.features.LiveChatVendor.brand &&
