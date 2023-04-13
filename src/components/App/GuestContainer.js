@@ -537,9 +537,9 @@ class GuestContainer extends Component {
       // }
     } else {
       if (config.features.HomePage_PromoRoulette) {
-        this.props.getPromotionRouletteStatus(
-          "18fa2258-8101-0000-0001-0000c19227bd"
-        );
+        //  this.props.getPromotionRouletteStatus(
+        //    "18fa2258-8101-0000-0001-0000c19227bd"
+        //  );
       }
       // this.props.checkGame();
       var bankInfoAuthentication = null;
