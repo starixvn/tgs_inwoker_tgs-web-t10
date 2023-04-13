@@ -5,8 +5,8 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 var InterpolateHtmlPlugin = require("react-dev-utils/InterpolateHtmlPlugin");
 var BrotliPlugin = require("brotli-webpack-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-var hash = require('object-hash');
-var hashCode = hash(new Date());
+
+const dotenv = require("dotenv").config({ path: __dirname + "/.env" });
 
 module.exports = {
   entry: path.join(__dirname, "src", "index.js"),
@@ -14,7 +14,7 @@ module.exports = {
     path: path.resolve(__dirname, "build"),
     publicPath: "/",
     clean: true,
-    filename: hashCode + '/[name].[contenthash].js',
+    filename: '[name].[contenthash].js',
   },
   devServer: {
     historyApiFallback: {
@@ -61,14 +61,8 @@ module.exports = {
       },
 
       {
-        test: /\.(png|jp(e*)g|svg|gif|webp)$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-              limit: 50000, // Convert images < 8kb to base64 strings
-              name: 'images/[hash]-[name].[ext]'
-          }
-        }
+        test: /\.(png|jp(e*)g|svg|gif)$/,
+        use: ['base64-inline-loader']
       },
       {
         test: /\.(woff(2)?|ttf|eot|otf)(\?v=\d+\.\d+\.\d+)?$/,
@@ -102,13 +96,10 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: "public/assets", to: hashCode + "/assets" },
-        { from: "public/css", to: hashCode + "/css" },
+        { from: "public/assets", to: "assets" },
+        { from: "public/css", to: "css" },
         { from: "public/env.html", to: "" },
       ],
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, "public", "index.html"),
     }),
     new webpack.DefinePlugin({
       "process.env": JSON.stringify({
@@ -116,9 +107,12 @@ module.exports = {
         "REACT_APP_VERSION":"1.37.0",
         "SKIP_PREFLIGHT_CHECK":"true",
         "GENERATE_SOURCEMAP":"false",
-        "PUBLIC_URL":"/" + hashCode}),
-      
+        "PUBLIC_URL":""}),
     }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, "public", "index.html"),
+    }),
+  
     new BrotliPlugin({
       asset: "[path].br[query]",
       test: /\.(js|css|html|svg)$/,
@@ -126,7 +120,7 @@ module.exports = {
       minRatio: 0.8,
     }),
     new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
-      PUBLIC_URL: "/"  + hashCode,
+      PUBLIC_URL: "",
       // You can pass any key-value pairs, this was just an example.
       // WHATEVER: 42 will replace %WHATEVER% with 42 in index.html.
     }),
