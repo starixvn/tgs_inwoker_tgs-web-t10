@@ -994,11 +994,11 @@ const PromotionRoulette = (props) => {
   };
 
   const handlePhoneVerifyClick = () => {
-    AppHistory.push("/" + i18n.language + "/account/profile/member_phone");
+    AppHistory.push("/account/profile/member_phone");
   };
 
   const handleNavigateToPromotion = () => {
-    AppHistory.push("/" + i18n.language + "/promotion");
+    AppHistory.push("/promotion");
     performCloseEmptyModal();
   };
 
@@ -1310,7 +1310,6 @@ const PromotionRoulette = (props) => {
                           ""
                         );
                       })() +
-                      
                       "</div>",
                   }}
                 ></EventText>
