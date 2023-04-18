@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import TextField from "../../Share/TextField";
 import Button from "../../Share/Button";
-import {AccountService} from "../../../api-services/services/AccountService";
-import {UPDATE_INFO} from "../../../api-services/constant/actionType";
+import { AccountService } from "../../../api-services/services/AccountService";
+import { UPDATE_INFO } from "../../../api-services/constant/actionType";
 import ErrorSwitcher from "../../../utils/ErrorSwitcher";
 import { withSnackbar } from "notistack";
 import i18n from "../../../utils/i18n";
@@ -130,7 +130,7 @@ class EmailVerification extends Component {
               member_email: this.state.email,
             },
           });
-          AppHistory.replace("/" + i18n.language + "/account/withdrawal");
+          AppHistory.replace("/account/withdrawal");
           this.setState({
             ...this.state,
             code: "",

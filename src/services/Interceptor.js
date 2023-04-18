@@ -1,5 +1,5 @@
 import axios from "axios";
-import {UNAUTHORIZE} from "../api-services/constant/actionType";
+import { UNAUTHORIZE } from "../api-services/constant/actionType";
 import { AppHistory } from "../history/History";
 import i18n from "../utils/i18n";
 import Promise from "promise-polyfill";
@@ -98,9 +98,9 @@ const Interceptor = {
           store.dispatch({ type: UNAUTHORIZE });
 
           if (newResponse.code === 210) {
-            AppHistory.replace("/" + i18n.language + "/banned");
+            AppHistory.replace("/banned");
           } else {
-            AppHistory.replace("/" + i18n.language + "/");
+            AppHistory.replace("/");
           }
         }
 
@@ -122,9 +122,9 @@ const Interceptor = {
               localStorage.removeItem("token" + (isMobileOnly ? "1" : "0"));
               store.dispatch({ type: UNAUTHORIZE });
               if (error.response.data.err === 210) {
-                AppHistory.replace("/" + i18n.language + "/banned");
+                AppHistory.replace("/banned");
               } else {
-                AppHistory.replace("/" + i18n.language + "/");
+                AppHistory.replace("/");
               }
             }
           }

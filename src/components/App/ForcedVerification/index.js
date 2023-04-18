@@ -324,7 +324,7 @@ const ForcedVerification = ({ forcedverify }) => {
       //   !response.data.registercompleted
       // ) {
       //   AppHistory.push(
-      //     "/" + i18n.language + "/account/profile/member_email"
+      //      "/account/profile/member_email"
       //   );
       // } else {
       //   this.props.handleCloseDialog();

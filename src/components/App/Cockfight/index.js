@@ -221,14 +221,7 @@ class Cockfight extends Component {
             this.popup.close();
           });
       } else {
-        AppHistory.push(
-          "/" +
-            i18n.language +
-            "/sports/play/" +
-            params +
-            "/" +
-            GameTypeEnum.SPORTS
-        );
+        AppHistory.push("/sports/play/" + params + "/" + GameTypeEnum.SPORTS);
       }
     } else {
       this.props.showLogin(true);

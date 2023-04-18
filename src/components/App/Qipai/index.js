@@ -206,12 +206,7 @@ class Qipai extends Component {
       Common.closePreviousPopup();
       this.props.performBalanceRefresh();
       Common.PopupCenter(
-        "/" +
-          i18n.language +
-          "/joingame/" +
-          GameTypeEnum.QIPAILOBBY +
-          "/" +
-          params.toUpperCase(),
+        "/joingame/" + GameTypeEnum.QIPAILOBBY + "/" + params.toUpperCase(),
         params.toUpperCase(),
         1280,
         720

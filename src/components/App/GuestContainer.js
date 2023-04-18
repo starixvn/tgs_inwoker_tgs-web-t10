@@ -308,7 +308,7 @@ class GuestContainer extends Component {
       this.props.showLogin(true);
     } else if (result.code === 210) {
       this.onhandleCloseDialog();
-      AppHistory.replace("/" + i18n.language + "/banned");
+      AppHistory.replace("/banned");
     } else {
     }
     if (result.IsSuccess) {
@@ -584,24 +584,18 @@ class GuestContainer extends Component {
       ) {
         if (config.features.NavigateToAddCard) {
           if (isPhoneNull) {
-            this.props.history.push(
-              "/" + i18n.language + "/account/profile/member_phone"
-            );
+            this.props.history.push("/account/profile/member_phone");
           } else {
             if (isEmailNull) {
-              this.props.history.push(
-                "/" + i18n.language + "/account/profile/member_email"
-              );
+              this.props.history.push("/account/profile/member_email");
             } else {
               if (!isRegisterCompleted) {
-                this.props.history.push(
-                  "/" + i18n.language + "/account/withdrawal?do=addCard"
-                );
+                this.props.history.push("/account/withdrawal?do=addCard");
               }
             }
           }
           // this.props.history.push(
-          //   "/" + i18n.language + "/account/withdrawal?do=addCard"
+          //    "/account/withdrawal?do=addCard"
           // );
         }
       }
