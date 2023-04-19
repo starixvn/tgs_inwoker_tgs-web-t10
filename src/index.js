@@ -183,6 +183,23 @@ const AppWrapper = () => {
     });
   }, []);
 
+  useEffect(() => {
+    var languages = "zh-CN|zh-TW|en-US|id-ID|th-TH|vi-VN".split("|");
+    var pathname = window.location.pathname;
+    var isfoundLanguage = "";
+    for (var i = 0; i < languages.length; i++) {
+      if (pathname.indexOf(languages[i]) >= 0) {
+        isfoundLanguage = languages[i];
+        break;
+      }
+    }
+    if (isfoundLanguage != "") {
+      pathname = pathname.replace("/" + isfoundLanguage, "/");
+      pathname = pathname.replace("//", "/");
+      window.location.href = pathname + window.location.search;
+    }
+  }, []);
+
   if (isReady) {
     return (
       <Provider store={store}>
