@@ -1,10 +1,7 @@
-FROM node:14.15.1-stretch-slim AS build
+FROM node:16.6.1-stretch-slim AS build
 
 WORKDIR /src
 COPY . .
-
-RUN apt-get update && \
-    apt-get install -y git
 	
 RUN npm install     
 RUN npm ci
