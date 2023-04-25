@@ -8,6 +8,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/pickers": "^3.3.10",
     "axios": "^0.21.4",
+    "copy-image-clipboard": "^2.1.2",
     "date-fns": "^2.23.0",
     "es6-promise": "^4.2.8",
     "i18next": "^19.9.2",
