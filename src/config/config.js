@@ -2,7 +2,7 @@ import featureList from "./features";
 
 var template = 10; //2 for T2, 3 for T3 (based on .xd file)
 const config = {
-  baseUrl: window?.env ? "/api/" : "https://dev-t1.rpgp.cc/api/",
+  baseUrl: window?.env ? "/api/" : "https://stg-t1.rpgp.cc/api/",
   client:
     window?.env?.client ||
     "I7nKiimrZQOqnJ6ryjUw74c0Hi64KC6Myunhob4cHh8VOUIuZh4p63czefxyyzbZ",
