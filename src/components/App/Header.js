@@ -42,7 +42,7 @@ const InnerWrap = styled.div`
 `;
 
 const TopMostHeader = styled.div`
-  background: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => theme.toppestHeader};
   color: white;
   display: flex;
   justify-content: center;
@@ -259,7 +259,7 @@ const RightMenuLI = styled.div`
 
   line-height: 50px;
   text-align: center;
-  color: #000;
+  color: ${({ theme }) => theme.bodyText};
   border-bottom: solid 4px transparent;
   cursor: pointer;
 
@@ -336,22 +336,12 @@ const ThePhoneContainer = styled.div`
   font-size: 14px;
 `;
 
-const StyledAppBar = withStyles((theme) => ({
-  root: {
-    background: "#fff",
-    "& .MuiToolbar-regular": {
-      margin: "0 auto",
-    },
-    "&.MuiPaper-elevation4": {
-      boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-    },
-  },
-}))(AppBar);
-
-const CustomAppBar = styled(StyledAppBar)`
+const CustomAppBar = styled(AppBar)`
   display: ${({ hide }) => {
     return hide ? "none" : "block";
   }};
+  background: ${({ theme }) => theme.bottomHeader};
+  box-shadow: ${({ theme }) => theme.headerShadow};
 `;
 
 const GameFrameWrapper = styled.div`

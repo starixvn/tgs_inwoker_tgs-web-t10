@@ -64,12 +64,12 @@ const TheSelectorContainer = styled.div`
 const TopLiner = styled.div`
   height: 4px;
   width: 40%;
-  background: #878dee;
+  background: ${({ theme }) => theme.gamePageButtonBorderBottom};
   ::before {
     content: "";
     display: block;
 
-    background: #878dee;
+    background: ${({ theme }) => theme.gamePageButtonBorderBottom};
     width: 4px;
     height: 6px;
     position: absolute;
@@ -82,7 +82,7 @@ const TopLiner = styled.div`
   ::after {
     content: "";
     display: block;
-    background: #878dee;
+    background: ${({ theme }) => theme.gamePageButtonBorderBottom};
     width: 4px;
     height: 6px;
     position: absolute;
@@ -96,7 +96,7 @@ const BottomLiner = styled.div`
   width: 100%;
   height: 10px;
 
-  background: #878dee;
+  background: ${({ theme }) => theme.gamePageButtonBorderBottom};
 `;
 
 const TheBottomLiner = styled.div`
@@ -244,7 +244,7 @@ class Qipai extends Component {
                     <CustomLogoHolder
                       src={
                         process.env.PUBLIC_URL +
-                        "/assets/images/provider/white/" +
+                        "/assets/images/provider/transfer/" +
                         item.abbreviation.toLowerCase() +
                         ".png"
                       }

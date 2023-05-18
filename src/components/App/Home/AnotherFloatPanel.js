@@ -28,7 +28,7 @@ const Icon = styled.div`
   width: 35px;
 
   background-color: ${({ theme, active }) => {
-    return active ? theme.primary : "#fff";
+    return active ? theme.primary : "#000";
   }};
   transition: transform 0.5s;
   mask: url(${({ active, src, src2 }) => (active ? src2 : src)}) no-repeat
@@ -89,17 +89,10 @@ const SidePanel = styled.div`
   border-color: #fff;
   border-style: solid;
   border-radius: 1000px;
-
-  ${({ active, theme }) => {
-    return active
-      ? `  
-       background-color:  #fff;`
-      : `  
-      background-color: ${theme.accent};`;
-  }}
+  background-color: ${({ theme }) => theme.accent};
 
   &:hover {
-    background-color: #fff;
+    background-color: #000;
     cursor: pointer;
     border-color: transparent;
     border-color: ${({ theme }) => theme.accent};
@@ -347,7 +340,6 @@ const AnotherFloatPanel = (props) => {
 
         {config.features.HaveDownloadFeature && (
           <SidePanel
-            active={supportModal}
             onClick={() => {
               AppHistory.replace("/download");
             }}
@@ -357,7 +349,6 @@ const AnotherFloatPanel = (props) => {
               <Icon
                 src={PanelDownloadPNG}
                 src2={PanelDownloadPNG2}
-                active={supportModal}
                 alt="user-cs"
               />
               <Text active={supportModal}>
