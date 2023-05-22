@@ -563,6 +563,8 @@ export const wapT10 = {
   bodyText: "#000",
 
   gamePageButtonBorderBottom: "#878dee",
+  homeHeaderBackgroundColor: "dbf5f0",
+  homeHeaderTextColor: " #19bc9b",
 };
 
 export const PB2 = {
@@ -578,7 +580,7 @@ export const PB2 = {
   primaryGradient: "#D3FF06",
   primaryGradientRgb: "211,255,6",
   primaryHightlight: "#D3FF06",
-  secondary: "#fff",
+  secondary: "#000",
   secondaryText: "rgba(0,0,0,0.5)",
   tertiary: "rgba(255, 255, 255, 1)",
   tertiaryText: "rgba(255, 255, 255, 0.5)",
@@ -607,14 +609,14 @@ export const PB2 = {
 
   accent: "#D3FF06",
   webSection: "#00041C",
-  footer: "#00041C",
+  footer: "#000522",
   toppestHeader: "#00041C",
   bottomHeader: "#00041C",
   headerShadow: "none",
   bodyText: "#fff",
   gamelisterBg: "#00041C",
 
-  gamePageButtonBorderBottom: "#00041C",
+  gamePageButtonBorderBottom: "#D3FF06",
   customButtonText: "#000",
   profileBlockBackground: "#000520",
   profileBlockIcon: "#d3d3d3",
@@ -626,6 +628,15 @@ export const PB2 = {
 
   alternateTabBackground: "#D3FF06",
   alternateTabText: "#000",
+
+  useBackgroundColor: "#00041C",
+  homeHeaderTextColor: " #fff",
+  homeHeaderBackgroundColor: "#362f80",
+  whiteText: "#fff",
+  slotGameTabBackground: "#45495b",
+  slotGameTabText: "#fff",
+  slotGameSelectedTabBackground: "#D3FF06",
+  slotGameSelectedTabText: "#000",
 };
 
 export const TIGER = {
@@ -685,7 +696,6 @@ export const TIGER = {
   downloadButtonBorder: "solid 5px #ffffff",
   downloadButtonBorderRad: "50px",
   downloadButtonText: "#fff",
-  downloadButtonIcon: "#fff",
 };
 
 export const themeList = {

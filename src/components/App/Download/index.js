@@ -16,6 +16,9 @@ const Container = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
+  color: ${({ theme }) => {
+    return theme.whiteText ? theme.whiteText : "#000";
+  }};
 `;
 
 const ContentPlacedHere = styled.div`
@@ -65,7 +68,6 @@ const Icons = styled.div`
   width: 30px;
   height: 30px;
 
-  background: #000;
   mask: url(${({ icon }) => {
       return (
         process.env.PUBLIC_URL + `/assets/images/download/icons/${icon}.png`
@@ -73,6 +75,10 @@ const Icons = styled.div`
     }})
     no-repeat center / contain;
   background-size: 100%;
+
+  background: ${({ theme }) => {
+    return theme.whiteText ? theme.whiteText : "#000";
+  }};
 `;
 
 const DownloadTitleSection = styled.div`
@@ -133,7 +139,8 @@ const DialogContent = styled.div`
 
 const DialogTitle2 = styled(DialogTitle)`
   background: ${({ theme }) => theme.primary};
-  color: white;
+  color: ${({ theme }) =>
+    theme.useBackgroundColor ? theme.useBackgroundColor : "#fff"};
 `;
 
 const CloseButton = styled.div`

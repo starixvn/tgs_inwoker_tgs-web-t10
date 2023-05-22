@@ -143,7 +143,8 @@ const DialogTitle = styled.div`
 
 const DialogTitle2 = styled(DialogTitle)`
   background: ${({ theme }) => theme.accent};
-  color: white;
+  color: ${({ theme }) =>
+    theme.useBackgroundColor ? theme.useBackgroundColor : "#fff"};
 `;
 
 const DialogTitleTwo = styled(DialogTitle)`
@@ -293,21 +294,15 @@ const AnotherFloatPanel = (props) => {
       <Container customPosition={config.features.Home_CustomFPPosition}>
         {props.general.livechat && !config.features.LiveChatVendor && (
           <SidePanel
-            active={csModal}
             onClick={() => {
               performOpenCsModal();
             }}
             src2={PanelUserPNG2}
           >
-            <RotateBack active={csModal}>
-              <Icon
-                src={PanelUserPNG}
-                src2={PanelUserPNG2}
-                active={csModal}
-                alt="user-icon"
-              />
+            <RotateBack>
+              <Icon src={PanelUserPNG} src2={PanelUserPNG2} alt="user-icon" />
 
-              <Text active={csModal}>
+              <Text>
                 {config.features.FloatPanel_CustomTranslation
                   ? i18n.t("mess888.panel.cs")
                   : i18n.t("panel.cs")}
@@ -317,20 +312,14 @@ const AnotherFloatPanel = (props) => {
         )}
 
         <SidePanel
-          active={supportModal}
           onClick={() => {
             performOpenSupportModal();
           }}
           src2={PanelCSPNG2}
         >
-          <RotateBack active={supportModal}>
-            <Icon
-              src={PanelCSPNG}
-              src2={PanelCSPNG2}
-              active={supportModal}
-              alt="user-cs"
-            />
-            <Text active={supportModal}>
+          <RotateBack>
+            <Icon src={PanelCSPNG} src2={PanelCSPNG2} alt="user-cs" />
+            <Text>
               {config.features.FloatPanel_CustomTranslation
                 ? i18n.t("mess888.panel.im")
                 : i18n.t("panel.im")}
@@ -345,13 +334,13 @@ const AnotherFloatPanel = (props) => {
             }}
             src2={PanelDownloadPNG2}
           >
-            <RotateBack active={supportModal}>
+            <RotateBack>
               <Icon
                 src={PanelDownloadPNG}
                 src2={PanelDownloadPNG2}
                 alt="user-cs"
               />
-              <Text active={supportModal}>
+              <Text>
                 {config.features.FloatPanel_CustomTranslation
                   ? i18n.t("mess888.panel.download")
                   : i18n.t("download.title")}{" "}

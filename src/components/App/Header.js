@@ -308,7 +308,7 @@ const CustomVIPHeaderButton = styled.div`
   letter-spacing: 3px;
   cursor: pointer;
   border-bottom: solid 4px transparent;
-  color: #000;
+  color: ${({ theme }) => (theme.whiteText ? theme.whiteText : "#000")};
 
   ${({ active, theme }) => {
     return active

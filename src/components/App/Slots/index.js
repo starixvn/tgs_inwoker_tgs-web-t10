@@ -244,16 +244,32 @@ const GameButtonBlock = styled.div`
 `;
 
 const TabButton = styled.div`
-  background: ${({ theme, selected }) => {
+  ${({ theme, selected }) => {
     return selected
-      ? "linear-gradient(101deg, rgba(252,195,111,1) 21%, rgba(252,203,119,0.7) 100%)"
-      : `rgba(${theme.primaryRgb}, 0.8)`;
+      ? `
+      background:${
+        theme.slotGameSelectedTabBackground
+          ? theme.slotGameSelectedTabBackground
+          : `rgba(${theme.primaryRgb}, 0.8)`
+      }; 
+      color:${
+        theme.slotGameSelectedTabText ? theme.slotGameSelectedTabText : `#fff`
+      };
+      `
+      : `
+      background: ${
+        theme.slotGameTabBackground
+          ? theme.slotGameTabBackground
+          : `rgba(${theme.primaryRgb}, 0.8)`
+      };
+      color:${theme.slotGameTabText ? theme.slotGameTabText : `#fff`};
+      
+     `;
   }};
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
   cursor: pointer;
   font-weight: bold;
   padding: 5px 0;
