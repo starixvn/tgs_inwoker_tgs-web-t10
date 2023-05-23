@@ -599,7 +599,7 @@ export const PB2 = {
   pcHeaderRightMenuHover: "#D3FF06",
 
   gamelisterOriginalText: "#fff",
-  gamelisterSelectedText: "#fff",
+  gamelisterSelectedText: "#00041C",
 
   popoverBackground: "rgba(255,255,255,0.95)",
   popoverGameTypeText: "#D3FF06",
@@ -637,6 +637,11 @@ export const PB2 = {
   slotGameTabText: "#fff",
   slotGameSelectedTabBackground: "#D3FF06",
   slotGameSelectedTabText: "#000",
+  wapSecondary: "#fff",
+  neon: true,
+  downloadButtonBg: "#D3FF06",
+  downloadButtonText: "#362f80",
+  downloadButtonIcon: "#362f80",
 };
 
 export const TIGER = {
