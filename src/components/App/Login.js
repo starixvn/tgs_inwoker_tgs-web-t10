@@ -33,14 +33,18 @@ const TitleContainer = styled.div`
 
   font-size: 42px;
 
-  color: ${({ theme }) => theme.secondary};
+  color: ${({ theme }) => {
+    return theme.alternateTabText ? theme.alternateTabText : theme.secondary;
+  }};
 `;
 const SubTitleContainer = styled.div`
   text-align: center;
 
   font-size: 18px;
 
-  color: ${({ theme }) => theme.secondary};
+  color: ${({ theme }) => {
+    return theme.alternateTabText ? theme.alternateTabText : theme.secondary;
+  }};
 `;
 const FormContainer = styled.div`
   margin: 10px 78px 0 78px;
@@ -84,7 +88,9 @@ const ButtonLogin = styled.div`
   margin-top: 35px;
   width: 350px;
   height: 51px;
-  color: #fff;
+  color: ${({ theme }) => {
+    return theme.alternateTabText ? theme.alternateTabText : "#fff;";
+  }};
   font-size: 20px;
 
   border-radius: 6px;
@@ -113,7 +119,9 @@ const LinkStyle = styled.a`
 
   font-size: 15px;
 
-  color: ${({ theme }) => theme.secondary};
+  color: ${({ theme }) => {
+    return theme.alternateTabText ? theme.alternateTabText : theme.secondary;
+  }};
 
   &:hover {
     cursor: pointer;

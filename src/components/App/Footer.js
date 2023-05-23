@@ -11,7 +11,9 @@ const Container = styled.div`
   display: ${({ hide }) => {
     return hide ? "none" : "block";
   }};
-  background: #262626;
+  background: ${({ theme }) => {
+    return theme.footer;
+  }};
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 `;
 

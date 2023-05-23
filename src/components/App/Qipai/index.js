@@ -64,12 +64,12 @@ const TheSelectorContainer = styled.div`
 const TopLiner = styled.div`
   height: 4px;
   width: 40%;
-  background: #878dee;
+  background: ${({ theme }) => theme.gamePageButtonBorderBottom};
   ::before {
     content: "";
     display: block;
 
-    background: #878dee;
+    background: ${({ theme }) => theme.gamePageButtonBorderBottom};
     width: 4px;
     height: 6px;
     position: absolute;
@@ -82,7 +82,7 @@ const TopLiner = styled.div`
   ::after {
     content: "";
     display: block;
-    background: #878dee;
+    background: ${({ theme }) => theme.gamePageButtonBorderBottom};
     width: 4px;
     height: 6px;
     position: absolute;
@@ -96,7 +96,7 @@ const BottomLiner = styled.div`
   width: 100%;
   height: 10px;
 
-  background: #878dee;
+  background: ${({ theme }) => theme.gamePageButtonBorderBottom};
 `;
 
 const TheBottomLiner = styled.div`
@@ -111,10 +111,11 @@ const TheBottomLiner = styled.div`
 `;
 
 const TheSelector = styled.div`
-  background: rgba(${({ theme }) => theme.primaryRgb}, 0.6);
+  background: ${({ theme }) => theme.body};
 
   :hover {
-    background: rgba(${({ theme }) => theme.primaryRgb}, 1);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    opacity: 0.9;
     ${TopLiner} {
       background: ${({ theme }) => theme.accent};
       ::before {

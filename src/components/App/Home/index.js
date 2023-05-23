@@ -34,7 +34,7 @@ const MarqueeContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
 `;
 const SectionContainer = styled.div`
-  background-color: #f0f3f9;
+  background-color: ${({ theme }) => theme.webSection}})};
   width: 100%;
 `;
 const FirstSection = styled.div`
@@ -50,20 +50,24 @@ const FirstSectionItemBg = styled(Grid)`
   bottom: 76px;
   right: ${(props) => (i18n.language === "vi-VN" ? "0px" : "16px")};
   width: 160px;
-  padding-left: 30px;
 `;
 const FirstSectionItemLabel = styled(Grid)`
   text-transform: uppercase;
-  color: ${({ theme }) => theme.primary};
+  font-weight: bold;
+  color: ${({ theme }) =>
+    theme.useBackgroundColor ? theme.useBackgroundColor : theme.primary};
 `;
 
 const FirstSectionItemButton = styled(Grid)`
   font-size: 14px;
-  color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) =>
+    theme.useBackgroundColor ? theme.useBackgroundColor : theme.primary};
   text-align: center;
   width: 85px;
   border-radius: 6px;
-  border: solid 1px ${({ theme }) => theme.primary};
+  border: solid 1px
+    ${({ theme }) =>
+      theme.useBackgroundColor ? theme.useBackgroundColor : theme.primary};
   margin-top: 25px;
   height: 34px;
   line-height: 2em;
@@ -73,6 +77,8 @@ const FirstSectionItemButton = styled(Grid)`
     color: #fff;
     background-color: ${({ theme }) => theme.primary};
     border: solid 1px ${({ theme }) => theme.primary};
+    color: ${({ theme }) =>
+      theme.useBackgroundColor ? theme.useBackgroundColor : theme.primary};
     transition: all 0.3s;
   }
 `;

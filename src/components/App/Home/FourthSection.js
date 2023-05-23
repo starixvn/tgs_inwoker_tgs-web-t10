@@ -57,7 +57,9 @@ const FeatureTitle = styled.div`
   }};
   font-weight: bold;
   padding-bottom: 10px;
-  color: #107f9d;
+  color: ${({ theme }) => {
+    return theme.whiteText ? theme.whiteText : "#262626";
+  }};
   text-align: center;
 `;
 

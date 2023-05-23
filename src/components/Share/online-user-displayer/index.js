@@ -5,7 +5,11 @@ import styled from "styled-components";
 import config from "../../../config/config";
 const OnlineDisplayerText = styled.div`
   color: ${({ color, theme }) => {
-    return color ? color : theme.secondary;
+    return theme.wapSecondary
+      ? theme.wapSecondary
+      : color
+      ? color
+      : theme.secondary;
   }};
   font-size ${({ size }) => {
     return size ? size : "";

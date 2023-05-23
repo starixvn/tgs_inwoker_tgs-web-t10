@@ -70,6 +70,9 @@ const PromoButtonContainer = styled(Grid)`
   width: 100%;
   border-radius: 5px;
   height: 62px;
+  color: ${({ theme }) => {
+    return theme.useBackgroundColor ? theme.useBackgroundColor : "#fff";
+  }};
   background-image: linear-gradient(
     to top,
     ${({ theme }) => theme.primaryGradient},
@@ -90,7 +93,6 @@ const TNCContainer = styled.span`
   font-weight: bold;
 `;
 const PromoButtonText = styled(Grid)`
-  color: #fff;
   font-size: 20px;
 `;
 const StyledDialog = withStyles({

@@ -120,7 +120,9 @@ const PromoButtonText = styled.div`
   position: absolute;
   left: calc(50% - 32px);
   bottom: 20px;
-  color: white;
+  color: ${({ theme }) => {
+    return theme.useBackgroundColor ? theme.useBackgroundColor : "#fff";
+  }};
   font-size: 20px;
 `;
 
