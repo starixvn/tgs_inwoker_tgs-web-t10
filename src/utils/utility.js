@@ -1,4 +1,4 @@
-import { copyImageToClipboard } from 'copy-image-clipboard';
+import { copyImageToClipboard } from "copy-image-clipboard";
 
 function imagePathGenerator(path) {
   return `${process.env.PUBLIC_URL}/assets/images/${path}`;
@@ -36,9 +36,14 @@ export function downloadImage(url, name) {
     .catch((e) => console.log("Error: " + e.message));
 }
 
+function removeSpace(str) {
+  return str.replace(/^\s+|\s+$/g, "");
+}
+
 export const utility = {
   imagePathGenerator,
   copy,
   copyImage,
   downloadImage,
+  removeSpace,
 };
