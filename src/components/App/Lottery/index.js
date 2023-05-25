@@ -109,11 +109,38 @@ const TheBottomLiner = styled.div`
   align-items: center;
 `;
 
+const CustomLogoHolder = styled.div`
+  width: 120px;
+  height: 100px;
+
+  background: url(${({ src }) => src}) no-repeat center;
+  background-size: contain;
+`;
+
 const TheSelector = styled.div`
-  background: rgba(${({ theme }) => theme.primaryRgb}, 0.6);
+  background: ${({ theme }) => theme.body};
+  opacity: 0.8;
+
+  ${TopLiner} {
+    background: ${({ theme }) => theme.body};
+    ::before {
+      background: ${({ theme }) => theme.body};
+    }
+    ::after {
+      background: ${({ theme }) => theme.body};
+    }
+  }
+
+  ${BottomLiner} {
+    background: ${({ theme }) => theme.body};
+    opacity: 0.9;
+  }
+
+  transition: all 1s ease-in-out;
 
   :hover {
-    background: rgba(${({ theme }) => theme.primaryRgb}, 1);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    opacity: 1;
     ${TopLiner} {
       background: ${({ theme }) => theme.accent};
       ::before {
@@ -125,6 +152,10 @@ const TheSelector = styled.div`
     }
     ${BottomLiner} {
       background: ${({ theme }) => theme.accent};
+    }
+
+    ${CustomLogoHolder} {
+      transform: translateY(-10px);
     }
   }
   position: relative;
@@ -152,14 +183,6 @@ const TheSelector = styled.div`
   }`
     );
   }}
-`;
-
-const CustomLogoHolder = styled.div`
-  width: 120px;
-  height: 100px;
-
-  background: url(${({ src }) => src}) no-repeat center;
-  background-size: contain;
 `;
 
 class Lottery extends Component {
