@@ -18,7 +18,9 @@ const StyleButton = styled.div`
   margin:0 auto;
   font-size: 34px;
 
-  color: #ffffff;
+  color: ${({ theme }) => {
+    return theme.useBackgroundColor ? theme.useBackgroundColor : "#fff";
+  }};
 
   padding-top: 20px;
   text-align: center;

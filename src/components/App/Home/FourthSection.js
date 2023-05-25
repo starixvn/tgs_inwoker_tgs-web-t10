@@ -41,9 +41,7 @@ const FeatureBg = styled.div`
 
 const FeatureIcon = styled.img``;
 
-const FeatureRightContainer = styled.div`
-  margin-right: 34px;
-`;
+const FeatureRightContainer = styled.div``;
 const FeatureTitle = styled.div`
   font-size: ${(props) => {
     switch (props.lang) {
@@ -57,7 +55,9 @@ const FeatureTitle = styled.div`
   }};
   font-weight: bold;
   padding-bottom: 10px;
-  color: #107f9d;
+  color: ${({ theme }) => {
+    return theme.whiteText ? theme.whiteText : "#262626";
+  }};
   text-align: center;
 `;
 

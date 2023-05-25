@@ -50,9 +50,13 @@ const BtnLoginRegister = styled.div`
  
 `;
 const BtnRegister = styled(BtnLoginRegister)`
-  border: solid 1px #fff;
-  background: #fff;
-  color: ${({ theme }) => theme.primary};
+  border: solid 1px ${({ theme }) =>
+    theme.alternateTabBackground ? theme.alternateTabBackground : "#fff"};
+  background: ${({ theme }) =>
+    theme.alternateTabBackground ? theme.alternateTabBackground : "#fff"};
+  color: ${({ theme }) => {
+    return theme.alternateTabText ? theme.alternateTabText : "#fff";
+  }}};
 `;
 
 const BtnLogin = styled(BtnLoginRegister)`

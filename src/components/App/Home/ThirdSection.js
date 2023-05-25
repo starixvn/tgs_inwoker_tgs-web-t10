@@ -24,7 +24,9 @@ const ItemInnerLabel = styled.div`
 `;
 
 const ItemBottomLabel = styled.div`
-  color: #262626;
+  color: ${({ theme }) => {
+    return theme.whiteText ? theme.whiteText : "#262626";
+  }};
   font-size: 30px;
 `;
 
