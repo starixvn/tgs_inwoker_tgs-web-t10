@@ -41,9 +41,7 @@ const FeatureBg = styled.div`
 
 const FeatureIcon = styled.img``;
 
-const FeatureRightContainer = styled.div`
-  margin-right: 34px;
-`;
+const FeatureRightContainer = styled.div``;
 const FeatureTitle = styled.div`
   font-size: ${(props) => {
     switch (props.lang) {
