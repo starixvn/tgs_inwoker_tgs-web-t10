@@ -123,18 +123,17 @@ const TheSelector = styled.div`
   opacity: 0.8;
 
   ${TopLiner} {
-    background: ${({ theme }) => theme.body};
+    background: ${({ theme }) => theme.homeHeaderBackgroundColor};
     ::before {
-      background: ${({ theme }) => theme.body};
+      background: ${({ theme }) => theme.homeHeaderBackgroundColor};
     }
     ::after {
-      background: ${({ theme }) => theme.body};
+      background: ${({ theme }) => theme.homeHeaderBackgroundColor};
     }
   }
 
   ${BottomLiner} {
-    background: ${({ theme }) => theme.body};
-    opacity: 0.9;
+    background: ${({ theme }) => theme.homeHeaderBackgroundColor};
   }
 
   transition: all 1s ease-in-out;
