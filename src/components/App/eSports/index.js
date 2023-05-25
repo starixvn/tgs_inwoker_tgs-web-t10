@@ -110,12 +110,37 @@ const TheBottomLiner = styled.div`
   align-items: center;
 `;
 
+const CustomLogoHolder = styled.div`
+  width: 120px;
+  height: 100px;
+
+  background: url(${({ src }) => src}) no-repeat center;
+  background-size: contain;
+`;
+
 const TheSelector = styled.div`
   background: ${({ theme }) => theme.body};
+  opacity: 0.8;
+
+  ${TopLiner} {
+    background: ${({ theme }) => theme.homeHeaderBackgroundColor};
+    ::before {
+      background: ${({ theme }) => theme.homeHeaderBackgroundColor};
+    }
+    ::after {
+      background: ${({ theme }) => theme.homeHeaderBackgroundColor};
+    }
+  }
+
+  ${BottomLiner} {
+    background: ${({ theme }) => theme.homeHeaderBackgroundColor};
+  }
+
+  transition: all 1s ease-in-out;
 
   :hover {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-    opacity: 0.9;
+    opacity: 1;
     ${TopLiner} {
       background: ${({ theme }) => theme.accent};
       ::before {
@@ -127,6 +152,10 @@ const TheSelector = styled.div`
     }
     ${BottomLiner} {
       background: ${({ theme }) => theme.accent};
+    }
+
+    ${CustomLogoHolder} {
+      transform: translateY(-10px);
     }
   }
   position: relative;
@@ -154,14 +183,6 @@ const TheSelector = styled.div`
   }`
     );
   }}
-`;
-
-const CustomLogoHolder = styled.div`
-  width: 120px;
-  height: 100px;
-
-  background: url(${({ src }) => src}) no-repeat center;
-  background-size: contain;
 `;
 
 class ESports extends Component {

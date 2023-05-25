@@ -4,13 +4,11 @@ import styled from "styled-components";
 const TitleBackground = styled.div`
   height: 85px;
   width: 800px;
-  mask: url(${
-    process.env.PUBLIC_URL + "/assets/images/pcHomePage/titlesection.png"
-  })
+  mask: url(${process.env.PUBLIC_URL +
+    "/assets/images/pcHomePage/titlesection.png"})
     no-repeat bottom;
   mask-size: 100%;
-  background-color: ${({ theme }) => theme.homeHeaderBackgroundColor}})};
-
+  background-color: ${({ theme }) => theme.homeHeaderBackgroundColor};
 `;
 
 const ProviderTitleContainer = styled.div`
