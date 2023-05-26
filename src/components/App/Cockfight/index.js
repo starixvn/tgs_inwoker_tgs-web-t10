@@ -121,7 +121,11 @@ const CustomLogoHolder = styled.div`
 `;
 
 const TheSelector = styled.div`
-  background: ${({ theme }) => theme.body};
+  background: ${({ theme }) => {
+    return theme.useBackgroundColor
+      ? theme.homeHeaderBackgroundColor
+      : `rgba(${theme.primaryRgb}, 0.6)`;
+  }};
   opacity: 0.8;
 
   ${TopLiner} {
