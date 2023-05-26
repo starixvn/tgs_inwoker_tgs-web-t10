@@ -641,7 +641,7 @@ export const PB2 = {
   neon: true,
   downloadButtonBg: "#D3FF06",
   downloadButtonText: "#362f80",
-  downloadButtonIcon: "#362f80",
+  downloadButtonIcon: "#000",
 };
 
 export const TIGER = {
