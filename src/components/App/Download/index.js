@@ -52,8 +52,12 @@ const SectionContentItem = styled.div`
 `;
 
 const InstallationGuideButton = styled.div`
-  color: #fff;
-  background: #000;
+  color: ${({ theme }) => {
+    return theme.useBackgroundColor ? "#000" : "#fff";
+  }};
+  background: ${({ theme }) => {
+    return theme.useBackgroundColor ? theme.primary : "#000";
+  }};
   border-radius: 75px;
   padding: 10px 20px;
   cursor: pointer;
@@ -183,8 +187,12 @@ const QRCodeHolder = styled.div`
 `;
 
 const DownloadButton = styled.div`
-  color: #fff;
-  background: #000;
+  color: ${({ theme }) => {
+    return theme.useBackgroundColor ? "#000" : "#fff";
+  }};
+  background: ${({ theme }) => {
+    return theme.useBackgroundColor ? theme.primary : "#000";
+  }};
   border-radius: 75px;
   padding: 5px 10px;
   cursor: pointer;
