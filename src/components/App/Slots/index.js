@@ -33,14 +33,18 @@ const Container = styled.div`
   width: 100%;
 
   position: relative;
+  background-color: ${({ theme }) => {
+    return theme.useBackgroundColor ? theme.body : "#fff";
+  }};
 `;
 
 const InnerWrap = styled.div`
   width: 1280px;
   min-height: 580px;
 
-  background: rgba(255, 255, 255);
-  box-shadow: 2px 2px 7px 7.5px rgba(79, 95, 120, 0.29);
+  background-color: ${({ theme }) => {
+    return theme.useBackgroundColor ? theme.body : "#fff";
+  }};
 
   margin: 110px auto 50px auto;
   padding: 16px 46px;
@@ -87,6 +91,10 @@ margin-top: 6px
 const CategoryText = styled.div`
   float: left;
   margin-top: 2px;
+
+  ${({ active }) => {
+    return !active && `color: #fff;`;
+  }}
 `;
 const FilterItem = styled.div`
   background-repeat: no-repeat;
@@ -139,7 +147,9 @@ const GameListContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   justify-items: center;
-  background-color: #fff;
+  background-color: ${({ theme }) => {
+    return theme.useBackgroundColor ? theme.body : "#fff";
+  }};
   gap: 14px;
 `;
 
@@ -542,7 +552,9 @@ class Slots extends Component {
           }
         })()}
 
-        <CategoryText>{text}</CategoryText>
+        <CategoryText active={this.state.filterGame === category}>
+          {text}
+        </CategoryText>
       </CategoryContainer>
     );
   }
