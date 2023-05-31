@@ -647,6 +647,8 @@ export const PB2 = {
   customProfileBackground100: "#0D1229",
   customProfileBackground80: "#101528",
   customProfileBackground50: "#171927",
+
+  darkMode: true,
 };
 
 export const TIGER = {

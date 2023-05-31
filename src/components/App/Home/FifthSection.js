@@ -21,7 +21,11 @@ const ProviderIMG = styled.div`
     no-repeat center;
   width: 100%;
   height: 66px;
+
+  filter: grayscale(100%);
 `;
+
+const Background = styled.div``;
 
 const FifthSection = (props) => {
   return (
@@ -39,11 +43,13 @@ const FifthSection = (props) => {
             })
             .map((item, index) => {
               return (
-                <ProviderIMG
-                  key={index}
-                  provider={item.abbreviation.toLowerCase()}
-                  title={item.name}
-                ></ProviderIMG>
+                <Background>
+                  <ProviderIMG
+                    key={index}
+                    provider={item.abbreviation.toLowerCase()}
+                    title={item.name}
+                  ></ProviderIMG>
+                </Background>
               );
             })}
         </ProviderContainer>
