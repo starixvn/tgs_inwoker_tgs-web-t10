@@ -21,8 +21,6 @@ const ProviderIMG = styled.div`
     no-repeat center;
   width: 100%;
   height: 66px;
-
-  filter: grayscale(100%);
 `;
 
 const Background = styled.div``;
