@@ -18,8 +18,8 @@ const ProviderContainer = styled.div`
 const ProviderIMG = styled.div`
   background: url("${process.env.PUBLIC_URL}/assets/images/provider/${(props) =>
       props.provider}.png")
-    no-repeat;
-  width: 130px;
+    no-repeat center;
+  width: 100%;
   height: 66px;
 `;
 

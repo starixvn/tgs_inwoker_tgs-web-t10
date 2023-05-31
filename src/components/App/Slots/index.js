@@ -9,16 +9,10 @@ import { GameTypeEnum, SlotFilterType } from "../../../api-services/utils/Enum";
 import { SHOW_LOGIN } from "../../../api-services/constant/actionType";
 
 import SlotAllGamePNG from "../../../assets/images/slot-allgame.png";
-import SlotAllGameInactivePNG from "../../../assets/images/slot-allgame-inactive.png";
-import SlotHotGamePNG from "../../../assets/images/slot-hotgame.png";
 import SlotHotGameActivePNG from "../../../assets/images/slot-hotgame-active.png";
-import SlotNewGamePNG from "../../../assets/images/slot-newgame.png";
 import SlotNewGameActivePNG from "../../../assets/images/slot-newgame-active.png";
-import SlotBookmarkPNG from "../../../assets/images/slot-bookmark.png";
 import SlotBookmarkActivePNG from "../../../assets/images/slot-bookmark-active.png";
-import SlotFishGamePNG from "../../../assets/images/slot-fishgame.png";
 import SlotFishGameActivePNG from "../../../assets/images/slot-fishgame-active.png";
-import SlotHistoryGamePNG from "../../../assets/images/slot-history.png";
 import SlotHistoryGameActivePNG from "../../../assets/images/slot-history-active.png";
 
 import SlotBookmark1PNG from "../../../assets/images/slot-bookmark-1.png";
@@ -103,43 +97,29 @@ const FilterItem = styled.div`
   height: 19px;
   width: 19px;
   float: left;
+
+  ${({ active, theme }) => {
+    return active ? `background:red` : `background:#45495b`;
+  }}
 `;
 
 const AllGameFilterItem = styled(FilterItem)`
-  ${(props) =>
-    props.active
-      ? `  background: url(${SlotAllGamePNG}) no-repeat;`
-      : `  background: url(${SlotAllGameInactivePNG}) no-repeat;`};
+  mask: url(${SlotAllGamePNG}) no-repeat;
 `;
 const HotGameFilterItem = styled(FilterItem)`
-  ${(props) =>
-    props.active
-      ? `  background: url(${SlotHotGameActivePNG}) no-repeat;`
-      : `  background: url(${SlotHotGamePNG}) no-repeat;`};
+  mask: url(${SlotHotGameActivePNG}) no-repeat;
 `;
 const NewGameFilterItem = styled(FilterItem)`
-  ${(props) =>
-    props.active
-      ? `  background: url(${SlotNewGameActivePNG}) no-repeat;`
-      : `  background: url(${SlotNewGamePNG}) no-repeat;`};
+  mask: url(${SlotNewGameActivePNG}) no-repeat;
 `;
 const BookmarkFilterItem = styled(FilterItem)`
-  ${(props) =>
-    props.active
-      ? `  background: url(${SlotBookmarkActivePNG}) no-repeat;`
-      : `  background: url(${SlotBookmarkPNG}) no-repeat;`};
+  mask: url(${SlotBookmarkActivePNG}) no-repeat;
 `;
 const FishGameFilterItem = styled(FilterItem)`
-  ${(props) =>
-    props.active
-      ? `  background: url(${SlotFishGameActivePNG}) no-repeat;`
-      : `  background: url(${SlotFishGamePNG}) no-repeat;`};
+  mask: url(${SlotFishGameActivePNG}) no-repeat;
 `;
 const HistoryFilterItem = styled(FilterItem)`
-  ${(props) =>
-    props.active
-      ? `  background: url(${SlotHistoryGameActivePNG}) no-repeat;`
-      : `  background: url(${SlotHistoryGamePNG}) no-repeat;`};
+  mask: url(${SlotHistoryGameActivePNG}) no-repeat;
 `;
 
 const GameListContainer = styled.div`

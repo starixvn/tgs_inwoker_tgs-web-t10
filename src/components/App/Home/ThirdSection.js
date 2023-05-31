@@ -16,11 +16,24 @@ const Container = styled(Grid)`
 `;
 
 const ItemInnerLabel = styled.div`
-  font-size: 38px;
   font-weight: bold;
-  padding-bottom: 100px;
+  padding-bottom: 85px;
   margin: 0 45px;
-  color: #007797;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const ItemInnerLabelValue = styled.div`
+  color: #362f80;
+  font-size: 50px;
+`;
+
+const ItemInnerLabelMeasurement = styled.div`
+  font-size: 24px;
+  color: #414141;
 `;
 
 const ItemBottomLabel = styled.div`
@@ -31,13 +44,15 @@ const ItemBottomLabel = styled.div`
 `;
 
 const ItemContainer = styled.div`
-  background: url(${ItemPNG}) no-repeat;
+  background: url(${process.env.PUBLIC_URL +
+    "/assets/images/pcHomePage/section3.png"})
+    no-repeat;
   background-position-x: center;
   width: 235px;
   height: 280px;
   color: #ffffff;
   text-align: center;
-  padding-top: 85px;
+  padding-top: 65px;
 `;
 
 const OuterContainer = styled.div`
@@ -49,15 +64,18 @@ const ThirdSection = (props) => {
   const itemList = [
     {
       title: i18n.t("web.home.services.service1.title"),
-      value: i18n.t("web.home.services.service1.value"),
+      value: 30,
+      measurement: i18n.t("second"),
     },
     {
       title: i18n.t("web.home.services.service2.title"),
-      value: i18n.t("web.home.services.service2.value"),
+      value: 50,
+      measurement: i18n.t("second"),
     },
     {
       title: i18n.t("web.home.services.service4.title"),
-      value: i18n.t("web.home.services.service4.value"),
+      value: 80,
+      measurement: i18n.t("platform"),
     },
   ];
 
@@ -69,7 +87,10 @@ const ThirdSection = (props) => {
           return (
             <ItemContainer key={index}>
               <ItemInnerLabel>
-                <DynamicFont content={item.value}></DynamicFont>
+                <ItemInnerLabelValue>{item.value}</ItemInnerLabelValue>
+                <ItemInnerLabelMeasurement>
+                  {item.measurement}
+                </ItemInnerLabelMeasurement>
               </ItemInnerLabel>
               <ItemBottomLabel>
                 <DynamicFont content={item.title}></DynamicFont>
