@@ -15,12 +15,19 @@ const ProviderContainer = styled.div`
   grid-template-columns: repeat(9, 1fr);
   grid-gap: 20px;
 `;
+
+const WhiteBackground = styled.div`
+  background: #fff;
+  width: 100%;
+  height: 100%;
+`;
 const ProviderIMG = styled.div`
   background: url("${process.env.PUBLIC_URL}/assets/images/provider/${(props) =>
       props.provider}.png")
-    no-repeat;
-  width: 130px;
-  height: 66px;
+    no-repeat center;
+  background-size: 100%;
+  width: 100%;
+  height: 70px;
 `;
 
 const FifthSection = (props) => {
@@ -38,11 +45,13 @@ const FifthSection = (props) => {
           })
           .map((item, index) => {
             return (
-              <ProviderIMG
-                key={index}
-                provider={item.abbreviation.toLowerCase()}
-                title={item.name}
-              ></ProviderIMG>
+              <WhiteBackground>
+                <ProviderIMG
+                  key={index}
+                  provider={item.abbreviation.toLowerCase()}
+                  title={item.name}
+                />
+              </WhiteBackground>
             );
           })}
       </ProviderContainer>
