@@ -61,6 +61,16 @@ const BtnRegister = styled(BtnLoginRegister)`
 
 const BtnLogin = styled(BtnLoginRegister)`
   border: solid 1px #fff;
+
+  ${({ theme }) => {
+    if (theme.alternateTabBackground) {
+      return `
+        background: ${theme.alternateTabBackground};
+        color: ${theme.alternateTabText};
+        border: solid 1px ${theme.alternateTabBackground};
+      `;
+    }
+  }}
 `;
 
 const StyledDialog = withStyles({

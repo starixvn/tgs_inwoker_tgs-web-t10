@@ -19,6 +19,7 @@ import ScrollAnimation from "react-animate-on-scroll";
 import { Grid } from "@material-ui/core";
 import config from "../../../config/config";
 import PopupAnnouncement from "./PopupAnnouncement";
+import AnotherFirstSection from "./AnotherFirstSection";
 const HomeContainer = styled.div`
   width: 100%;
   overflow: hidden;
@@ -248,96 +249,101 @@ class Home extends Component {
           </MarqueeContainer>
         </SliderContainer>
         <SectionContainer>
-          <FirstSection
-            style={{
-              display: "grid",
-              "grid-template-columns": config.features
-                .HomePage_FirstSection6Widget
-                ? "auto auto auto"
-                : "auto auto auto auto",
-            }}
-          >
-            {(() => {
-              const MenuItemList = [
-                {
-                  path: `electron`,
-                  title: i18n.t("web.home.Section1Electron"),
-                  img: "section1-electron",
-                  gameType: [GameTypeEnum.TABLEGAME],
-                  sortingHK28: 6,
-                  sorting: 1,
-                },
-                {
-                  path: `fish`,
-                  title: i18n.t("web.home.Section1Fishing"),
-                  img: "section1-fish",
-                  gameType: [GameTypeEnum.FISH],
-                  sortingHK28: 5,
-                  sorting: 3,
-                },
-                {
-                  path: "lottery",
-                  title: i18n.t("web.home.Section1Lottery"),
-                  img: "section1-lottery",
-                  gameType: [GameTypeEnum.LOTTERYLOBBY],
-                  sortingHK28: 7,
-                  sorting: 2,
-                },
-              ];
-              var count = 0;
-              return MenuItemList.sort((a, b) => {
-                if (config.features.MenuItem_Sorting_HK28) {
-                  return a.sortingHK28 > b.sortingHK28 ? 1 : -1;
-                } else {
-                  return a.sorting > b.sorting ? 1 : -1;
-                }
-              }).map((item, index) => {
-                var list = this.props.game.homePageGameList.filter(
-                  (game) => item.gameType.indexOf(game.type) >= 0
-                );
-
-                if (
-                  list.length > 0 &&
-                  index < (config.features.PopupAnnouncement ? 6 : 4)
-                ) {
-                  count++;
-                  return (
-                    <ScrollAnimation
-                      animateIn="fadeInLeft"
-                      duration={1}
-                      animateOnce={true}
-                      style={{ overflow: "visible" }}
-                    >
-                      <FirstSectionItem
-                        item
-                        spacing={0}
-                        img={item.img + this.brandSwitcher(config.brand)}
-                      >
-                        <FirstSectionItemBg
-                          container
-                          direction="row"
-                          justify="flex-start"
-                          alignItems="center"
-                        >
-                          <FirstSectionItemLabel item>
-                            {item.title}
-                          </FirstSectionItemLabel>
-                          <FirstSectionItemButton
-                            onClick={() => {
-                              window.scrollTo({ top: 0, behavior: "smooth" });
-                              this.props.history.push(`/${item.path}`);
-                            }}
-                          >
-                            {i18n.t("withdrawal.checkDetails")}
-                          </FirstSectionItemButton>
-                        </FirstSectionItemBg>
-                      </FirstSectionItem>
-                    </ScrollAnimation>
+          <AnotherFirstSection />
+        </SectionContainer>
+        <SectionContainer>
+          {false && (
+            <FirstSection
+              style={{
+                display: "grid",
+                "grid-template-columns": config.features
+                  .HomePage_FirstSection6Widget
+                  ? "auto auto auto"
+                  : "auto auto auto auto",
+              }}
+            >
+              {(() => {
+                const MenuItemList = [
+                  {
+                    path: `electron`,
+                    title: i18n.t("web.home.Section1Electron"),
+                    img: "section1-electron",
+                    gameType: [GameTypeEnum.TABLEGAME],
+                    sortingHK28: 6,
+                    sorting: 1,
+                  },
+                  {
+                    path: `fish`,
+                    title: i18n.t("web.home.Section1Fishing"),
+                    img: "section1-fish",
+                    gameType: [GameTypeEnum.FISH],
+                    sortingHK28: 5,
+                    sorting: 3,
+                  },
+                  {
+                    path: "lottery",
+                    title: i18n.t("web.home.Section1Lottery"),
+                    img: "section1-lottery",
+                    gameType: [GameTypeEnum.LOTTERYLOBBY],
+                    sortingHK28: 7,
+                    sorting: 2,
+                  },
+                ];
+                var count = 0;
+                return MenuItemList.sort((a, b) => {
+                  if (config.features.MenuItem_Sorting_HK28) {
+                    return a.sortingHK28 > b.sortingHK28 ? 1 : -1;
+                  } else {
+                    return a.sorting > b.sorting ? 1 : -1;
+                  }
+                }).map((item, index) => {
+                  var list = this.props.game.homePageGameList.filter(
+                    (game) => item.gameType.indexOf(game.type) >= 0
                   );
-                }
-              });
-            })()}
-          </FirstSection>
+
+                  if (
+                    list.length > 0 &&
+                    index < (config.features.PopupAnnouncement ? 6 : 4)
+                  ) {
+                    count++;
+                    return (
+                      <ScrollAnimation
+                        animateIn="fadeInLeft"
+                        duration={1}
+                        animateOnce={true}
+                        style={{ overflow: "visible" }}
+                      >
+                        <FirstSectionItem
+                          item
+                          spacing={0}
+                          img={item.img + this.brandSwitcher(config.brand)}
+                        >
+                          <FirstSectionItemBg
+                            container
+                            direction="row"
+                            justify="flex-start"
+                            alignItems="center"
+                          >
+                            <FirstSectionItemLabel item>
+                              {item.title}
+                            </FirstSectionItemLabel>
+                            <FirstSectionItemButton
+                              onClick={() => {
+                                window.scrollTo({ top: 0, behavior: "smooth" });
+                                this.props.history.push(`/${item.path}`);
+                              }}
+                            >
+                              {i18n.t("withdrawal.checkDetails")}
+                            </FirstSectionItemButton>
+                          </FirstSectionItemBg>
+                        </FirstSectionItem>
+                      </ScrollAnimation>
+                    );
+                  }
+                });
+              })()}
+            </FirstSection>
+          )}
 
           <SecondSection />
 

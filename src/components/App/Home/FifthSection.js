@@ -50,7 +50,7 @@ const FifthSection = (props) => {
                   key={index}
                   provider={item.abbreviation.toLowerCase()}
                   title={item.name}
-                />
+                ></ProviderIMG>
               </WhiteBackground>
             );
           })}
