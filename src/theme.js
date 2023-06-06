@@ -580,7 +580,7 @@ export const PB2 = {
   primaryGradient: "#D3FF06",
   primaryGradientRgb: "211,255,6",
   primaryHightlight: "#D3FF06",
-  secondary: "#000",
+  secondary: "#fff",
   secondaryText: "rgba(0,0,0,0.5)",
   tertiary: "rgba(255, 255, 255, 1)",
   tertiaryText: "rgba(255, 255, 255, 0.5)",
@@ -642,6 +642,13 @@ export const PB2 = {
   downloadButtonBg: "#D3FF06",
   downloadButtonText: "#362f80",
   downloadButtonIcon: "#000",
+
+  customTabButtonBackground: "#fff",
+  customProfileBackground100: "#0D1229",
+  customProfileBackground80: "#101528",
+  customProfileBackground50: "#171927",
+
+  darkMode: true,
 };
 
 export const TIGER = {
