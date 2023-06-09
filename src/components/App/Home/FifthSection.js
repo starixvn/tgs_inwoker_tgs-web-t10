@@ -17,7 +17,6 @@ const ProviderContainer = styled.div`
 `;
 
 const WhiteBackground = styled.div`
-  background: #fff;
   width: 100%;
   height: 100%;
 `;
