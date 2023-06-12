@@ -8,13 +8,17 @@ const StyleButton = styled.div`
   padding-top: 22px;
   font-size: 34px;
 
-  color: #ffffff;
+  color: ${({ theme }) => {
+    return theme.customButtonText ? theme.customButtonText : "#fff";
+  }};
   width: 637px;
   height: 93px;
   border-radius: 20px;
-  border: solid 1px #ffffff;
+  border: solid 1px
+    ${({ theme }) => {
+      return theme.customButtonText ? theme.customButtonText : "#fff";
+    }};
   background-color: ${({ theme }) => theme.primary};
-  box-shadow: 0px 2px 5px 3px rgba(177, 177, 177, 1);
 `;
 
 class ButtonWap extends Component {

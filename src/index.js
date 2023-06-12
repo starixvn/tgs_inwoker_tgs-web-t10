@@ -123,14 +123,14 @@ const muiTheme = createMuiTheme({
         height: "74px",
         overflow: "visible",
         "& .MuiTabs-indicator": {
-          backgroundColor: "#FDE740",
+          backgroundColor: "transparent",
           height: "5px",
         },
         "& .MuiTabs-indicator:before": {
           content: "'\\A'",
           borderStyle: "solid",
           borderWidth: "0 10px 10px 10px",
-          borderColor: "transparent transparent #FDE740 transparent",
+          borderColor: "transparent transparent #fff transparent",
           position: "absolute",
           left: "50%",
           top: "-6px",

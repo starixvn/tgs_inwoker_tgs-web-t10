@@ -6,7 +6,7 @@ import { ProviderTitle } from "./SharedComponent";
 
 const Container = styled(Grid)`
   width: 1400px;
-  margin: 175px auto;
+  margin: 20px auto 175px auto;
 `;
 
 const ProviderContainer = styled.div`
@@ -18,35 +18,41 @@ const ProviderContainer = styled.div`
 const ProviderIMG = styled.div`
   background: url("${process.env.PUBLIC_URL}/assets/images/provider/${(props) =>
       props.provider}.png")
-    no-repeat;
-  width: 130px;
+    no-repeat center;
+  width: 100%;
   height: 66px;
 `;
 
+const Background = styled.div``;
+
 const FifthSection = (props) => {
   return (
-    <Container>
+    <>
       <ProviderTitle title={i18n.t("t10.home.section4.title")} />
-      <ProviderContainer>
-        {props.providerList
-          .filter((gp) => {
-            if (gp.abbreviation.includes("TCG")) {
-              return gp.abbreviation === "TCG_SEA";
-            } else {
-              return gp;
-            }
-          })
-          .map((item, index) => {
-            return (
-              <ProviderIMG
-                key={index}
-                provider={item.abbreviation.toLowerCase()}
-                title={item.name}
-              ></ProviderIMG>
-            );
-          })}
-      </ProviderContainer>
-    </Container>
+      <Container>
+        <ProviderContainer>
+          {props.providerList
+            .filter((gp) => {
+              if (gp.abbreviation.includes("TCG")) {
+                return gp.abbreviation === "TCG_SEA";
+              } else {
+                return gp;
+              }
+            })
+            .map((item, index) => {
+              return (
+                <Background>
+                  <ProviderIMG
+                    key={index}
+                    provider={item.abbreviation.toLowerCase()}
+                    title={item.name}
+                  ></ProviderIMG>
+                </Background>
+              );
+            })}
+        </ProviderContainer>
+      </Container>
+    </>
   );
 };
 

@@ -555,6 +555,100 @@ export const wapT10 = {
   buttonBorder: "#fff",
 
   accent: "#d772ff",
+  webSection: "#f0f3f9",
+  footer: "#262626",
+  toppestHeader: "#5f67ea",
+  bottomHeader: "#fff",
+  headerShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+  bodyText: "#000",
+
+  gamePageButtonBorderBottom: "#878dee",
+  homeHeaderBackgroundColor: "dbf5f0",
+  homeHeaderTextColor: " #19bc9b",
+};
+
+export const PB2 = {
+  pcAppBar: "#FBFBFF",
+  appbar: "#00041C",
+  body: "#00041C",
+  variant: "PB",
+  loginBody: "#00041C",
+  loginText: "#fff",
+  primary: "#D3FF06",
+  primaryRgb: "211,255,6",
+  primaryText: "#fff",
+  primaryGradient: "#D3FF06",
+  primaryGradientRgb: "211,255,6",
+  primaryHightlight: "#D3FF06",
+  secondary: "#fff",
+  secondaryText: "rgba(0,0,0,0.5)",
+  tertiary: "rgba(255, 255, 255, 1)",
+  tertiaryText: "rgba(255, 255, 255, 0.5)",
+  //new addition to compensate wap-t2
+  buttonBackground: "#fff",
+  buttonText: "#D3FF06",
+  buttonText2: "#D3FF06",
+  bottomnav: "#00041C",
+  bottomNavAction: "#fff",
+  bodyBackground: "#F0EFF5",
+  supportBg: ``,
+  balance: "#d3ff06",
+  pcHeaderText: "#000",
+  pcHeaderTextHover: "#D3FF06",
+  pcHeaderRightMenu: "#D3FF06",
+  pcHeaderRightMenuHover: "#D3FF06",
+
+  gamelisterOriginalText: "#fff",
+  gamelisterSelectedText: "#00041C",
+
+  popoverBackground: "rgba(255,255,255,0.95)",
+  popoverGameTypeText: "#D3FF06",
+  popoverSubWalletText: "#000",
+
+  buttonBorder: "#fff",
+
+  accent: "#D3FF06",
+  webSection: "#00041C",
+  footer: "#000522",
+  toppestHeader: "#00041C",
+  bottomHeader: "#00041C",
+  headerShadow: "none",
+  bodyText: "#fff",
+  gamelisterBg: "#00041C",
+
+  gamePageButtonBorderBottom: "#D3FF06",
+  customButtonText: "#000",
+  profileBlockBackground: "#000520",
+  profileBlockIcon: "#d3d3d3",
+  profileBlockLabel: "#fff",
+  profileBlockArrow: "#fff",
+  sameActionButtonColor: "#D3FF06",
+  customSlotTabText: "#000",
+  customSlotTabTextSelected: "#000",
+
+  alternateTabBackground: "#D3FF06",
+  alternateTabText: "#000",
+
+  useBackgroundColor: "#00041C",
+  homeHeaderTextColor: " #fff",
+  homeHeaderBackgroundColor: "#362f80",
+  whiteText: "#fff",
+  slotGameTabBackground: "#45495b",
+  slotGameTabText: "#fff",
+  slotGameSelectedTabBackground: "#D3FF06",
+  slotGameSelectedTabText: "#000",
+  wapSecondary: "#fff",
+  neon: true,
+  downloadButtonBg: "#D3FF06",
+  downloadButtonText: "#362f80",
+  downloadButtonIcon: "#000",
+
+  customTabButtonBackground: "#fff",
+  customProfileBackground100: "#0D1229",
+  customProfileBackground80: "#101528",
+  customProfileBackground50: "#171927",
+
+  darkMode: true,
 };
 
 export const TIGER = {
@@ -596,7 +690,8 @@ export const TIGER = {
   no-repeat center,  linear-gradient(180deg, rgb(5 30 74) 40%, rgba(12,21,37,1) 100%)`,
   gameTab: "#fff",
   gamelisterBg: `url(${
-    process.env.PUBLIC_URL + `/assets/images/wapp/resource/T10TIGER/gamelisterbg.png`
+    process.env.PUBLIC_URL +
+    `/assets/images/wapp/resource/T10TIGER/gamelisterbg.png`
   }) no-repeat center center / 750px 72px`,
   gamelisterOriginalColor: "#9fa3b4",
   gamelisterOriginalText: "#000",
@@ -608,13 +703,11 @@ export const TIGER = {
   popoverBackground: "rgba(255,255,255,0.95)",
   popoverGameTypeText: "#F0DE81",
   popoverSubWalletText: "#000",
-  
+
   downloadButtonBg: `linear-gradient(120deg, #F0DE81, #B0803A)`,
   downloadButtonBorder: "solid 5px #ffffff",
   downloadButtonBorderRad: "50px",
   downloadButtonText: "#fff",
-  downloadButtonIcon: "#fff",
-
 };
 
 export const themeList = {
@@ -634,4 +727,5 @@ export const themeList = {
   PB: PB,
   wapT10: wapT10,
   TIGER: TIGER,
+  PB2: PB2,
 };

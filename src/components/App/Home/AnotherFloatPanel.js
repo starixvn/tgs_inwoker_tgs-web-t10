@@ -28,7 +28,7 @@ const Icon = styled.div`
   width: 35px;
 
   background-color: ${({ theme, active }) => {
-    return active ? theme.primary : "#fff";
+    return active ? theme.primary : "#000";
   }};
   transition: transform 0.5s;
   mask: url(${({ active, src, src2 }) => (active ? src2 : src)}) no-repeat
@@ -89,17 +89,10 @@ const SidePanel = styled.div`
   border-color: #fff;
   border-style: solid;
   border-radius: 1000px;
-
-  ${({ active, theme }) => {
-    return active
-      ? `  
-       background-color:  #fff;`
-      : `  
-      background-color: ${theme.accent};`;
-  }}
+  background-color: ${({ theme }) => theme.accent};
 
   &:hover {
-    background-color: #fff;
+    background-color: #000;
     cursor: pointer;
     border-color: transparent;
     border-color: ${({ theme }) => theme.accent};
@@ -150,7 +143,8 @@ const DialogTitle = styled.div`
 
 const DialogTitle2 = styled(DialogTitle)`
   background: ${({ theme }) => theme.accent};
-  color: white;
+  color: ${({ theme }) =>
+    theme.useBackgroundColor ? theme.useBackgroundColor : "#fff"};
 `;
 
 const DialogTitleTwo = styled(DialogTitle)`
@@ -300,21 +294,15 @@ const AnotherFloatPanel = (props) => {
       <Container customPosition={config.features.Home_CustomFPPosition}>
         {props.general.livechat && !config.features.LiveChatVendor && (
           <SidePanel
-            active={csModal}
             onClick={() => {
               performOpenCsModal();
             }}
             src2={PanelUserPNG2}
           >
-            <RotateBack active={csModal}>
-              <Icon
-                src={PanelUserPNG}
-                src2={PanelUserPNG2}
-                active={csModal}
-                alt="user-icon"
-              />
+            <RotateBack>
+              <Icon src={PanelUserPNG} src2={PanelUserPNG2} alt="user-icon" />
 
-              <Text active={csModal}>
+              <Text>
                 {config.features.FloatPanel_CustomTranslation
                   ? i18n.t("mess888.panel.cs")
                   : i18n.t("panel.cs")}
@@ -324,20 +312,14 @@ const AnotherFloatPanel = (props) => {
         )}
 
         <SidePanel
-          active={supportModal}
           onClick={() => {
             performOpenSupportModal();
           }}
           src2={PanelCSPNG2}
         >
-          <RotateBack active={supportModal}>
-            <Icon
-              src={PanelCSPNG}
-              src2={PanelCSPNG2}
-              active={supportModal}
-              alt="user-cs"
-            />
-            <Text active={supportModal}>
+          <RotateBack>
+            <Icon src={PanelCSPNG} src2={PanelCSPNG2} alt="user-cs" />
+            <Text>
               {config.features.FloatPanel_CustomTranslation
                 ? i18n.t("mess888.panel.im")
                 : i18n.t("panel.im")}
@@ -347,20 +329,18 @@ const AnotherFloatPanel = (props) => {
 
         {config.features.HaveDownloadFeature && (
           <SidePanel
-            active={supportModal}
             onClick={() => {
               AppHistory.replace("/download");
             }}
             src2={PanelDownloadPNG2}
           >
-            <RotateBack active={supportModal}>
+            <RotateBack>
               <Icon
                 src={PanelDownloadPNG}
                 src2={PanelDownloadPNG2}
-                active={supportModal}
                 alt="user-cs"
               />
-              <Text active={supportModal}>
+              <Text>
                 {config.features.FloatPanel_CustomTranslation
                   ? i18n.t("mess888.panel.download")
                   : i18n.t("download.title")}{" "}

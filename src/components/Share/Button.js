@@ -13,12 +13,13 @@ function CustomButton(props) {
       ${({ theme }) => theme.primary}
     );
     ${props.grayMode
-      ? "    background-blend-mode: multiply, normal; background-image:  linear-gradient(to bottom, #bfbfbf, #bfbfbf), linear-gradient(to top, #797979, #c3c3c3);"
+      ? "  color: #fff !important;  background-blend-mode: multiply, normal; background-image:  linear-gradient(to bottom, #bfbfbf, #bfbfbf), linear-gradient(to top, #797979, #c3c3c3);"
       : ""}
 
     border-radius: 6px;
     font-size: ${props.small ? "14" : "16"}px;
-    color: #fff;
+    color: ${({ theme }) =>
+      theme.useBackgroundColor ? theme.useBackgroundColor : "#fff"};
     ${props.float ? "float: " + props.float + ";" : " float: left;"}
     ${props.marginLeft ? "margin-left: " + props.marginLeft + "px;" : ""}
     ${props.marginRight ? "margin-right: " + props.marginRight + "px;" : ""}

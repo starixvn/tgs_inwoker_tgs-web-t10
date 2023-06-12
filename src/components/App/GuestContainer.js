@@ -50,13 +50,27 @@ const BtnLoginRegister = styled.div`
  
 `;
 const BtnRegister = styled(BtnLoginRegister)`
-  border: solid 1px #fff;
-  background: #fff;
-  color: ${({ theme }) => theme.primary};
+  border: solid 1px ${({ theme }) =>
+    theme.alternateTabBackground ? theme.alternateTabBackground : "#fff"};
+  background: ${({ theme }) =>
+    theme.alternateTabBackground ? theme.alternateTabBackground : "#fff"};
+  color: ${({ theme }) => {
+    return theme.alternateTabText ? theme.alternateTabText : "#fff";
+  }}};
 `;
 
 const BtnLogin = styled(BtnLoginRegister)`
   border: solid 1px #fff;
+
+  ${({ theme }) => {
+    if (theme.alternateTabBackground) {
+      return `
+        background: ${theme.alternateTabBackground};
+        color: ${theme.alternateTabText};
+        border: solid 1px ${theme.alternateTabBackground};
+      `;
+    }
+  }}
 `;
 
 const StyledDialog = withStyles({
