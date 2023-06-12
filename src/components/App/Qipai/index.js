@@ -64,12 +64,12 @@ const TheSelectorContainer = styled.div`
 const TopLiner = styled.div`
   height: 4px;
   width: 40%;
-  background: #878dee;
+  background: ${({ theme }) => theme.gamePageButtonBorderBottom};
   ::before {
     content: "";
     display: block;
 
-    background: #878dee;
+    background: ${({ theme }) => theme.gamePageButtonBorderBottom};
     width: 4px;
     height: 6px;
     position: absolute;
@@ -82,7 +82,7 @@ const TopLiner = styled.div`
   ::after {
     content: "";
     display: block;
-    background: #878dee;
+    background: ${({ theme }) => theme.gamePageButtonBorderBottom};
     width: 4px;
     height: 6px;
     position: absolute;
@@ -96,7 +96,7 @@ const BottomLiner = styled.div`
   width: 100%;
   height: 10px;
 
-  background: #878dee;
+  background: ${({ theme }) => theme.gamePageButtonBorderBottom};
 `;
 
 const TheBottomLiner = styled.div`
@@ -110,11 +110,41 @@ const TheBottomLiner = styled.div`
   align-items: center;
 `;
 
+const CustomLogoHolder = styled.div`
+  width: 120px;
+  height: 100px;
+
+  background: url(${({ src }) => src}) no-repeat center;
+  background-size: contain;
+`;
+
 const TheSelector = styled.div`
-  background: rgba(${({ theme }) => theme.primaryRgb}, 0.6);
+  background: ${({ theme }) => {
+    return theme.useBackgroundColor
+      ? theme.homeHeaderBackgroundColor
+      : `rgba(${theme.primaryRgb}, 0.6)`;
+  }};
+  opacity: 0.8;
+
+  ${TopLiner} {
+    background: ${({ theme }) => theme.homeHeaderBackgroundColor};
+    ::before {
+      background: ${({ theme }) => theme.homeHeaderBackgroundColor};
+    }
+    ::after {
+      background: ${({ theme }) => theme.homeHeaderBackgroundColor};
+    }
+  }
+
+  ${BottomLiner} {
+    background: ${({ theme }) => theme.homeHeaderBackgroundColor};
+  }
+
+  transition: all 1s ease-in-out;
 
   :hover {
-    background: rgba(${({ theme }) => theme.primaryRgb}, 1);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    opacity: 1;
     ${TopLiner} {
       background: ${({ theme }) => theme.accent};
       ::before {
@@ -126,6 +156,10 @@ const TheSelector = styled.div`
     }
     ${BottomLiner} {
       background: ${({ theme }) => theme.accent};
+    }
+
+    ${CustomLogoHolder} {
+      transform: translateY(-10px);
     }
   }
   position: relative;
@@ -153,14 +187,6 @@ const TheSelector = styled.div`
   }`
     );
   }}
-`;
-
-const CustomLogoHolder = styled.div`
-  width: 120px;
-  height: 100px;
-
-  background: url(${({ src }) => src}) no-repeat center;
-  background-size: contain;
 `;
 class Qipai extends Component {
   constructor(props) {

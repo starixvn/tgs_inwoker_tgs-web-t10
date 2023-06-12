@@ -4,11 +4,6 @@ import styled from "styled-components";
 
 import ScrollAnimation from "react-animate-on-scroll";
 
-import IconFeature1 from "../../../assets/images/home/section/icon-feature1.png";
-import IconFeature2 from "../../../assets/images/home/section/icon-feature2.png";
-import IconFeature3 from "../../../assets/images/home/section/icon-feature3.png";
-import IconFeature4 from "../../../assets/images/home/section/icon-feature4.png";
-
 import i18n from "../../../utils/i18n";
 
 const Container = styled(Grid)`
@@ -41,9 +36,7 @@ const FeatureBg = styled.div`
 
 const FeatureIcon = styled.img``;
 
-const FeatureRightContainer = styled.div`
-  margin-right: 34px;
-`;
+const FeatureRightContainer = styled.div``;
 const FeatureTitle = styled.div`
   font-size: ${(props) => {
     switch (props.lang) {
@@ -57,30 +50,32 @@ const FeatureTitle = styled.div`
   }};
   font-weight: bold;
   padding-bottom: 10px;
-  color: #107f9d;
+  color: ${({ theme }) => {
+    return theme.whiteText ? theme.whiteText : "#262626";
+  }};
   text-align: center;
 `;
 
 const FourthSection = (props) => {
   var featureList = [
     {
-      icon: IconFeature1,
+      icon: "feature1",
       title: i18n.t("t10.home.section3.content.first"),
       description: i18n.t("web.home.features.feature1.description"),
     },
     {
-      icon: IconFeature3,
+      icon: "feature2",
 
       title: i18n.t("t10.home.section3.content.second"),
       description: i18n.t("web.home.features.feature2.description"),
     },
     {
-      icon: IconFeature2,
+      icon: "feature3",
       title: i18n.t("t10.home.section3.content.third"),
       description: i18n.t("web.home.features.feature3.description"),
     },
     {
-      icon: IconFeature4,
+      icon: "feature4",
       title: i18n.t("t10.home.section3.content.forth"),
       description: i18n.t("web.home.features.feature4.description"),
     },
@@ -100,7 +95,15 @@ const FourthSection = (props) => {
           {featureList.map((feature, index) => {
             return (
               <FeatureBg brand={props.brand}>
-                <FeatureIcon src={feature.icon} alt={index}></FeatureIcon>
+                <FeatureIcon
+                  src={
+                    process.env.PUBLIC_URL +
+                    "/assets/images/pcHomePage/" +
+                    feature.icon +
+                    ".png"
+                  }
+                  alt={index}
+                ></FeatureIcon>
                 <FeatureRightContainer>
                   <FeatureTitle lang={i18n.language}>
                     {feature.title}

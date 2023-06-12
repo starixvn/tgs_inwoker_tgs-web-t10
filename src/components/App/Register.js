@@ -49,14 +49,18 @@ const TitleContainer = styled.div`
 
   font-size: 42px;
 
-  color: ${({ theme }) => theme.secondary};
+  color: ${({ theme }) => {
+    return theme.alternateTabText ? theme.alternateTabText : theme.secondary;
+  }};
 `;
 const SubTitleContainer = styled.div`
   text-align: center;
 
   font-size: 18px;
 
-  color: ${({ theme }) => theme.secondary};
+  color: ${({ theme }) => {
+    return theme.alternateTabText ? theme.alternateTabText : theme.secondary;
+  }};
 `;
 const FormContainer = styled.div`
   margin: 10px 78px 0 78px;
@@ -188,7 +192,9 @@ const ButtonLogin = styled.div`
   margin-bottom: 35px;
   width: 350px;
   height: 51px;
-  color: #fff;
+  color: ${({ theme }) => {
+    return theme.alternateTabText ? theme.alternateTabText : theme.secondary;
+  }};
   font-size: 20px;
   border-radius: 6px;
 
@@ -222,7 +228,9 @@ const Description = styled.div`
 
   line-height: 1.43;
 
-  color: ${({ theme }) => theme.secondary};
+  color: ${({ theme }) => {
+    return theme.alternateTabText ? theme.alternateTabText : theme.secondary;
+  }};
 `;
 
 const useStyles = makeStyles((theme) => ({
@@ -443,7 +451,12 @@ function Register(props) {
                 setPhoneDontCareDuplicate
               );
             } else if (config.features.Register_ShowPhone) {
-              props.doLoginWithHp(username, password, phone, setPhoneDontCareDuplicate);
+              props.doLoginWithHp(
+                username,
+                password,
+                phone,
+                setPhoneDontCareDuplicate
+              );
             } else {
               props.doLogin(username, password);
             }
