@@ -317,7 +317,7 @@ class LiveGame extends Component {
                     <CustomLogoHolder
                       src={
                         process.env.PUBLIC_URL +
-                        "/assets/images/provider/white/" +
+                        "/assets/images/provider/" +
                         item.abbreviation.toLowerCase() +
                         ".png"
                       }
