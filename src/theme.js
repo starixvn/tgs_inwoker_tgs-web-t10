@@ -563,7 +563,7 @@ export const wapT10 = {
   bodyText: "#000",
 
   gamePageButtonBorderBottom: "#878dee",
-  homeHeaderBackgroundColor: "dbf5f0",
+  homeHeaderBackgroundColor: "#dbf5f0",
   homeHeaderTextColor: " #19bc9b",
 };
 
