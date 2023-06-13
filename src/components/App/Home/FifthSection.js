@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import i18n from "../../../utils/i18n";
 import { ProviderTitle } from "./SharedComponent";
+import config from "../../../config/config";
 
 const Container = styled(Grid)`
   width: 1400px;
@@ -16,9 +17,11 @@ const ProviderContainer = styled.div`
   grid-gap: 20px;
 `;
 const ProviderIMG = styled.div`
-  background: url("${process.env.PUBLIC_URL}/assets/images/provider/${(props) =>
+  background: url("${process.env.PUBLIC_URL}/assets/images/provider/${config
+      .features.UseAlternateLogo && "alternate/"}${(props) =>
       props.provider}.png")
     no-repeat center;
+  background-size: contain;
   width: 100%;
   height: 66px;
 `;
