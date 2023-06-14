@@ -340,6 +340,7 @@ const CustomAppBar = styled(AppBar)`
   display: ${({ hide }) => {
     return hide ? "none" : "block";
   }};
+  height: 190px;
   background: ${({ theme }) => theme.bottomHeader};
   box-shadow: ${({ theme }) => theme.headerShadow};
 `;

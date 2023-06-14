@@ -22,7 +22,9 @@ const heightSwitcher = (language) => {
 const Container = styled.div`
   padding: 20px 28px;
   box-sizing: border-box
-  background-color: #eaeaea;
+  background:${({ theme }) => {
+    return theme.darkMode ? " #00041c" : "#eaeaea";
+  }}
   width: 100%;
   min-height: 611px;
  
@@ -46,7 +48,11 @@ const InnerWrap = styled.div`
   min-height: 610px;
   margin-top: 18px;
   box-sizing: border-box;
-  background-color: #f7f7f7;
+
+  background: ${({ theme }) => {
+    return theme.darkMode ? theme.profileBackground80 : "#f7f7f7";
+  }};
+
   padding: 25px;
   border-radius: 10px;
 `;
@@ -71,6 +77,13 @@ const VIPOverflow = styled.div`
   flex-direction: column;
   overflow: visible;
   box-shadow: 0 20px 25px -5px rgb(0 0 0/0.1), 0 8px 10px -6px rgb(0 0 0/0.1);
+  background: ${({ theme }) => {
+    return theme.darkMode ? " #00041c" : "#eaeaea";
+  }};
+
+  color: ${({ theme }) => {
+    return theme.darkMode ? " #fff" : "#000";
+  }};
 `;
 
 const VIPOverflowData = styled(VIPOverflow)`
@@ -106,8 +119,14 @@ const VIPContent = styled.div`
 `;
 
 const TitleContent = styled(VIPContent)`
-  background: #d9d9d9;
-  color: #404040;
+  background: ${({ theme }) => {
+    return theme.darkMode ? " #362f80" : "#d9d9d9";
+  }};
+
+  color: ${({ theme }) => {
+    return theme.darkMode ? " #fff" : "#404040";
+  }};
+
   font-weight: bold;
   width: 275px;
   padding: 10px 20px;
@@ -116,7 +135,11 @@ const TitleContent = styled(VIPContent)`
 const TableWrapper = styled.div`
   border-radius: 8px;
   cursor: default;
-  border: solid 1px #b7c7cc;
+  border: solid 1px
+    ${({ theme }) => {
+      return theme.darkMode ? theme.profileBackground80 : "#b7c7cc";
+    }};
+
   margin-bottom: 20px;
 
   & ::-webkit-scrollbar {
@@ -146,8 +169,13 @@ const VipEmblemContainer = styled(VIPContent)`
 `;
 
 const VipEmblemContainerTitle = styled(VipEmblemContainer)`
-  background: #d9d9d9;
-  color: #404040;
+  background: ${({ theme }) => {
+    return theme.darkMode ? " #362f80" : "#d9d9d9";
+  }};
+
+  color: ${({ theme }) => {
+    return theme.darkMode ? " #fff" : "#404040";
+  }};
   font-weight: bold;
 `;
 
@@ -159,11 +187,23 @@ const DataRow = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  background: ${({ theme }) => {
+    return theme.darkMode ? " #00041c" : "#eaeaea";
+  }};
+
+  color: ${({ theme }) => {
+    return theme.darkMode ? " #fff" : "#000";
+  }};
 `;
 
 const TitleRow = styled(DataRow)`
-  background: #d9d9d9;
-  color: #404040;
+  background: ${({ theme }) => {
+    return theme.darkMode ? " #362f80" : "#d9d9d9";
+  }};
+
+  color: ${({ theme }) => {
+    return theme.darkMode ? " #fff" : "#404040";
+  }};
   font-weight: bold;
   align-items: center;
   text-transform: capitalize;
@@ -173,6 +213,16 @@ const TitleRow = styled(DataRow)`
 const StandardDataCol = styled.div`
   padding: 10px 20px;
   text-align: center;
+`;
+
+const VipDataCol = styled(StandardDataCol)`
+  background: ${({ theme }) => {
+    return theme.darkMode ? " #00041c" : "#eaeaea";
+  }};
+
+  color: ${({ theme }) => {
+    return theme.darkMode ? " #fff" : "#000";
+  }};
 `;
 
 const DataCol = styled(StandardDataCol)`
@@ -287,9 +337,7 @@ const VIP = (props) => {
                   <StandardDataCol>{i18n.t("vip.vipBenefit")}</StandardDataCol>
                 </TitleRow>
                 {vipBenefitList.map((data, index) => {
-                  return (
-                    <StandardDataCol key={index}>{data.level}</StandardDataCol>
-                  );
+                  return <VipDataCol key={index}>{data.level}</VipDataCol>;
                 })}
               </div>
               <div>
