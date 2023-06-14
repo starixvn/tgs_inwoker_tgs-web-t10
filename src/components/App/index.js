@@ -57,7 +57,7 @@ const Main = styled.div`
   min-height: 600px;
 `;
 const EmptyHeader = styled.div`
-  height: 160px;
+  height: 190px;
   background: #000103;
 `;
 const RouletteFloatingPanel = styled.div`
@@ -573,11 +573,7 @@ class App extends Component {
                       )}
                     />
                     {config.features.HaveDownloadFeature && (
-                      <Route
-                        exact
-                        path={"/download"}
-                        component={Download}
-                      />
+                      <Route exact path={"/download"} component={Download} />
                     )}
                     <Route
                       exact
