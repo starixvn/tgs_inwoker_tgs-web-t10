@@ -21,13 +21,28 @@ const Container = styled.div`
   padding-top: 20px;
 
   position: relative;
-  background: url(${BGJPG}) no-repeat top center #19262f;
+
+  background: ${({ theme }) => {
+    return theme.darkMode
+      ? `linear-gradient(
+      to bottom,
+      rgba(0, 4, 28, 0.5),
+      rgba(0, 4, 28, 0.5)
+    ),
+    url(${BGJPG}) no-repeat top center`
+      : `url(${BGJPG}) no-repeat top center #19262f`;
+  }};
+  background-attachment: fixed;
+  background-size: cover;
   min-height: 800px;
 `;
 
 const PromoDesc = styled.div`
   font-size: 14px;
-  color: #747474;
+
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#747474";
+  }};
 `;
 
 const PromoDetailContainer = styled(Grid)`
@@ -35,7 +50,9 @@ const PromoDetailContainer = styled(Grid)`
   margin: 10px 0px;
   width: 100%;
   position: relative;
-  background: white;
+  background: ${({ theme }) => {
+    return theme.darkMode ? theme.body : "#fff";
+  }};
   padding: 18px 15px;
   border-radius: 20px;
 `;
@@ -49,7 +66,10 @@ const PromoDetailImage = styled.div`
 `;
 
 const EventTitle = styled.div`
-  color: #7e0000;
+  color: ${({ theme }) => {
+    return theme.darkMode ? theme.primary : "#7e0000";
+  }};
+
   margin-bottom: 10px;
   font-size: 16px;
   font-family: Arial;
@@ -58,7 +78,9 @@ const EventTitle = styled.div`
 
 const EventText = styled.div`
   font-size: 14px;
-  color: #4f4f4f;
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#4f4f4f";
+  }};
 
   line-height: 26px;
   margin-bottom: 20px;
@@ -88,7 +110,10 @@ const PromoButtonContainer = styled(Grid)`
   }}
 `;
 const TNCContainer = styled.span`
-  color: #123414;
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#123414";
+  }};
+
   text-decoration: underline;
   font-weight: bold;
 `;
@@ -126,7 +151,9 @@ const TitleContainer = styled.div`
 
   font-size: 42px;
 
-  color: ${({ theme }) => theme.secondary};
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#000" : theme.secondary;
+  }};
 `;
 const DialogContent = styled.div`
   margin: 0 auto;
