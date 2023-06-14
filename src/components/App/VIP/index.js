@@ -78,7 +78,7 @@ const VIPOverflow = styled.div`
   overflow: visible;
   box-shadow: 0 20px 25px -5px rgb(0 0 0/0.1), 0 8px 10px -6px rgb(0 0 0/0.1);
   background: ${({ theme }) => {
-    return theme.darkMode ? " #00041c" : "#eaeaea";
+    return theme.darkMode ? " #161337" : "#eaeaea";
   }};
 
   color: ${({ theme }) => {
@@ -188,7 +188,7 @@ const DataRow = styled.div`
   justify-content: center;
   width: 100%;
   background: ${({ theme }) => {
-    return theme.darkMode ? " #00041c" : "#eaeaea";
+    return theme.darkMode ? " #161337" : "#eaeaea";
   }};
 
   color: ${({ theme }) => {
@@ -217,7 +217,7 @@ const StandardDataCol = styled.div`
 
 const VipDataCol = styled(StandardDataCol)`
   background: ${({ theme }) => {
-    return theme.darkMode ? " #00041c" : "#eaeaea";
+    return theme.darkMode ? " #161337" : "#eaeaea";
   }};
 
   color: ${({ theme }) => {
