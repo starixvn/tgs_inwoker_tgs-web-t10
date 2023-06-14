@@ -20,7 +20,20 @@ const moment = require("moment");
 
 const Container = styled.div`
   width: 100%;
-  background: url(${BGPromotionJPG}) no-repeat top center #fff;
+
+  background: ${({ theme }) => {
+    return theme.darkMode
+      ? `linear-gradient(
+      to bottom,
+      rgba(0, 4, 28, 0.5),
+      rgba(0, 4, 28, 0.5)
+    ),
+    url(${BGPromotionJPG}) no-repeat top center`
+      : `url(${BGPromotionJPG}) no-repeat top center #fff`;
+  }};
+  background-attachment: fixed;
+  background-size: cover;
+
   min-height: 800px;
   position: relative;
 `;
@@ -57,7 +70,9 @@ const PromoEmptyTextLine = styled.div`
 const ThePromotion = styled(Grid)``;
 
 const ThePromotionContainer = styled(Grid)`
-  background: #fff;
+  background: ${({ theme }) => {
+    return theme.darkMode ? theme.useBackgroundColor : "#fff";
+  }}
   width: 100%;
   border-radius: 20px;
   padding: 25px 18px;
@@ -77,7 +92,9 @@ const PromoImages = styled.div`
 `;
 
 const EventTitle = styled.div`
-  color: #7e0000;
+color:  ${({ theme }) => {
+  return theme.darkMode ? theme.primary : "#7e0000";
+}}
   margin-bottom: 10px;
   font-size: 19px;
   font-family: Arial;
@@ -85,7 +102,9 @@ const EventTitle = styled.div`
 `;
 const EventLabel = styled.div`
   font-size: 15px;
-  color: #4f4f4f;
+  color:  ${({ theme }) => {
+    return theme.darkMode ? "#f4f4f4" : theme.useBackgroundColor;
+  }}
   font-family: Arial;
   line-height: 16px;
   margin-bottom: 6px;
@@ -93,7 +112,9 @@ const EventLabel = styled.div`
 `;
 const EventText = styled.div`
   font-size: 15px;
-  color: #4f4f4f;
+  color:  ${({ theme }) => {
+    return theme.darkMode ? "#f4f4f4" : theme.useBackgroundColor;
+  }}
   font-family: Arial;
   line-height: 16px;
   margin-bottom: 12px;
