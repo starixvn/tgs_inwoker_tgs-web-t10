@@ -325,7 +325,8 @@ const CloseIcon = styled.div`
   position: absolute;
   padding: 0.5px 5px;
   border-radius: 50px;
-  border: solid 1px #000;
+  border: solid 1px ${({ theme }) => (theme.darkMode ? "#fff" : "#000")};
+  color: ${({ theme }) => (theme.darkMode ? "#fff" : "#000")};
   font-size: 12px;
   top: 0px;
   right: 0px;
