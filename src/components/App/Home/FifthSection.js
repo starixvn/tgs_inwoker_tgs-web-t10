@@ -18,8 +18,9 @@ const ProviderContainer = styled.div`
 `;
 const ProviderIMG = styled.div`
   background: url("${process.env.PUBLIC_URL}/assets/images/provider/${config
-      .features.UseAlternateLogo && "alternate/"}${(props) =>
-      props.provider}.png")
+      .features.UseAlternateLogo
+      ? "alternate/"
+      : ""}${(props) => props.provider}.png")
     no-repeat center;
   background-size: contain;
   width: 100%;
