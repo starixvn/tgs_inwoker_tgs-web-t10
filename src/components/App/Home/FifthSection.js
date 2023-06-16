@@ -17,10 +17,11 @@ const ProviderContainer = styled.div`
   grid-gap: 20px;
 `;
 const ProviderIMG = styled.div`
-  background: url("${process.env.PUBLIC_URL}/assets/images/provider/${config
-      .features.UseAlternateLogo
-      ? "alternate/"
-      : ""}${(props) => props.provider}.png")
+  background: url("${process.env.PUBLIC_URL}/assets/images/provider/${({
+      alternate,
+    }) => {
+      return alternate && "alternate/";
+    }}${(props) => props.provider}.png")
     no-repeat center;
   background-size: contain;
   width: 100%;
@@ -47,6 +48,7 @@ const FifthSection = (props) => {
               return (
                 <Background>
                   <ProviderIMG
+                    alternate={config.features.UseAlternateLogo}
                     key={index}
                     provider={item.abbreviation.toLowerCase()}
                     title={item.name}
