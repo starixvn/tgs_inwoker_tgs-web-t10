@@ -37,7 +37,7 @@ export function downloadImage(url, name) {
 }
 
 function removeSpace(str) {
-  return str.replace(/^\s+|\s+$/g, "");
+  return str && str.replace(/^\s+|\s+$/g, "");
 }
 
 export const utility = {
