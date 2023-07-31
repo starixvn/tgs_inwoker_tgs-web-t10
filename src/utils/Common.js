@@ -420,7 +420,7 @@ function GetPromoImg(index) {
   return promoImgMap[index % 3];
 }
 
-const baseRouteUrl = `/:locale(en-US|zh-CN|zh-TW|th-TH|id-ID|vi-VN)`;
+const baseRouteUrl = `/:locale(en-US|zh-CN|zh-TW|th-TH|id-ID|vi-VN|hi-IN|ta-IN)`;
 
 function addComma(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
