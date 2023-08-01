@@ -38,7 +38,7 @@ const InnerWrap = styled.div`
   margin: 0 auto;
   max-width: 1280px;
   width: 100%;
-  font-size: 14px;
+  font-size: ${(props) => i18n.language === "ta-IN" ? "12px" : "14px"};
 `;
 
 const TopMostHeader = styled.div`
@@ -69,7 +69,7 @@ const LeftContent = styled(TheContent)`
 
 const TimerContainer = styled.div`
   font-family: arial;
-  font-size: 14px;
+  font-size: ${(props) => i18n.language === "ta-IN" ? "12px" : "14px"};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -162,7 +162,7 @@ const RightMenuUL = styled.div`
 `;
 
 const RightMenuTextSpan = styled.span`
-  font-size: 16px;
+  font-size: ${(props) => i18n.language === "ta-IN" ? "13px" : "16px"};
   margin: 0 auto;
   text-align: center;
   display: inline-block;
@@ -333,7 +333,7 @@ const IconPhone = styled.div`
 const ThePhoneContainer = styled.div`
   display: flex;
   align-items: center;
-  font-size: 14px;
+  font-size: ${(props) => i18n.language === "ta-IN" ? "12px" : "14px"};
 `;
 
 const CustomAppBar = styled(AppBar)`
@@ -891,7 +891,7 @@ class Header extends Component {
             </LeftContent>
             <TheContent style={{ justifyContent: "flex-end" }}>
               {config.features.OnlineUser && (
-                <OnlineUserDisplayer color={"#fff"} size="14px" />
+                <OnlineUserDisplayer color={"#fff"} size={i18n.language === "ta-IN" ? "12px" : "14px"} />
               )}
 
               {(() => {

@@ -22,14 +22,14 @@ export const rotateKeyFrame = keyframes`
   }
 `;
 const Container = styled.div`
-  font-size: 14px;
+  font-size: ${(props) => i18n.language === "ta-IN" ? "12px" : "14px"};
 
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: ${(props) => i18n.language === "ta-IN" ? "5px" : "10px"};
 `;
 const BtnStyle1 = styled.div`
-  font-size: 14px;
+  font-size: ${(props) => i18n.language ? "12px" : "14px"};
   text-align: center;
   min-width: 70px;
   height: 25px;
@@ -55,7 +55,7 @@ const BtnLogout = styled.div`
   float: right;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ${(props) => i18n.language === "ta-IN" ? "unset" : "ellipsis"};
 `;
 
 const BtnDeposit = styled(BtnStyle1)``;
@@ -65,7 +65,7 @@ const BalanceContainer = styled.div`
   text-align: right;
 
   display: flex;
-  gap: 8px;
+  gap: ${(props) => i18n.language === "ta-IN" ? "2px" : "8px"};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
