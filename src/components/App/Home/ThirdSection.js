@@ -32,7 +32,7 @@ const ItemInnerLabelValue = styled.div`
 `;
 
 const ItemInnerLabelMeasurement = styled.div`
-  font-size: 24px;
+  font-size: ${(props) => i18n.language === "ta-IN" ? "18px" : "24px"};;
   color: #414141;
 `;
 
