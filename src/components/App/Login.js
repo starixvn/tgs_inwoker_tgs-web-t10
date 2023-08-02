@@ -117,7 +117,7 @@ const LinkStyle = styled.a`
   margin-top: 5px;
   text-decoration: underline;
 
-  font-size: 15px;
+  font-size: ${(props)=> i18n.language === "ta-IN" ? "12px" : "15px"};
 
   color: ${({ theme }) => {
     return theme.alternateTabText ? theme.alternateTabText : theme.secondary;
