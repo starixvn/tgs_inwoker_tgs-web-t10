@@ -20,7 +20,7 @@ pipeline {
                 script {
                     switch(env.GIT_BRANCH)
                     {
-                        case ['master', 'origin/master']:
+                        case ['master', 'master_28win', 'origin/master']:
                             env.kube_ns = "prod";
                             env.k8s_config = 'prod-k8s-config';
                             sh "git config --file=.gitmodules submodule.src/components/Wap.branch master";
@@ -64,8 +64,8 @@ pipeline {
                         envItems.each { key, value -> 
                             env."tgs_${key}" = value;
                         }
-                        componentArray = "${env.tgs_lobby_t10_components}".split(",")
-						componentArrayMerged = "${env.tgs_lobby_t10_components_merged}".split(",")
+                        componentArray = "${env.tgs_lobby_t10_28win_components}".split(",")
+						componentArrayMerged = "${env.tgs_lobby_t10_28win__components_merged}".split(",")
                     }
                 }
 
