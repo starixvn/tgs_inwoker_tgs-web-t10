@@ -822,6 +822,10 @@ export const win28 = {
   lightIcon: true,
   specialAccentText: "#CEB296",
   alternativeTextColor: "#6d7faa",
+  wapSecondary: "#000",
+  supportButtonBackground:
+    "linear-gradient(90deg, rgb(231, 190, 172), rgb(247, 227, 218))",
+  supportButtonText: "#fff",
 };
 
 export const themeList = {

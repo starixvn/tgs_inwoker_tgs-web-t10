@@ -120,6 +120,7 @@ const featureList = {
     UseBrandAssets: "WIN28",
     HomePageSectionOne: "type1",
     WapBannerColor: "white",
+    SupportVariant: 2,
   },
 };
 export default featureList;
