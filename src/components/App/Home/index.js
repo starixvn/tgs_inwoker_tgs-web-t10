@@ -20,6 +20,7 @@ import { Grid } from "@material-ui/core";
 import config from "../../../config/config";
 import PopupAnnouncement from "./PopupAnnouncement";
 import AnotherFirstSection from "./AnotherFirstSection";
+import { utility } from "../../../utils/utility";
 const HomeContainer = styled.div`
   width: 100%;
   overflow: hidden;
@@ -37,13 +38,6 @@ const MarqueeContainer = styled.div`
 const SectionContainer = styled.div`
   background-color: ${({ theme }) => theme.webSection}})};
   width: 100%;
-`;
-const FirstSection = styled.div`
-  max-width: 1440px;
-  margin: 0 auto;
-  min-height: 460px;
-  padding-top: 110px;
-  overflow: visible;
 `;
 
 const FirstSectionItemBg = styled(Grid)`
@@ -79,7 +73,7 @@ const FirstSectionItemButton = styled(Grid)`
     background-color: ${({ theme }) => theme.primary};
     border: solid 1px ${({ theme }) => theme.primary};
     color: ${({ theme }) =>
-      theme.useBackgroundColor ? theme.useBackgroundColor : theme.primary};
+      theme.useBackgroundColor ? theme.useBackgroundColor : "#fff"};
     transition: all 0.3s;
   }
 `;
@@ -87,7 +81,12 @@ const FirstSectionItemButton = styled(Grid)`
 const FirstSectionItem = styled(Grid)`
   background: url(${(props) => {
       return (
-        process.env.PUBLIC_URL + `/assets/images/pcHomePage/${props.img}.png`
+        process.env.PUBLIC_URL +
+        `/assets/images/pcHomePage/${
+          utility.assetsSwitcher
+            ? utility.assetsSwitcher(config.features.UseBrandAssets)
+            : ""
+        }${props.img}.png`
       );
     }})
     no-repeat;
@@ -107,6 +106,17 @@ const FirstSectionItem = styled(Grid)`
     transform: scale(1.05);
     transition: transform 0.3s;
   }
+`;
+
+const GameMenuSectionOne = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+`;
+
+const ButtonPlacement = styled.div`
+  position: absolute;
+  bottom: 50px;
+  right: 30px;
 `;
 
 class Home extends Component {
@@ -249,105 +259,102 @@ class Home extends Component {
             <Marquee text={this.props.ui.marqueeText}></Marquee>
           </MarqueeContainer>
         </SliderContainer>
-        <SectionContainer>
-          <AnotherFirstSection />
-        </SectionContainer>
-        <SectionContainer>
-          {false && (
-            <FirstSection
-              style={{
-                display: "grid",
-                "grid-template-columns": config.features
-                  .HomePage_FirstSection6Widget
-                  ? "auto auto auto"
-                  : "auto auto auto auto",
-              }}
-            >
-              {(() => {
-                const MenuItemList = [
-                  {
-                    path: `electron`,
-                    title: i18n.t("web.home.Section1Electron"),
-                    img: "section1-electron",
-                    gameType: [GameTypeEnum.TABLEGAME],
-                    sortingHK28: 6,
-                    sorting: 1,
-                  },
-                  {
-                    path: `fish`,
-                    title: i18n.t("web.home.Section1Fishing"),
-                    img: "section1-fish",
-                    gameType: [GameTypeEnum.FISH],
-                    sortingHK28: 5,
-                    sorting: 3,
-                  },
-                  {
-                    path: "lottery",
-                    title: i18n.t("web.home.Section1Lottery"),
-                    img: "section1-lottery",
-                    gameType: [GameTypeEnum.LOTTERYLOBBY],
-                    sortingHK28: 7,
-                    sorting: 2,
-                  },
-                ];
-                var count = 0;
-                return MenuItemList.sort((a, b) => {
-                  if (config.features.MenuItem_Sorting_HK28) {
-                    return a.sortingHK28 > b.sortingHK28 ? 1 : -1;
-                  } else {
-                    return a.sorting > b.sorting ? 1 : -1;
-                  }
-                }).map((item, index) => {
-                  var list = this.props.game.homePageGameList.filter(
-                    (game) => item.gameType.indexOf(game.type) >= 0
-                  );
 
-                  if (
-                    list.length > 0 &&
-                    index < (config.features.PopupAnnouncement ? 6 : 4)
-                  ) {
-                    count++;
-                    return (
-                      <ScrollAnimation
-                        animateIn="fadeInLeft"
-                        duration={1}
-                        animateOnce={true}
-                        style={{ overflow: "visible" }}
-                      >
-                        <FirstSectionItem
-                          item
-                          spacing={0}
-                          img={item.img + this.brandSwitcher(config.brand)}
-                        >
-                          <FirstSectionItemBg
-                            container
-                            direction="row"
-                            justify="flex-start"
-                            alignItems="center"
+        <SectionContainer>
+          <ScrollAnimation
+            animateIn="fadeInLeft"
+            duration={1}
+            animateOnce={true}
+            style={{ overflow: "visible" }}
+          >
+            {config.features.HomePageSectionOne === "type1" ? (
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <GameMenuSectionOne className="usable-space">
+                  {(() => {
+                    const MenuItemList = [
+                      {
+                        path: `electron`,
+                        title: i18n.t("web.home.Section1Electron"),
+                        img: "section1-electron",
+                        gameType: [GameTypeEnum.TABLEGAME],
+                        sortingHK28: 6,
+                        sorting: 1,
+                      },
+                      {
+                        path: `fish`,
+                        title: i18n.t("web.home.Section1Fishing"),
+                        img: "section1-fish",
+                        gameType: [GameTypeEnum.FISH],
+                        sortingHK28: 5,
+                        sorting: 3,
+                      },
+                      {
+                        path: "lottery",
+                        title: i18n.t("web.home.Section1Lottery"),
+                        img: "section1-lottery",
+                        gameType: [GameTypeEnum.LOTTERYLOBBY],
+                        sortingHK28: 7,
+                        sorting: 2,
+                      },
+                    ];
+                    var count = 0;
+                    return MenuItemList.sort((a, b) => {
+                      if (config.features.MenuItem_Sorting_HK28) {
+                        return a.sortingHK28 > b.sortingHK28 ? 1 : -1;
+                      } else {
+                        return a.sorting > b.sorting ? 1 : -1;
+                      }
+                    }).map((item, index) => {
+                      var list = this.props.game.homePageGameList.filter(
+                        (game) => item.gameType.indexOf(game.type) >= 0
+                      );
+
+                      if (
+                        list.length > 0 &&
+                        index < (config.features.PopupAnnouncement ? 6 : 4)
+                      ) {
+                        count++;
+                        return (
+                          <FirstSectionItem
+                            item
+                            spacing={0}
+                            img={item.img + this.brandSwitcher(config.brand)}
                           >
-                            <FirstSectionItemLabel item>
-                              {item.title}
-                            </FirstSectionItemLabel>
-                            <FirstSectionItemButton
-                              onClick={() => {
-                                window.scrollTo({ top: 0, behavior: "smooth" });
-                                this.props.history.push(`/${item.path}`);
-                              }}
+                            <FirstSectionItemBg
+                              container
+                              direction="row"
+                              justify="flex-start"
+                              alignItems="center"
                             >
-                              {i18n.t("withdrawal.checkDetails")}
-                            </FirstSectionItemButton>
-                          </FirstSectionItemBg>
-                        </FirstSectionItem>
-                      </ScrollAnimation>
-                    );
-                  }
-                });
-              })()}
-            </FirstSection>
-          )}
-
+                              <ButtonPlacement>
+                                <FirstSectionItemLabel item>
+                                  {item.title}
+                                </FirstSectionItemLabel>
+                                <FirstSectionItemButton
+                                  onClick={() => {
+                                    window.scrollTo({
+                                      top: 0,
+                                      behavior: "smooth",
+                                    });
+                                    this.props.history.push(`/${item.path}`);
+                                  }}
+                                >
+                                  {i18n.t("withdrawal.checkDetails")}
+                                </FirstSectionItemButton>
+                              </ButtonPlacement>
+                            </FirstSectionItemBg>
+                          </FirstSectionItem>
+                        );
+                      }
+                    });
+                  })()}
+                </GameMenuSectionOne>
+              </div>
+            ) : (
+              <AnotherFirstSection />
+            )}
+          </ScrollAnimation>
           <SecondSection />
-
           <ScrollAnimation
             animateIn="fadeInLeft"
             duration={1}

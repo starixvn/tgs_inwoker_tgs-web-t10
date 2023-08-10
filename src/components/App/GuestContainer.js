@@ -55,7 +55,7 @@ const BtnRegister = styled(BtnLoginRegister)`
   background: ${({ theme }) =>
     theme.alternateTabBackground ? theme.alternateTabBackground : "#fff"};
   color: ${({ theme }) => {
-    return theme.alternateTabText ? theme.alternateTabText : "#fff";
+    return theme.alternateTabText ? theme.alternateTabText : theme.primary;
   }}};
 `;
 

@@ -40,10 +40,20 @@ function removeSpace(str) {
   return str && str.replace(/^\s+|\s+$/g, "");
 }
 
+function assetsSwitcher(path) {
+  switch (path) {
+    case "WIN28":
+      return "win28/";
+    default:
+      return "";
+  }
+}
+
 export const utility = {
   imagePathGenerator,
   copy,
   copyImage,
   downloadImage,
   removeSpace,
+  assetsSwitcher,
 };
