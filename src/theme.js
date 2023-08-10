@@ -821,6 +821,7 @@ export const win28 = {
   bottomnavrad: "35px 35px 0px 0px",
   lightIcon: true,
   specialAccentText: "#CEB296",
+  alternativeTextColor: "#6d7faa",
 };
 
 export const themeList = {
