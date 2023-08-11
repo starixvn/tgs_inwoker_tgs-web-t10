@@ -105,7 +105,7 @@ pipeline {
                     withKubeConfig([credentialsId: env.k8s_config]) {
                         message += "\nComponent:"
 			
-						if (env.lobby_t10_28win_components!="") {
+						if (env.tgs_lobby_t10_28win_components!="") {
 							for (i = 0;i < componentArray.length; i++) {
 								message += "\n    ${componentArray[i]}"
 								sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
