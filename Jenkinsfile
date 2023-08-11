@@ -8,7 +8,7 @@ pipeline {
         Registry = "pgtgs/"
         GitUrl = "gitlab.com/inwoker/tgs/tgs-web-t10.git"
         dockerhub = credentials('dockerhub')
-        Image = "lobby-t10"
+        Image = "lobby-t10-28win"
     }
 	
     stages {		    	
@@ -19,7 +19,7 @@ pipeline {
                 script {
                     switch(env.GIT_BRANCH)
                     {
-                        case ['master', 'master_28win', 'origin/master']:
+                        case ['master', 'origin/master']:
                             env.kube_ns = "prod";
                             env.k8s_config = 'prod-k8s-config';
                             sh "git config --file=.gitmodules submodule.src/components/Wap.branch master";
@@ -69,6 +69,7 @@ pipeline {
 
                 sh "echo 'env: $env.kube_ns'"
                 sh "echo 'tag: ${TAG}'"
+                 
             }
         }	
         stage('Docker Build') {  
@@ -113,7 +114,7 @@ pipeline {
                     }
                 }
             }
-        } 
+        }
     }
     post {
         success {
