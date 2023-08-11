@@ -19,7 +19,7 @@ pipeline {
                 script {
                     switch(env.GIT_BRANCH)
                     {
-                        case ['master', 'origin/master']:
+                        case ['master', 'origin/master', 'master_28win',]:
                             env.kube_ns = "prod";
                             env.k8s_config = 'prod-k8s-config';
                             sh "git config --file=.gitmodules submodule.src/components/Wap.branch master";
