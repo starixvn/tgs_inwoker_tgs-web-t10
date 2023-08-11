@@ -1,6 +1,5 @@
 @Library('global-shared-library') _
 def componentArray = [];
-def componentArrayMerged = [];
 def message = "";
 pipeline {
 	agent any
@@ -29,7 +28,7 @@ pipeline {
                             sh "git submodule sync";
                             sh "git submodule update --remote";
                             break;
-                        case ['release/current', 'origin/release/current']:
+                        case ['release/current', 'origin/release/current', '28win']:
                             env.kube_ns = "staging";
                             env.k8s_config = 'stag-k8s-config';
                             sh "git config --file=.gitmodules submodule.src/components/Wap.branch release/current";
@@ -65,7 +64,6 @@ pipeline {
                             env."tgs_${key}" = value;
                         }
                         componentArray = "${env.tgs_lobby_t10_28win_components}".split(",")
-						componentArrayMerged = "${env.tgs_lobby_t10_28win__components_merged}".split(",")
                     }
                 }
 
@@ -106,7 +104,7 @@ pipeline {
                     withKubeConfig([credentialsId: env.k8s_config]) {
                         message += "\nComponent:"
 			
-						if (env.tgs_lobby_t10_components!="") {
+						if (env.tgs_lobby_t10_28win_components!="") {
 							for (i = 0;i < componentArray.length; i++) {
 								message += "\n    ${componentArray[i]}"
 								sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
@@ -115,39 +113,7 @@ pipeline {
                     }
                 }
             }
-        }
-        stage('Undo') {
-            when {
-                expression {
-                    return env.kube_ns == 'prod';
-                }
-            }
-            steps {
-                script {
-                    timeout(time: 600, unit: 'SECONDS') {
-                        input message: 'Ready to Undo?', ok: 'yes';
-                    }
-                }
-                
-                sh "echo start deploy"
-            }
-        }
-        stage('Undo Deployment') {   
-            steps {   
-                script {            
-                    withKubeConfig([credentialsId: env.k8s_config]) {
-                        message += "\nComponent:"
-
-                        if (env.tgs_lobby_t10_components!="") {
-                            for (i = 0;i < componentArray.length; i++) {
-                                message += "\n    ${componentArray[i]}"
-                                sh "kubectl rollout undo deployment/${componentArray[i]} -n $env.kube_ns"
-                            }
-                        }
-                    }
-                }
-            }
-        }   
+        } 
     }
     post {
         success {
