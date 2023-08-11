@@ -22,7 +22,7 @@ pipeline {
                         case ['master', 'origin/master', 'master_28win',]:
                             env.kube_ns = "prod";
                             env.k8s_config = 'prod-k8s-config';
-                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch master";
+                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch win28";
                             sh "git config --file=.gitmodules submodule.src/components/App/Account.branch master";
                             sh "git config --file=.gitmodules submodule.src/api-services.branch master";
                             sh "git submodule sync";
@@ -31,7 +31,7 @@ pipeline {
                         case ['release/current', 'origin/release/current', '28win']:
                             env.kube_ns = "staging";
                             env.k8s_config = 'stag-k8s-config';
-                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch release/current";
+                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch win28";
                             sh "git config --file=.gitmodules submodule.src/components/App/Account.branch release/current";
                             sh "git config --file=.gitmodules submodule.src/api-services.branch develop";
                             sh "git submodule sync";
