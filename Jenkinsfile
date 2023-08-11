@@ -63,12 +63,13 @@ pipeline {
                         envItems.each { key, value -> 
                             env."tgs_${key}" = value;
                         }
-                        componentArray = "${env.lobby_t10_28win_components}".split(",")
+                        componentArray = "${env.tgs_lobby_t10_28win_components}".split(",")
                     }
                 }
 
                 sh "echo 'env: $env.kube_ns'"
                 sh "echo 'tag: ${TAG}'"
+                 
             }
         }	
         stage('Docker Build') {  
