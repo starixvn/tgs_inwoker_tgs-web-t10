@@ -28,7 +28,7 @@ pipeline {
                             sh "git submodule sync";
                             sh "git submodule update --remote";
                             break;
-                        case ['release/current', 'origin/release/current', '28win']:
+                        case ['release/current', 'origin/release/current', 'win28']:
                             env.kube_ns = "staging";
                             env.k8s_config = 'stag-k8s-config';
                             sh "git config --file=.gitmodules submodule.src/components/Wap.branch 28win";
