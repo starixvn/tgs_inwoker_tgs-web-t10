@@ -16,10 +16,8 @@ import { accountAction } from "../../api-services/actions/accountAction";
 import { inboxAction } from "../../api-services/actions/inboxAction";
 import { SHOW_LOGIN } from "../../api-services/constant/actionType";
 
-import LiveGame from "./LiveGame/index";
 import Slots from "./Slots/index";
 import SlotPlay from "./Slots/Play";
-import Qipai from "./Qipai/index";
 import Sports from "./Sports/index";
 import SportsPlay from "./Sports/Play";
 import Lottery from "./Lottery/index";
@@ -27,7 +25,6 @@ import LotteryPlay from "./Lottery/Play";
 import Promotion from "./Promotion/index";
 import PromotionDetails from "./Promotion/Details";
 import Home from "./Home/index";
-import Cockfight from "./Cockfight/index";
 // import Maintenance from "./Maintenance";
 import Account from "./Account/index";
 
@@ -45,13 +42,14 @@ import i18n from "../../utils/i18n";
 import Maintenance from "../Share/Maintenance";
 import Banned from "./Banned";
 import AnotherFloatPanel from "./Home/AnotherFloatPanel";
-import ESports from "./eSports";
 import PromotionRoulette from "./Home/PromotionRoulette";
 
 import LiveChat from "../Share/live-chat";
 import config from "../../config/config";
 import CustomLibrary from "./Sports/CustomLibrary.js";
 import ForcedVerification from "./ForcedVerification";
+import BannerGame from "./BannerGame";
+import { GameTypeEnum } from "../../api-services/utils/Enum";
 
 const Main = styled.div`
   min-height: 600px;
@@ -434,7 +432,8 @@ class App extends Component {
                       exact
                       path={"/live"}
                       render={(props) => (
-                        <LiveGame
+                        <BannerGame
+                          gameType={GameTypeEnum.LIVELOBBY}
                           performBalanceRefresh={this.performBalanceRefresh}
                         />
                       )}
@@ -443,7 +442,8 @@ class App extends Component {
                       exact
                       path={"/chess"}
                       render={(props) => (
-                        <Qipai
+                        <BannerGame
+                          gameType={GameTypeEnum.QIPAILOBBY}
                           performBalanceRefresh={this.performBalanceRefresh}
                         />
                       )}
@@ -452,7 +452,8 @@ class App extends Component {
                       exact
                       path={"/sports"}
                       render={(props) => (
-                        <Sports
+                        <BannerGame
+                          gameType={GameTypeEnum.SPORTS}
                           performBalanceRefresh={this.performBalanceRefresh}
                         />
                       )}
@@ -461,7 +462,8 @@ class App extends Component {
                       exact
                       path={"/esports"}
                       render={(props) => (
-                        <ESports
+                        <BannerGame
+                          gameType={GameTypeEnum.ESPORTS}
                           performBalanceRefresh={this.performBalanceRefresh}
                         />
                       )}
@@ -579,7 +581,8 @@ class App extends Component {
                       exact
                       path={"/cockfight"}
                       render={(props) => (
-                        <Cockfight
+                        <BannerGame
+                          gameType={GameTypeEnum.COCKFIGHT}
                           performBalanceRefresh={this.performBalanceRefresh}
                         />
                       )}

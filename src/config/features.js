@@ -121,6 +121,7 @@ const featureList = {
     HomePageSectionOne: "type1",
     WapBannerColor: "white",
     SupportVariant: 2,
+    GamePageButtonVariant: 2,
   },
 };
 export default featureList;
