@@ -97,7 +97,7 @@ pipeline {
 		stage('Deploy') {
             when {
                 expression {
-                    return env.kube_ns == 'prod';
+                    return env.kube_ns == 'staging';
                 }
             }
 
