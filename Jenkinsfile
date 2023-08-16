@@ -109,37 +109,6 @@ pipeline {
                 sh "echo start deploy"
             }
         }
-        stage('Deployment') {   
-            steps {	  
-                script {			
-                    withKubeConfig([credentialsId: env.k8s_config]) {
-                        message += "\nComponent:"
-			
-						if (env.tgs_lobby_t10_components!="") {
-							for (i = 0;i < componentArray.length; i++) {
-								message += "\n    ${componentArray[i]}"
-								sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
-							}
-						}
-                    }
-                }
-            }
-        }
-        stage('Ready for deploy to staging') {
-            when {
-                expression {
-                    return env.kube_ns == 'prod';
-                }
-            }
-
-            steps {
-                script {
-                    input message: 'Ready to go for master?', ok: 'yes';
-                }
-                
-                sh "echo start deploy staging"
-            }
-        }
         stage('Deploy to staging') {   
             steps {	  
                 script {			
