@@ -105,12 +105,16 @@ pipeline {
                     withKubeConfig([credentialsId: env.k8s_config]) {
                         message += "\nComponent:"
 			
-						if (env.tgs_lobby_t10_28win_components!="") {
-							for (i = 0;i < componentArray.length; i++) {
-								message += "\n    ${componentArray[i]}"
-								sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
-							}
-						}
+
+                        message += "\n    ${componentArray[i]}"
+						sh "kubectl set image deployment/lobby-28win lobby-28win=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
+
+						// if (env.tgs_lobby_t10_28win_components!="") {
+						// 	for (i = 0;i < componentArray.length; i++) {
+						// 		message += "\n    ${componentArray[i]}"
+						// 		sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
+						// 	}
+						// }
                     }
                 }
             }
