@@ -19,10 +19,10 @@ pipeline {
                 script {
                     switch(env.GIT_BRANCH)
                     {
-                        case ['master', 'origin/master', 'master_28win',]:
+                        case ['master', 'origin/master', '28win_prod',]:
                             env.kube_ns = "prod";
                             env.k8s_config = 'prod-k8s-config';
-                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch master";
+                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch win28";
                             sh "git config --file=.gitmodules submodule.src/components/App/Account.branch master";
                             sh "git config --file=.gitmodules submodule.src/api-services.branch master";
                             sh "git submodule sync";
@@ -106,15 +106,15 @@ pipeline {
                         message += "\nComponent:"
 			
 
-                        message += "\n    ${componentArray[i]}"
-						sh "kubectl set image deployment/lobby-28win lobby-28win=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
+                        // message += "\n    ${componentArray[i]}"
+						// sh "kubectl set image deployment/lobby-28win lobby-28win=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
 
-						// if (env.tgs_lobby_t10_28win_components!="") {
-						// 	for (i = 0;i < componentArray.length; i++) {
-						// 		message += "\n    ${componentArray[i]}"
-						// 		sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
-						// 	}
-						// }
+						if (env.tgs_lobby_t10_28win_components!="") {
+							for (i = 0;i < componentArray.length; i++) {
+								message += "\n    ${componentArray[i]}"
+								sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
+							}
+						}
                     }
                 }
             }
