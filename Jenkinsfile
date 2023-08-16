@@ -19,7 +19,16 @@ pipeline {
                 script {
                     switch(env.GIT_BRANCH)
                     {
-                        case ['master', 'origin/master', 'master_28win',]:
+                        case ['master', 'origin/master']:
+                            env.kube_ns = "prod";
+                            env.k8s_config = 'prod-k8s-config';
+                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch master";
+                            sh "git config --file=.gitmodules submodule.src/components/App/Account.branch master";
+                            sh "git config --file=.gitmodules submodule.src/api-services.branch master";
+                            sh "git submodule sync";
+                            sh "git submodule update --remote";
+                            break;
+                        case ['master_28win',]:
                             env.kube_ns = "prod";
                             env.k8s_config = 'prod-k8s-config';
                             sh "git config --file=.gitmodules submodule.src/components/Wap.branch win28";
