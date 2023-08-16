@@ -8,7 +8,7 @@ pipeline {
         Registry = "pgtgs/"
         GitUrl = "gitlab.com/inwoker/tgs/tgs-web-t10.git"
         dockerhub = credentials('dockerhub')
-        Image = "lobby-t10-28win"
+        Image = "lobby-t10"
     }
 	
     stages {		    	
@@ -117,12 +117,61 @@ pipeline {
                 sh "echo start deploy"
             }
         }
-        stage('Deployment') {   
+        stage('Deploy to master') {
+            when {
+                expression {
+                    return env.kube_ns == 'prod';
+                }
+            }
+
+            steps {
+                script {
+                    input message: 'Ready to go for master?', ok: 'yes';
+                }
+                
+                sh "echo start deploy master"
+            }
+        }
+        stage('Deploy to master') {   
             steps {	  
                 script {			
                     withKubeConfig([credentialsId: env.k8s_config]) {
                         message += "\nComponent:"
 			
+                        componentArray = "${env.tgs_lobby_t10_components}".split(",")
+						if (env.tgs_lobby_t10_components!="") {
+							for (i = 0;i < componentArray.length; i++) {
+								message += "\n    ${componentArray[i]}"
+								sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
+							}
+						}
+                    }
+                }
+            }
+        }
+        stage('Deploy to 28win') {
+            when {
+                expression {
+                    return env.kube_ns == 'prod';
+                }
+            }
+
+            steps {
+                script {
+                    input message: 'Ready to go for 28win?', ok: 'yes';
+                }
+                
+                sh "echo start deploy 28win"
+            }
+        }
+        stage('Deploy to 28win') {   
+            steps {	  
+                script {			
+                    withKubeConfig([credentialsId: env.k8s_config]) {
+                        message += "\nComponent:"
+
+                        componentArray = "${env.tgs_lobby_t10_28win_components}".split(",")
+
 						if (env.tgs_lobby_t10_28win_components!="") {
 							for (i = 0;i < componentArray.length; i++) {
 								message += "\n    ${componentArray[i]}"
