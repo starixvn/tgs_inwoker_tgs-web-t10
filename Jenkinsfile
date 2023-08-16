@@ -117,7 +117,7 @@ pipeline {
                 sh "echo start deploy"
             }
         }
-        stage('Deploy to 28win') {
+        stage('Ready for deploy to 28win') {
             when {
                 expression {
                     return env.kube_ns == 'prod';
@@ -150,7 +150,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to master') {
+        stage('Ready for deploy to master') {
             when {
                 expression {
                     return env.kube_ns == 'prod';
