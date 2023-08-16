@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import config from "../../../config/config";
 
 const TitleBackground = styled.div`
   height: 85px;
@@ -52,7 +53,7 @@ export const ProviderTitle = ({ title }) => {
     <BigWrapper>
       <ProviderTitleContainer>
         <TheTitleText>{title}</TheTitleText>
-        <TitleBackground />
+        {config.features.HomePageSectionOne !== "type1" && <TitleBackground />}
       </ProviderTitleContainer>
     </BigWrapper>
   );

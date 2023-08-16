@@ -757,6 +757,77 @@ export const wapT15 = {
   bannerRadius: "0px",
   customPromoPageTitle: "#fff",
 };
+
+export const win28 = {
+  pcAppBar: "#FBFBFF",
+  appbar: "#fff",
+  body: "#FBFBFF",
+  variant: "PB",
+  loginBody: `linear-gradient(rgba(27, 29, 48, 0.62), rgba(27, 29, 48, 0.62)), url(${
+    process.env.PUBLIC_URL + `/assets/images/wapp/resource/T15/loginbg.png`
+  }) no-repeat center center / cover`,
+  loginText: "#FFFFFF",
+  primary: "#53B2B8",
+  primaryRgb: "83, 178, 184",
+  primaryText: "#000",
+  primaryGradient: "#53B2B8",
+  primaryGradientRgb: "83, 178, 184",
+  primaryHightlight: "#53B2B8",
+  secondary: "#404040",
+  secondaryText: "rgba(0,0,0,0.5)",
+  tertiary: "rgba(255, 255, 255, 1)",
+  tertiaryText: "rgba(255, 255, 255, 0.5)",
+  //new addition to compensate wap-t2
+  buttonBackground: "#fff",
+  buttonText: "#53B2B8",
+  buttonText2: "#53B2B8",
+  bottomnav: "#fff",
+  bottomNavAction: "#404040",
+  bodyBackground: "#F0EFF5",
+  supportBg: `url(${
+    process.env.PUBLIC_URL + `/assets/images/wapp/resource/T2/supportbg.png`
+  })
+  no-repeat center,  linear-gradient(180deg, rgb(5 30 74) 40%, rgba(12,21,37,1) 100%)`,
+  balance: "#e9a60b",
+  pcHeaderText: "#000",
+  pcHeaderTextHover: "#53B2B8",
+  pcHeaderRightMenu: "#53B2B8",
+  pcHeaderRightMenuHover: "#53B2B8",
+
+  gamelisterOriginalText: "#fff",
+  gamelisterSelectedText: "#fff200",
+
+  popoverBackground: "rgba(255,255,255,0.95)",
+  popoverGameTypeText: "#53B2B8",
+  popoverSubWalletText: "#000",
+
+  buttonBorder: "#fff",
+
+  accent: "#53B2B8",
+  webSection: "#f0f3f9",
+  footer: "#262626",
+  toppestHeader: "#53B2B8",
+  bottomHeader: "#fff",
+  headerShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+  bodyText: "#000",
+
+  gamePageButtonBorderBottom: "#53B2B8",
+  homeHeaderBackgroundColor: "#dbf5f0",
+  homeHeaderTextColor: "#53B2B8",
+
+  floatActionButtonHover: "#fff",
+
+  bottomNavActionSelected: "#9aa4c2",
+  bottomnavrad: "35px 35px 0px 0px",
+  lightIcon: true,
+  specialAccentText: "#CEB296",
+  alternativeTextColor: "#6d7faa",
+  wapSecondary: "#000",
+  supportButtonBackground:
+    "linear-gradient(90deg, rgb(231, 190, 172), rgb(247, 227, 218))",
+  supportButtonText: "#fff",
+};
+
 export const themeList = {
   red: themeRed,
   blue: themeBlue,
@@ -776,4 +847,5 @@ export const themeList = {
   TIGER: TIGER,
   PB2: PB2,
   wapT15: wapT15,
+  "28WIN": win28,
 };

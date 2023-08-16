@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import i18n from "../../../utils/i18n";
 import { ProviderTitle } from "./SharedComponent";
+import { utility } from "../../../utils/utility";
+import config from "../../../config/config";
 
 const Container = styled.div`
   display: flex;
@@ -12,7 +14,11 @@ const Container = styled.div`
 const Content = styled.div`
   height: 800px;
   background: url(${process.env.PUBLIC_URL +
-    "/assets/images/pcHomePage/section2-gameapp.png"})
+    "/assets/images/pcHomePage/" +
+    (utility.assetsSwitcher
+      ? utility.assetsSwitcher(config.features.UseBrandAssets)
+      : "") +
+    "section2-gameapp.png"})
     no-repeat center;
   background-size: contain;
   width: 80%;
