@@ -125,6 +125,38 @@ pipeline {
                 }
             }
         }
+        stage('Ready for deploy to staging') {
+            when {
+                expression {
+                    return env.kube_ns == 'prod';
+                }
+            }
+
+            steps {
+                script {
+                    input message: 'Ready to go for master?', ok: 'yes';
+                }
+                
+                sh "echo start deploy staging"
+            }
+        }
+        stage('Deploy to staging') {   
+            steps {	  
+                script {			
+                    withKubeConfig([credentialsId: env.k8s_config]) {
+                        message += "\nComponent:"
+			
+                        componentArray = "${env.tgs_lobby_t10_components}".split(",")
+						if (env.tgs_lobby_t10_components!="") {
+							for (i = 0;i < componentArray.length; i++) {
+								message += "\n    ${componentArray[i]}"
+								sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
+							}
+						}
+                    }
+                }
+            }
+        }   
         stage('Ready for deploy to 28win') {
             when {
                 expression {
@@ -158,38 +190,7 @@ pipeline {
                 }
             }
         }
-        stage('Ready for deploy to master') {
-            when {
-                expression {
-                    return env.kube_ns == 'prod';
-                }
-            }
-
-            steps {
-                script {
-                    input message: 'Ready to go for master?', ok: 'yes';
-                }
-                
-                sh "echo start deploy master"
-            }
-        }
-        stage('Deploy to master') {   
-            steps {	  
-                script {			
-                    withKubeConfig([credentialsId: env.k8s_config]) {
-                        message += "\nComponent:"
-			
-                        componentArray = "${env.tgs_lobby_t10_components}".split(",")
-						if (env.tgs_lobby_t10_components!="") {
-							for (i = 0;i < componentArray.length; i++) {
-								message += "\n    ${componentArray[i]}"
-								sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
-							}
-						}
-                    }
-                }
-            }
-        }   
+        
     }
     post {
         success {
