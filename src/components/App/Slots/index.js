@@ -86,9 +86,9 @@ const CategoryText = styled.div`
   float: left;
   margin-top: 2px;
 
-  ${({ active }) => {
-    return !active && `color: #fff;`;
-  }}
+  color: ${({ theme }) => {
+    return theme.primaryText;
+  }};
 `;
 const FilterItem = styled.div`
   background-repeat: no-repeat;

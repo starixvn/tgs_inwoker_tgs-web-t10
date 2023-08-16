@@ -5,6 +5,8 @@ import styled from "styled-components";
 import ScrollAnimation from "react-animate-on-scroll";
 
 import i18n from "../../../utils/i18n";
+import { utility } from "../../../utils/utility";
+import config from "../../../config/config";
 
 const Container = styled(Grid)`
   width: 1280px;
@@ -14,9 +16,11 @@ const Container = styled(Grid)`
 `;
 
 const FeatureContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   width: 1280px;
+  gap: 20px;
+  text-align: justify;
 `;
 
 const FeatureBg = styled.div`
@@ -36,8 +40,13 @@ const FeatureBg = styled.div`
 
 const FeatureIcon = styled.img``;
 
-const FeatureRightContainer = styled.div``;
+const FeatureRightContainer = styled.div`
+  color: ${({ theme }) => {
+    return theme.primaryText;
+  }};
+`;
 const FeatureTitle = styled.div`
+  margin-bottom: 10px;
   font-size: ${(props) => {
     switch (props.lang) {
       case "en-US":
@@ -80,6 +89,7 @@ const FourthSection = (props) => {
       description: i18n.t("web.home.features.feature4.description"),
     },
   ];
+
   return (
     <Container>
       <ScrollAnimation
@@ -99,6 +109,9 @@ const FourthSection = (props) => {
                   src={
                     process.env.PUBLIC_URL +
                     "/assets/images/pcHomePage/" +
+                    (utility.assetsSwitcher
+                      ? utility.assetsSwitcher(config.features.UseBrandAssets)
+                      : "") +
                     feature.icon +
                     ".png"
                   }
@@ -108,6 +121,7 @@ const FourthSection = (props) => {
                   <FeatureTitle lang={i18n.language}>
                     {feature.title}
                   </FeatureTitle>
+                  <div>{feature.description}</div>
                 </FeatureRightContainer>
               </FeatureBg>
             );
