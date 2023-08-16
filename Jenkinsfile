@@ -69,7 +69,7 @@ pipeline {
 
                 sh "echo 'env: $env.kube_ns'"
                 sh "echo 'tag: ${TAG}'"
-                 
+                sh "echo 'components: ${env.tgs_lobby_t10_28win_components}'"
             }
         }	
         stage('Docker Build') {  
