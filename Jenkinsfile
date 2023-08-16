@@ -38,6 +38,15 @@ pipeline {
                             sh "git submodule sync";
                             sh "git submodule update --remote";
                             break;
+                        case ['28win']:
+                            env.kube_ns = "staging";
+                            env.k8s_config = 'stag-k8s-config';
+                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch win28";
+                            sh "git config --file=.gitmodules submodule.src/components/App/Account.branch release/current";
+                            sh "git config --file=.gitmodules submodule.src/api-services.branch develop";
+                            sh "git submodule sync";
+                            sh "git submodule update --remote";
+                            break;
                         default:
                             sh "git config --file=.gitmodules submodule.src/components/Wap.branch develop";
                             sh "git config --file=.gitmodules submodule.src/components/App/Account.branch develop";
@@ -115,7 +124,72 @@ pipeline {
                     }
                 }
             }
-        }	
+        }
+        stage('Ready for deploy to 28win') {
+            when {
+                expression {
+                    return env.kube_ns == 'prod';
+                }
+            }
+
+            steps {
+                script {
+                    input message: 'Ready to go for 28win?', ok: 'yes';
+                }
+                
+                sh "echo start deploy 28win"
+            }
+        }
+        stage('Deploy to 28win') {   
+            steps {	  
+                script {			
+                    withKubeConfig([credentialsId: env.k8s_config]) {
+                        message += "\nComponent:"
+
+                        componentArray = "${env.tgs_lobby_t10_28win_components}".split(",")
+
+						if (env.tgs_lobby_t10_28win_components!="") {
+							for (i = 0;i < componentArray.length; i++) {
+								message += "\n    ${componentArray[i]}"
+								sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
+							}
+						}
+                    }
+                }
+            }
+        }
+        stage('Ready for deploy to master') {
+            when {
+                expression {
+                    return env.kube_ns == 'prod';
+                }
+            }
+
+            steps {
+                script {
+                    input message: 'Ready to go for master?', ok: 'yes';
+                }
+                
+                sh "echo start deploy master"
+            }
+        }
+        stage('Deploy to master') {   
+            steps {	  
+                script {			
+                    withKubeConfig([credentialsId: env.k8s_config]) {
+                        message += "\nComponent:"
+			
+                        componentArray = "${env.tgs_lobby_t10_components}".split(",")
+						if (env.tgs_lobby_t10_components!="") {
+							for (i = 0;i < componentArray.length; i++) {
+								message += "\n    ${componentArray[i]}"
+								sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
+							}
+						}
+                    }
+                }
+            }
+        }   
     }
     post {
         success {
