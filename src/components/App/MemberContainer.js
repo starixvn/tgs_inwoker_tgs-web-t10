@@ -274,7 +274,10 @@ const MemberContainer = (props) => {
           {SortedMenuList.map((item, key) => {
             return (
               <GameType>
-                <GameTypeName>{i18n.t(item.title)}</GameTypeName>
+                {props.game.homePageGameList.some(
+                  (game) => item.gameType.indexOf(game.type) >= 0
+                ) && <GameTypeName>{i18n.t(item.title)}</GameTypeName>}
+
                 {props.game.homePageGameList
                   .filter((game) => {
                     return item.gameType.indexOf(game.type) >= 0;
