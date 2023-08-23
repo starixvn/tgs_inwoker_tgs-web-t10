@@ -26,6 +26,7 @@ i18n
       "vi-VN",
       "hi-IN",
       "ta-IN",
+      "tgl-PH",
     ],
     fallbackLng: [language || Config.defaultLanguage],
     detection: {
