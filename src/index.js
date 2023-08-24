@@ -184,7 +184,7 @@ const AppWrapper = () => {
   }, []);
 
   useEffect(() => {
-    var languages = "zh-CN|zh-TW|en-US|id-ID|th-TH|vi-VN".split("|");
+    var languages = "zh-CN|zh-TW|en-US|id-ID|th-TH|vi-VN|tgl-PH".split("|");
     var pathname = window.location.pathname;
     var isfoundLanguage = "";
     for (var i = 0; i < languages.length; i++) {
