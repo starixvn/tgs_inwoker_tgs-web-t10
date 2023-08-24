@@ -112,10 +112,16 @@ const featureList = {
     RouletteNewFlow: false,
     HaveVIPFeature: true,
     TIGER_CustomTranslation: false,
-    DepositCustomPaymentNames: [
-    ], 
+    DepositCustomPaymentNames: [],
     Withdrawal_WalletTransfer: false,
     Deposit_ManualDepositPassPhone: false,
+    UseAlternateLogo: true,
+    //new addition
+    UseBrandAssets: "WIN28",
+    HomePageSectionOne: "type1",
+    WapBannerColor: "white",
+    SupportVariant: 2,
+    GamePageButtonVariant: 2,
   },
 };
 export default featureList;

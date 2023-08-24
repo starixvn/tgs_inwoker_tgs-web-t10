@@ -1,6 +1,5 @@
 @Library('global-shared-library') _
 def componentArray = [];
-def componentArrayMerged = [];
 def message = "";
 pipeline {
 	agent any
@@ -74,12 +73,12 @@ pipeline {
                             env."tgs_${key}" = value;
                         }
                         componentArray = "${env.tgs_lobby_t10_components}".split(",")
-						componentArrayMerged = "${env.tgs_lobby_t10_components_merged}".split(",")
                     }
                 }
 
                 sh "echo 'env: $env.kube_ns'"
                 sh "echo 'tag: ${TAG}'"
+                 
             }
         }	
         stage('Docker Build') {  
@@ -97,7 +96,7 @@ pipeline {
 		stage('Deploy') {
             when {
                 expression {
-                    return env.kube_ns == 'staging';
+                    return env.kube_ns == 'prod';
                 }
             }
 
@@ -109,13 +108,12 @@ pipeline {
                 sh "echo start deploy"
             }
         }
-        stage('Deploy to staging') {   
+     
+        stage('Deploy to master') {   
             steps {	  
                 script {			
                     withKubeConfig([credentialsId: env.k8s_config]) {
                         message += "\nComponent:"
-			
-                        componentArray = "${env.tgs_lobby_t10_components}".split(",")
 						if (env.tgs_lobby_t10_components!="") {
 							for (i = 0;i < componentArray.length; i++) {
 								message += "\n    ${componentArray[i]}"
@@ -125,41 +123,7 @@ pipeline {
                     }
                 }
             }
-        }   
-        stage('Ready for deploy to 28win') {
-            when {
-                expression {
-                    return env.kube_ns == 'prod';
-                }
-            }
-
-            steps {
-                script {
-                    input message: 'Ready to go for 28win?', ok: 'yes';
-                }
-                
-                sh "echo start deploy 28win"
-            }
-        }
-        stage('Deploy to 28win') {   
-            steps {	  
-                script {			
-                    withKubeConfig([credentialsId: env.k8s_config]) {
-                        message += "\nComponent:"
-
-                        componentArray = "${env.tgs_lobby_t10_28win_components}".split(",")
-
-						if (env.tgs_lobby_t10_28win_components!="") {
-							for (i = 0;i < componentArray.length; i++) {
-								message += "\n    ${componentArray[i]}"
-								sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
-							}
-						}
-                    }
-                }
-            }
-        }
-        
+        }     
     }
     post {
         success {

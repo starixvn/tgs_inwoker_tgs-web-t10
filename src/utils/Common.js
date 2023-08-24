@@ -420,7 +420,7 @@ function GetPromoImg(index) {
   return promoImgMap[index % 3];
 }
 
-const baseRouteUrl = `/:locale(en-US|zh-CN|zh-TW|th-TH|id-ID|vi-VN|hi-IN|ta-IN)`;
+const baseRouteUrl = `/:locale(en-US|zh-CN|zh-TW|th-TH|id-ID|vi-VN|hi-IN|ta-IN|tgl-PH)`;
 
 function addComma(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -429,9 +429,9 @@ function arrayValidator(array) {
   return array && Array.isArray(array) && array.length > 0;
 }
 
-function truncateString(str, n){
-  return (str.length > n) ? str.slice(0, n) + '…' : str;
-};
+function truncateString(str, n) {
+  return str.length > n ? str.slice(0, n) + "…" : str;
+}
 
 const Common = {
   baseRouteUrl,

@@ -16,8 +16,17 @@ i18n
       loadPath: `https://app12.srvptt.com/translation/{{lng}}.json`,
       addPath: `https://app12.srvptt.com/translation/{{lng}}`,
     },
-
-    whitelist: ["en-US", "zh-CN", "zh-TW", "th-TH", "id-ID", "vi-VN", "hi-IN", "ta-IN"],
+    whitelist: [
+      "en-US",
+      "zh-CN",
+      "zh-TW",
+      "th-TH",
+      "id-ID",
+      "vi-VN",
+      "hi-IN",
+      "ta-IN",
+      "tgl-PH",
+    ],
     fallbackLng: [language || Config.defaultLanguage],
     detection: {
       order: ["path"],
