@@ -1,6 +1,5 @@
 @Library('global-shared-library') _
 def componentArray = [];
-def componentArrayMerged = [];
 def message = "";
 pipeline {
 	agent any
@@ -38,6 +37,15 @@ pipeline {
                             sh "git submodule sync";
                             sh "git submodule update --remote";
                             break;
+                        case ['28win']:
+                            env.kube_ns = "staging";
+                            env.k8s_config = 'stag-k8s-config';
+                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch win28";
+                            sh "git config --file=.gitmodules submodule.src/components/App/Account.branch release/current";
+                            sh "git config --file=.gitmodules submodule.src/api-services.branch develop";
+                            sh "git submodule sync";
+                            sh "git submodule update --remote";
+                            break;
                         default:
                             sh "git config --file=.gitmodules submodule.src/components/Wap.branch develop";
                             sh "git config --file=.gitmodules submodule.src/components/App/Account.branch develop";
@@ -65,12 +73,12 @@ pipeline {
                             env."tgs_${key}" = value;
                         }
                         componentArray = "${env.tgs_lobby_t10_components}".split(",")
-						componentArrayMerged = "${env.tgs_lobby_t10_components_merged}".split(",")
                     }
                 }
 
                 sh "echo 'env: $env.kube_ns'"
                 sh "echo 'tag: ${TAG}'"
+                 
             }
         }	
         stage('Docker Build') {  
@@ -100,12 +108,12 @@ pipeline {
                 sh "echo start deploy"
             }
         }
-        stage('Deployment') {   
+     
+        stage('Deploy to master') {   
             steps {	  
                 script {			
                     withKubeConfig([credentialsId: env.k8s_config]) {
                         message += "\nComponent:"
-			
 						if (env.tgs_lobby_t10_components!="") {
 							for (i = 0;i < componentArray.length; i++) {
 								message += "\n    ${componentArray[i]}"
@@ -115,7 +123,11 @@ pipeline {
                     }
                 }
             }
+<<<<<<< HEAD
         }
+=======
+        }     
+>>>>>>> v1.37/hotfix/1.37.14-philippinesLanguage
     }
     post {
         success {

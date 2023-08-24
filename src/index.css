@@ -473,6 +473,10 @@ body.cke_editable p {
   font-family: "CenturyGothic" !important;
 }
 
+.usable-space {
+  width: 1280px;
+}
+
 /*
 
 div[class^="SnackbarItem-variantError-"],

@@ -5,6 +5,8 @@ import DynamicFont from "react-dynamic-font";
 import ItemPNG from "../../../assets/images/home/section/section3-item.png";
 import i18n from "../../../utils/i18n";
 import { ProviderTitle } from "./SharedComponent";
+import { utility } from "../../../utils/utility";
+import config from "../../../config/config";
 
 const Container = styled(Grid)`
   width: 1280px;
@@ -45,7 +47,11 @@ const ItemBottomLabel = styled.div`
 
 const ItemContainer = styled.div`
   background: url(${process.env.PUBLIC_URL +
-    "/assets/images/pcHomePage/section3.png"})
+    "/assets/images/pcHomePage/" +
+    (utility.assetsSwitcher
+      ? utility.assetsSwitcher(config.features.UseBrandAssets)
+      : "") +
+    "section3.png"})
     no-repeat;
   background-position-x: center;
   width: 235px;

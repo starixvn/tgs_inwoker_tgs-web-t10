@@ -1,14 +1,14 @@
 import i18next from "i18next";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
 import config from "../../../config/config";
+
 const OnlineDisplayerText = styled.div`
   color: ${({ color, theme }) => {
-    return theme.wapSecondary
-      ? theme.wapSecondary
-      : color
+    return color
       ? color
+      : theme.wapSecondary
+      ? theme.wapSecondary
       : theme.secondary;
   }};
   font-size ${({ size }) => {

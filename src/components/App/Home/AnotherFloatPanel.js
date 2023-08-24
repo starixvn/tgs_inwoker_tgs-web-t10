@@ -28,7 +28,11 @@ const Icon = styled.div`
   width: 35px;
 
   background-color: ${({ theme, active }) => {
-    return active ? theme.primary : "#000";
+    return active
+      ? theme.primary
+      : theme.floatActionButtonHover
+      ? theme.floatActionButtonHover
+      : "#000";
   }};
   transition: transform 0.5s;
   mask: url(${({ active, src, src2 }) => (active ? src2 : src)}) no-repeat
@@ -92,7 +96,7 @@ const SidePanel = styled.div`
   background-color: ${({ theme }) => theme.accent};
 
   &:hover {
-    background-color: #000;
+    background-color: ${({ theme }) => theme.floatActionButtonHover};
     cursor: pointer;
     border-color: transparent;
     border-color: ${({ theme }) => theme.accent};
