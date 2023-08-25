@@ -3,6 +3,7 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Config from "../config/config";
 import HttpBackend from "i18next-http-backend";
+import config from "../config/config";
 
 //localstorage language
 const language = localStorage.getItem("i18nextLng");
@@ -13,8 +14,8 @@ i18n
   .use(initReactI18next)
   .init({
     backend: {
-      loadPath: `https://app12.srvptt.com/translation/{{lng}}.json`,
-      addPath: `https://app12.srvptt.com/translation/{{lng}}`,
+      loadPath: `${config.configUrl}translation/{{lng}}.json`,
+      addPath: `${config.configUrl}translation/{{lng}}`,
     },
 
     whitelist: [
