@@ -123,11 +123,7 @@ pipeline {
                     }
                 }
             }
-<<<<<<< HEAD
-        }
-=======
         }     
->>>>>>> v1.37/hotfix/1.37.14-philippinesLanguage
     }
     post {
         success {
