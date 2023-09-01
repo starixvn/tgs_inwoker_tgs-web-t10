@@ -158,6 +158,7 @@ const muiTheme = createMuiTheme({
     },
   },
 });
+
 const AppWrapper = () => {
   const classes = useStyles();
   const languageDetector =
@@ -200,18 +201,25 @@ const AppWrapper = () => {
     }
   }, []);
 
-  const [dedicatedBanner, setDedicatedBanner] = React.useState(
-    config.features.DedicatedHomeBanner && isMobileOnly
-      ? config.features.DedicatedHomeBanner?.wap
-      : config.features.DedicatedHomeBanner?.web
-  );
+  const [loaded, setLoaded] = React.useState(false);
+
+  const [dedicatedBanner, setDedicatedBanner] = React.useState();
+
+  React.useEffect(() => {
+    setDedicatedBanner(
+      config.features.DedicatedHomeBanner && isMobileOnly
+        ? config.features.DedicatedHomeBanner?.wap
+        : config.features.DedicatedHomeBanner?.web
+    );
+  }, [loaded]);
 
   if (isReady) {
     return (
       <Provider store={store}>
-        <FeatureGetter />
+        <FeatureGetter setLoaded={setLoaded} />
         {Config.features.BackgroundMusic && <AudioPlayer />}
-        {config.features.DedicatedHomeBanner &&
+        {loaded &&
+          config.features.DedicatedHomeBanner &&
           window.location.pathname === "/" && (
             <div
               style={{
