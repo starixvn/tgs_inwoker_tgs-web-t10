@@ -200,11 +200,44 @@ const AppWrapper = () => {
     }
   }, []);
 
+  const [dedicatedBanner, setDedicatedBanner] = React.useState(
+    config.features.DedicatedHomeBanner
+  );
+
   if (isReady) {
     return (
       <Provider store={store}>
         <FeatureGetter />
         {Config.features.BackgroundMusic && <AudioPlayer />}
+        {config.features.DedicatedHomeBanner &&
+          window.location.pathname === "/" && (
+            <div
+              style={{
+                background: "rgba(0,0,0,0.5)",
+                position: "fixed",
+                width: "100%",
+                height: "100%",
+                display: dedicatedBanner ? "flex" : "none",
+                justifyContent: "center",
+                alignItems: "center",
+                zIndex: 1101,
+              }}
+              onClick={() => {
+                setDedicatedBanner(false);
+              }}
+            >
+              <img
+                src={config.features.DedicatedHomeBanner}
+                alt="banner"
+                style={{ maxWidth: "80vw", maxHeight: "80vh" }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  AppHistory.push("/promotion");
+                  setDedicatedBanner(false);
+                }}
+              />
+            </div>
+          )}
         <StylesProvider injectFirst>
           <MuiThemeProvider theme={muiTheme}>
             <ThemeProvider theme={muiThemeMode}>
