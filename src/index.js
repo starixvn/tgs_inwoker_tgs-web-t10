@@ -201,7 +201,9 @@ const AppWrapper = () => {
   }, []);
 
   const [dedicatedBanner, setDedicatedBanner] = React.useState(
-    config.features.DedicatedHomeBanner
+    config.features.DedicatedHomeBanner && isMobileOnly
+      ? config.features.DedicatedHomeBanner?.wap
+      : config.features.DedicatedHomeBanner?.web
   );
 
   if (isReady) {
@@ -227,7 +229,11 @@ const AppWrapper = () => {
               }}
             >
               <img
-                src={config.features.DedicatedHomeBanner}
+                src={
+                  isMobileOnly
+                    ? config.features.DedicatedHomeBanner?.wap
+                    : config.features.DedicatedHomeBanner?.web
+                }
                 alt="banner"
                 style={{ maxWidth: "80vw", maxHeight: "80vh" }}
                 onClick={(e) => {
