@@ -107,6 +107,8 @@ const MemberUserName = styled.span`
 
 const InboxContainer = styled(BalanceContainer)`
   text-align: right;
+
+  align-items: center;
   &:hover {
     cursor: pointer;
   }
@@ -114,6 +116,7 @@ const InboxContainer = styled(BalanceContainer)`
 const InboxIconImg = styled.div`
   display: inline-block;
   float: right;
+  margin-top: -4px;
 
   height: 15px;
   width: 15px;
@@ -133,6 +136,7 @@ const InboxCountLabel = styled.span`
   color: #fff;
   display: inline-block;
   float: right;
+  display: none;
 `;
 const WelcomeContainer = styled(BalanceContainer)`
   color: #fff;
