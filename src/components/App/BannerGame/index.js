@@ -236,7 +236,11 @@ const BannerGame = ({
 
       if (gameType === GameTypeEnum.SPORTS) {
         AppHistory.push("/sports/play/" + params + "/" + gameType);
-      } else if (params === "WGFM" || params === "WGVIA") {
+      } else if (
+        params === "WGFM" ||
+        params === "WGVIA" ||
+        params === "9WCRICKET"
+      ) {
         Common.PopupCenter(
           `/joinlobbygame/${gameType}/${params}`,
           params,
