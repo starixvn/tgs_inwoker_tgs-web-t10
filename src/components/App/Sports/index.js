@@ -235,7 +235,11 @@ class Sports extends Component {
       Common.closePreviousPopup();
       if (type === GameTypeEnum.RNGSPORTS) {
         this.props.history.push("/sports/" + params);
-      } else if (params === "WGFM" || params === "WGVIA") {
+      } else if (
+        params === "WGFM" ||
+        params === "WGVIA" ||
+        params === "9WCRICKET"
+      ) {
         if (document.getElementById("audio") != null)
           document.getElementById("audio").volume = 0.0;
         Common.PopupCenter(
