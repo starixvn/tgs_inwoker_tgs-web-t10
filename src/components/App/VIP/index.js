@@ -342,22 +342,22 @@ const VIP = (props) => {
               </div>
               <div>
                 <TitleRow>
-                  <DataCol>{i18n.t("vip.cardGameRebate")}</DataCol>
                   <DataCol>{i18n.t("vip.liveDealerRebate")}</DataCol>
-                  <DataCol>{i18n.t("vip.lotteryRebate")}</DataCol>
                   <DataCol>{i18n.t("vip.slotRebate")}</DataCol>
+                  <DataCol>{i18n.t("vip.cardGameRebate")}</DataCol>
                   <DataCol>{i18n.t("vip.sportsRebate")}</DataCol>
                   <DataCol>{i18n.t("vip.virtualSportsRebate")}</DataCol>
+                  <DataCol>{i18n.t("vip.lotteryRebate")}</DataCol>
                 </TitleRow>
                 {vipBenefitList.map((data, index) => {
                   return (
                     <DataRow key={index}>
-                      <DataCol>{data.cardGameRebate}%</DataCol>
                       <DataCol>{data.liveDealerRebate}%</DataCol>
-                      <DataCol>{data.lotteryRebate}%</DataCol>
                       <DataCol>{data.slotRebate}%</DataCol>
+                      <DataCol>{data.cardGameRebate}%</DataCol>
                       <DataCol>{data.sportsRebate}%</DataCol>
                       <DataCol>{data.virtualSportsRebate}%</DataCol>
+                      <DataCol>{data.lotteryRebate}%</DataCol>
                     </DataRow>
                   );
                 })}
