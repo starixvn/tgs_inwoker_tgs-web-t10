@@ -234,21 +234,25 @@ const BannerGame = ({
       Common.closePreviousPopup();
       performBalanceRefresh();
 
-      if (gameType === GameTypeEnum.SPORTS) {
-        AppHistory.push("/sports/play/" + params + "/" + gameType);
-      } else if (params === "WGFM" || params === "WGVIA") {
+      if (params === "WGFM" || params === "WGVIA" || params === "9WCRICKET") {
         Common.PopupCenter(
           `/joinlobbygame/${gameType}/${params}`,
           params,
           1280,
           720
         );
-        this.props.performBalanceRefresh();
+        performBalanceRefresh();
+      } else if (gameType === GameTypeEnum.SPORTS) {
+        AppHistory.push("/sports/play/" + params + "/" + gameType);
       } else if (gameType === GameTypeEnum.RNGSPORTS) {
         this.props.history.push("/sports/" + params);
       } else if (gameType === GameTypeEnum.COCKFIGHT) {
-        console.log("trigger");
         if (params === "SM01") {
+          if (document.getElementById("audio") != null)
+            document.getElementById("audio").volume = 0.0;
+          this.props.performBalanceRefresh();
+          Common.closePreviousPopup();
+
           this.popup = window.open("", "Cockfight");
           GameService.GetCockfight()
             .then((e) => {
@@ -259,8 +263,6 @@ const BannerGame = ({
             .catch((e) => {
               this.popup.close();
             });
-        } else {
-          AppHistory.push("/sports/play/" + params + "/" + GameTypeEnum.SPORTS);
         }
       } else {
         var win = Common.PopupCenter(

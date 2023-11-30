@@ -686,7 +686,11 @@ class Header extends Component {
         } else {
           if (gameType === GameTypeEnum.RNGSPORTS) {
             this.props.history.push("/sports/" + gameCode);
-          } else if (gameCode === "WGFM" || gameCode === "WGVIA") {
+          } else if (
+            gameCode === "WGFM" ||
+            gameCode === "WGVIA" ||
+            gameCode === "9WCRICKET"
+          ) {
             if (document.getElementById("audio") != null)
               document.getElementById("audio").volume = 0;
             if (this.props.history.location.pathname.indexOf("play") >= 0) {
@@ -811,9 +815,7 @@ class Header extends Component {
     if (!this.props.account.token) {
       this.props.showLogin(true);
     } else {
-      AppHistory.push(
-        "/sports/play/" + game.abbreviation + "/" + GameTypeEnum.SPORTS
-      );
+      AppHistory.push("/sports/play/" + game.name + "/" + GameTypeEnum.SPORTS);
     }
   };
 
