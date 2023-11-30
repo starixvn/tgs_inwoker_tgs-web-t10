@@ -815,9 +815,7 @@ class Header extends Component {
     if (!this.props.account.token) {
       this.props.showLogin(true);
     } else {
-      AppHistory.push(
-        "/sports/play/" + game.abbreviation + "/" + GameTypeEnum.SPORTS
-      );
+      AppHistory.push("/sports/play/" + game.name + "/" + GameTypeEnum.SPORTS);
     }
   };
 

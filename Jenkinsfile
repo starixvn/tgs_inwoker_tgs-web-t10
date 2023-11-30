@@ -8,7 +8,7 @@ pipeline {
         Registry = "pgtgs/"
         GitUrl = "gitlab.com/inwoker/tgs/tgs-web-t10.git"
         dockerhub = credentials('dockerhub')
-        Image = "lobby-t10"
+        Image = "lobby-t10-28win"
     }
 	
     stages {		    	
@@ -19,25 +19,16 @@ pipeline {
                 script {
                     switch(env.GIT_BRANCH)
                     {
-                        case ['master', 'origin/master']:
+                        case ['master', 'origin/master', '28win_prod',]:
                             env.kube_ns = "prod";
                             env.k8s_config = 'prod-k8s-config';
-                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch master";
+                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch 28win_prod";
                             sh "git config --file=.gitmodules submodule.src/components/App/Account.branch master";
                             sh "git config --file=.gitmodules submodule.src/api-services.branch master";
                             sh "git submodule sync";
                             sh "git submodule update --remote";
                             break;
-                        case ['release/current', 'origin/release/current']:
-                            env.kube_ns = "staging";
-                            env.k8s_config = 'stag-k8s-config';
-                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch release/current";
-                            sh "git config --file=.gitmodules submodule.src/components/App/Account.branch release/current";
-                            sh "git config --file=.gitmodules submodule.src/api-services.branch develop";
-                            sh "git submodule sync";
-                            sh "git submodule update --remote";
-                            break;
-                        case ['28win']:
+                        case ['release/current', 'origin/release/current', '28win']:
                             env.kube_ns = "staging";
                             env.k8s_config = 'stag-k8s-config';
                             sh "git config --file=.gitmodules submodule.src/components/Wap.branch win28";
@@ -72,13 +63,13 @@ pipeline {
                         envItems.each { key, value -> 
                             env."tgs_${key}" = value;
                         }
-                        componentArray = "${env.tgs_lobby_t10_components}".split(",")
+                        componentArray = "${env.tgs_lobby_t10_28win_components}".split(",")
                     }
                 }
 
                 sh "echo 'env: $env.kube_ns'"
                 sh "echo 'tag: ${TAG}'"
-                 
+                sh "echo 'components: ${env.tgs_lobby_t10_28win_components}'"
             }
         }	
         stage('Docker Build') {  
@@ -108,13 +99,17 @@ pipeline {
                 sh "echo start deploy"
             }
         }
-     
-        stage('Deploy to master') {   
+        stage('Deployment') {   
             steps {	  
                 script {			
                     withKubeConfig([credentialsId: env.k8s_config]) {
                         message += "\nComponent:"
-						if (env.tgs_lobby_t10_components!="") {
+			
+
+                        // message += "\n    ${componentArray[i]}"
+						// sh "kubectl set image deployment/lobby-28win lobby-28win=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
+
+						if (env.tgs_lobby_t10_28win_components!="") {
 							for (i = 0;i < componentArray.length; i++) {
 								message += "\n    ${componentArray[i]}"
 								sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
@@ -123,7 +118,7 @@ pipeline {
                     }
                 }
             }
-        }     
+        }
     }
     post {
         success {
