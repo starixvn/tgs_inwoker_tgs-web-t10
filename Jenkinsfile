@@ -8,7 +8,7 @@ pipeline {
         Registry = "pgtgs/"
         GitUrl = "gitlab.com/inwoker/tgs/tgs-web-t10.git"
         dockerhub = credentials('dockerhub')
-        Image = "lobby-t10-28win"
+        Image = "lobby-t10"
     }
 	
     stages {		    	
@@ -23,15 +23,6 @@ pipeline {
                             env.kube_ns = "prod";
                             env.k8s_config = 'prod-k8s-config';
                             sh "git config --file=.gitmodules submodule.src/components/Wap.branch master";
-                            sh "git config --file=.gitmodules submodule.src/components/App/Account.branch master";
-                            sh "git config --file=.gitmodules submodule.src/api-services.branch master";
-                            sh "git submodule sync";
-                            sh "git submodule update --remote";
-                            break;
-                        case ['master_28win',]:
-                            env.kube_ns = "prod";
-                            env.k8s_config = 'prod-k8s-config';
-                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch win28";
                             sh "git config --file=.gitmodules submodule.src/components/App/Account.branch master";
                             sh "git config --file=.gitmodules submodule.src/api-services.branch master";
                             sh "git submodule sync";
@@ -81,7 +72,7 @@ pipeline {
                         envItems.each { key, value -> 
                             env."tgs_${key}" = value;
                         }
-                        componentArray = "${env.tgs_lobby_t10_28win_components}".split(",")
+                        componentArray = "${env.tgs_lobby_t10_components}".split(",")
                     }
                 }
 
@@ -117,13 +108,13 @@ pipeline {
                 sh "echo start deploy"
             }
         }
-        stage('Deployment') {   
+     
+        stage('Deploy to master') {   
             steps {	  
                 script {			
                     withKubeConfig([credentialsId: env.k8s_config]) {
                         message += "\nComponent:"
-			
-						if (env.tgs_lobby_t10_28win_components!="") {
+						if (env.tgs_lobby_t10_components!="") {
 							for (i = 0;i < componentArray.length; i++) {
 								message += "\n    ${componentArray[i]}"
 								sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${Image}:${TAG} --record -n $env.kube_ns"
@@ -132,7 +123,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }     
     }
     post {
         success {

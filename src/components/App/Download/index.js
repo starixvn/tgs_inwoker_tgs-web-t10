@@ -9,7 +9,7 @@ import { utility } from "../../../utils/utility";
 
 const Container = styled.div`
   width: 100%;
-  min-height: 2000px;
+  min-height: 1000px;
   position: relative;
   background: url(${process.env.PUBLIC_URL + `/assets/images/download/bg.jpg`})
     no-repeat;
