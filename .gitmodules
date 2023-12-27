@@ -8,5 +8,5 @@
 	branch = develop
 [submodule "src/components/Wap"]
 	path = src/components/Wap
-	url = https://gitlab+deploy-token-729540:uMEFZgbsUQ6TEasLGgEX@gitlab.com/inwoker/tgs/tgs-wap-temp-2.git
+	url = https://gitlab+deploy-token-2357267:D8oCbEap8TMBKzxJzzSQ@gitlab.com/inwoker/tgs/tgs-wap-temp-3.git
 	branch = release/current
