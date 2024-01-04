@@ -22,6 +22,7 @@ const config = {
     : "zh-CN",
   affiliateId: window?.env?.affiliateId || "",
   features: featureList["default"],
+  version: window?.env?.version,
 };
 
 export default config;
