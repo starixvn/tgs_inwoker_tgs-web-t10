@@ -23,6 +23,7 @@ const config = {
   affiliateId: window?.env?.affiliateId || "",
   features: featureList["default"],
   configUrl: window?.env?.configUrl || "https://app12.srvptt.com/",
+  version: window?.env?.version,
 };
 
 export default config;
