@@ -28,6 +28,15 @@ pipeline {
                             sh "git submodule sync";
                             sh "git submodule update --remote";
                             break;
+                        case ['28win_prod']:
+                            env.kube_ns = "prod";
+                            env.k8s_config = 'prod-k8s-config';
+                            sh "git config --file=.gitmodules submodule.src/components/Wap.branch 28win_prod";
+                            sh "git config --file=.gitmodules submodule.src/components/App/Account.branch master";
+                            sh "git config --file=.gitmodules submodule.src/api-services.branch master";
+                            sh "git submodule sync";
+                            sh "git submodule update --remote";
+                            break;
                         case ['release/current', 'origin/release/current']:
                             env.kube_ns = "staging";
                             env.k8s_config = 'stag-k8s-config';
