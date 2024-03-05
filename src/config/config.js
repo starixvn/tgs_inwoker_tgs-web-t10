@@ -8,10 +8,10 @@ const config = {
     window?.env?.client ||
     "I7nKiimrZQOqnJ6ryjUw74c0Hi64KC6Myunhob4cHh8VOUIuZh4p63czefxyyzbZ",
   currency: window?.env?.currency || "CNY",
-  brand: window?.env?.brand || process.env.REACT_APP_BRAND || "GPI",
+  brand: window?.env?.brand || process.env.REACT_APP_BRAND || "PB2",
   brandName: window?.env?.brandName
     ? window?.env?.brandName
-    : window?.env?.brand || "xxxx",
+    : window?.env?.brand || "PB2",
   theme: window?.env?.theme || "PB2",
   wapVersion: window?.env?.wapTemplate || 10,
   sourceUrl: window?.env?.sourceUrl || "https://images.srvptt.com/",
