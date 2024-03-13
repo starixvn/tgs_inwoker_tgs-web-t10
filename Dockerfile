@@ -4,6 +4,7 @@ WORKDIR /src
 COPY . .
 	
 RUN npm cache clean --force
+RUN npm config set strict-ssl false
 RUN npm install
 RUN npm run build
 
