@@ -3,7 +3,8 @@ FROM node:16.6.1-stretch-slim AS build
 WORKDIR /src
 COPY . .
 	
-RUN npm install -g npm@10.5.0
+RUN npm cache clean --force
+RUN npm install
 RUN npm run build
 
 FROM caddy:2.1.1-alpine
