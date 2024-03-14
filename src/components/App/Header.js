@@ -597,15 +597,20 @@ class Header extends Component {
   handleMenuMouseLeave = () => {
     this.setState({ ...this.state, isHoverMenu: false });
   };
-  handleClickMenu = (path) => {
-    if (
-      config.features.ForceRedirectAddCard &&
-      !this.props.account.info.bankInfoAuthentication
-    ) {
+  handleClickMenu = (path, requireAuth) => {
+    if (requireAuth && !this.props.account.token) {
+      this.props.showLogin(true);
       return;
+    } else {
+      if (
+        config.features.ForceRedirectAddCard &&
+        !this.props.account.info.bankInfoAuthentication
+      ) {
+        return;
+      }
+      this.setState({ ...this.state, selected: path });
+      this.props.history.push(`/${path}`);
     }
-    this.setState({ ...this.state, selected: path });
-    this.props.history.push(`/${path}`);
   };
 
   RightMenuItem = (to, label, subMenuImg) => {
@@ -960,7 +965,7 @@ class Header extends Component {
               >
                 <CustomVIPHeaderButton
                   active={currentPage === "vip"}
-                  onClick={() => this.handleClickMenu("vip")}
+                  onClick={() => this.handleClickMenu("account/vip", true)}
                 >
                   <img
                     src={
