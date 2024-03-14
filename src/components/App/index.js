@@ -539,7 +539,7 @@ class App extends Component {
                       path={"/promotion/:id"}
                       render={(props) => <PromotionDetails />}
                     />
-                    <Route exact path={"/vip"} render={(props) => <VIP />} />
+                    {/* <Route exact path={"/vip"} render={(props) => <VIP />} /> */}
                     {/* <Route
                       exact
                       path={ "/registersuccess/:username"}
