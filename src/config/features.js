@@ -122,6 +122,7 @@ const featureList = {
     WapBannerColor: "white",
     SupportVariant: 2,
     GamePageButtonVariant: 2,
+    SendCodeInterval: 60
   },
 };
 export default featureList;
