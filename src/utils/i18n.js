@@ -17,7 +17,6 @@ i18n
       loadPath: `${config.configUrl}translation/{{lng}}.json`,
       addPath: `${config.configUrl}translation/{{lng}}`,
     },
-
     whitelist: [
       "en-US",
       "zh-CN",

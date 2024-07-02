@@ -278,7 +278,7 @@ class ForgotPasswordPhone extends Component {
             this.props.enqueueSnackbar(i18n.t("common.msgTokenSent"), {
               variant: "info",
             });
-            this.setState({ ...this.state, countdown: 60 });
+            this.setState({ ...this.state, countdown: config.features.SendCodeInterval || 60 });
             this.checkCountdown();
           } else {
             this.props.enqueueSnackbar(
