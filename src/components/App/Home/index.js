@@ -145,7 +145,6 @@ class Home extends Component {
 
     if (config.features.PopupPromotion) {
       if (
-        isInHomePage &&
         this.props.general.promotionList.items !==
           preProps.general.promotionList.items &&
         this.props.general.promotionList.items.length > 0

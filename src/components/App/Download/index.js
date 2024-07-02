@@ -235,11 +235,7 @@ const Download = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   function getJsonData() {
-    return fetch(
-      "https://app12.s3.ap-east-1.amazonaws.com/version_" +
-        config.brand +
-        ".json"
-    )
+    return fetch(config.configUrl + "version_" + config.brand + ".json")
       .then((response) => response.json())
       .then((responseJson) => {
         setDownload(responseJson);

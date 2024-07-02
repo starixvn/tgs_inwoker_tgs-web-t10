@@ -6,11 +6,7 @@ const FeatureGetter = () => {
   const [feature, setFeatures] = useState("");
 
   function getJsonData() {
-    return fetch(
-      "https://app12.s3.ap-east-1.amazonaws.com/features_" +
-        config.brand +
-        ".json"
-    )
+    return fetch(config.configUrl + "features_" + config.brand + ".json")
       .then((response) => response.json())
       .then((responseJson) => {
         setFeatures(responseJson);

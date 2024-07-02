@@ -3,9 +3,8 @@ FROM node:16.6.1-stretch-slim AS build
 WORKDIR /src
 COPY . .
 	
-RUN npm cache clean --force
-RUN npm config set strict-ssl false
-RUN npm install
+RUN npm install     
+RUN npm ci
 RUN npm run build
 
 FROM caddy:2.1.1-alpine
