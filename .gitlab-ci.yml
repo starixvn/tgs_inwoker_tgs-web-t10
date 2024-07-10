@@ -22,8 +22,6 @@ deploy-dev:
     components: "dev_t10"
   tags:
     - dev
-    - deploy
-    - kubernetes
   only:
     - develop
 
@@ -34,8 +32,6 @@ deploy-staging:
     components: "staging_t10"
   tags:
     - staging
-    - deploy
-    - kubernetes
   only:
     - release/current
   when: manual
@@ -46,9 +42,7 @@ deploy-prod:
     namespace: "prod"
     components: "prod_t10"
   tags:
-    - staging
-    - deploy
-    - kubernetes
+    - prod
   only:
     - master
   when: manual
