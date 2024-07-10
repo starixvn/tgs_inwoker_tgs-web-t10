@@ -10,3 +10,6 @@
 	path = src/components/Wap
 	url = https://gitlab+deploy-token-729540:uMEFZgbsUQ6TEasLGgEX@gitlab.com/inwoker/tgs/tgs-wap-temp-2.git
 	branch = release/current
+[submodule "src/components/Common"]
+	path = src/components/Common
+	url = https://gitlab+deploy-token-4448039:gldt-1P5iVVpENs8E58tzHDNy@gitlab.com/inwoker/tgs/tgs-common.git
