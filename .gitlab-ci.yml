@@ -8,6 +8,8 @@ variables:
   
 build:
   extends: .build
+  tags:
+  - local-build
   only:
     - master
     - release/current
@@ -18,6 +20,8 @@ deploy-dev:
   variables:
     namespace: "dev"
     components: "dev_t10"
+  tags:
+    - dev
   only:
     - develop
 
@@ -26,29 +30,19 @@ deploy-staging:
   variables:
     namespace: "staging"
     components: "staging_t10"
+  tags:
+    - staging
   only:
     - release/current
-
-deploy-staging-28win:
-  extends: .deploy-base
-  variables:
-    namespace: "staging"
-    components: "staging_t10_28win"
-  only:
-    - 28win
+  when: manual
 
 deploy-prod:
   extends: .deploy-base
   variables:
     namespace: "prod"
     components: "prod_t10"
+  tags:
+    - prod
   only:
     - master
-
-deploy-prod-28win:
-  extends: .deploy-base
-  variables:
-    namespace: "prod"
-    components: "prod_t10_28win"
-  only:
-    - 28win_prod
+  when: manual
