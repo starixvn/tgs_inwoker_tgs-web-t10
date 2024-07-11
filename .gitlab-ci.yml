@@ -8,41 +8,18 @@ variables:
   
 build:
   extends: .build
-  tags:
-  - local-build
-  only:
-    - master
-    - release/current
-    - develop
 
 deploy-dev:
-  extends: .deploy-base
+  extends: .deploy-k8s-dev
   variables:
-    namespace: "dev"
     components: "dev_t10"
-  tags:
-    - dev
-  only:
-    - develop
 
 deploy-staging:
-  extends: .deploy-base
+  extends: .deploy-k8s-staging
   variables:
-    namespace: "staging"
     components: "staging_t10"
-  tags:
-    - staging
-  only:
-    - release/current
-  when: manual
 
 deploy-prod:
-  extends: .deploy-base
+  extends: .deploy-k8s-prod
   variables:
-    namespace: "prod"
     components: "prod_t10"
-  tags:
-    - prod
-  only:
-    - master
-  when: manual
