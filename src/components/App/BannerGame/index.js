@@ -233,7 +233,6 @@ const BannerGame = ({
         document.getElementById("audio").volume = 0.0;
       Common.closePreviousPopup();
       performBalanceRefresh();
-
       if (gameType === GameTypeEnum.SPORTS) {
         AppHistory.push("/sports/play/" + params + "/" + gameType);
       } else if (
@@ -267,6 +266,9 @@ const BannerGame = ({
             .catch((e) => {
               this.popup.close();
             });
+        } else {
+          const showGameType = params === 'GA28' ? GameTypeEnum.SPORTS : gameType
+          AppHistory.push("/sports/play/" + params + "/" + showGameType);
         }
       } else {
         var win = Common.PopupCenter(
