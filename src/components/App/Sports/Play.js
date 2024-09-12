@@ -315,6 +315,7 @@ class Play extends Component {
               // style={{ width: "1280px" }}
               scrolling="yes"
               frameBorder="0"
+              allow="fullscreen"
             ></GameFrame>
           </InnerContainer>
         </Container>
