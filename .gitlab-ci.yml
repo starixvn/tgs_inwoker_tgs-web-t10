@@ -15,7 +15,7 @@ deploy-dev:
     components: "dev_t10"
 
 deploy-staging:
-  extends: .deploy-k8s-staging
+  extends: .deploy-k8s-staging_for_develop
   variables:
     components: "staging_t10"
 
