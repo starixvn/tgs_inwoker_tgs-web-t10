@@ -21,6 +21,7 @@ import { SHOWING_DIALOG } from "../../api-services/constant/actionType";
 import { SHOW_LOGIN } from "../../api-services/constant/actionType";
 
 import Register from "./Register";
+import RegisterRefactor from "./RegisterRefactor";
 import { withSnackbar } from "notistack";
 import ForgotPasswordPhone from "./ForgotPasswordPhone";
 import i18n from "../../utils/i18n";
@@ -674,7 +675,7 @@ class GuestContainer extends Component {
               );
             } else {
               if (this.state.openDialogName === "register") {
-                return (
+                return (true || config.features.useOldRegister) ? (
                   <Register
                     onhandleClose={this.onhandleCloseDialog}
                     onRegisterSuccess={this.handleRegisterSuccess}
@@ -682,6 +683,12 @@ class GuestContainer extends Component {
                     doLoginWithHp={this.handleLoginClickWithHp}
                     doLoginWithHpEmail={this.performLoginWithPhoneAndEmail}
                   ></Register>
+                ) : (
+                  <RegisterRefactor
+                    onHandleClose={this.onhandleCloseDialog}
+                    onHandleLoginSuccess={this.handleLoginSuccess}
+                    doLogin={this.handleLoginClick}
+                  ></RegisterRefactor>
                 );
               } else if (this.state.openDialogName === "activation") {
                 return (
