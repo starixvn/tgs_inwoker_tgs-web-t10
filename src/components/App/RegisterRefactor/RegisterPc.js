@@ -22,19 +22,18 @@ import {
 } from "./styles";
 
 
-const RegisterPc = ({ onHandleClose, onHandleLoginSuccess, enqueueSnackbar }) => {
-    const { performNewRegister } = useRegisterForm(enqueueSnackbar);
+const RegisterPc = ({ onHandleClose, onHandleLoginSuccess }) => {
+    const { performNewRegister } = useRegisterForm();
     const { handleChangeUserName, handleChangePwd, handleChangePwd2, handleChangePhone, handleChangePromotion, handleTncClick, handleChangeAreaCode } = useRegisterHandle();
     const { formData, setFormData } = useContext(RegisterContext);
 
     useEffect(() => {
-        console.log("Register v9.13.1");
+        console.log("Register v9.18.1");
     }, []);
 
 
 
     const onClickRegister = () => {
-        console.log('onHandleLoginSuccess' + onHandleLoginSuccess)
         performNewRegister(false, onHandleLoginSuccess);
     }
 
