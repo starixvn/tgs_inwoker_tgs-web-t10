@@ -650,6 +650,8 @@ export const PB2 = {
   vipSpecialText: "#FFC700",
 
   darkMode: true,
+  profileTitleColor: "#d3d3d3",
+  profileTextColor: "#D3FF06"
 };
 
 export const TIGER = {
