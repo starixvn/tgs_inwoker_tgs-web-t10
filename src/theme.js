@@ -651,7 +651,18 @@ export const PB2 = {
 
   darkMode: true,
   profileTitleColor: "#d3d3d3",
-  profileTextColor: "#D3FF06"
+  profileTextColor: "#D3FF06",
+  
+  newRewardBackground:'rgba(0, 0, 0, 0.1)',
+  newTrophyBackground:'rgba(60, 174, 193, 0.4)',
+  newTrophyBackgroundActive:'rgba(60, 174, 193, 1)',
+  newTitleColor:'#0f548b',
+  newTrophyBackgroundWap:'rgba(211, 255, 6, 0.2)',
+  newTrophyBackgroundWapActive:'rgba(211, 255,6, 1)',
+  newTitleColorWap:'#fff',
+  newStepBorderRadius:'10px',
+  newTrophyBackgroundColorWap:'#000',
+  newTrophyBackgroundColor:'#fff',
 };
 
 export const TIGER = {
