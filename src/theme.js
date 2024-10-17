@@ -565,6 +565,18 @@ export const wapT10 = {
   gamePageButtonBorderBottom: "#878dee",
   homeHeaderBackgroundColor: "#dbf5f0",
   homeHeaderTextColor: " #19bc9b",
+
+  newRewardBackground:'rgba(0,0,0,0.1)',
+  newTrophyBackground:'rgba(83, 178, 184, 0.4)',
+  newTrophyBackgroundActive:'rgba(83, 178, 184, 1)',
+  newTrophyBackgroundWap:'rgba(101, 138, 248, 0.2)',
+  newTrophyBackgroundWapActive:'rgba(101, 138, 248, 1)',
+  newTitleColor:'rgba(88,88,88,1)',
+  newTitleColorWap:'rgba(15,84,139,1)',
+  newStepBorderRadius:'10px',
+  newBorderColor:"rgba(231, 241, 251, 1)",
+  newTrophyBackgroundColorWap:'#fff',
+  newTrophyBackgroundColor:'#fff',
 };
 
 export const PB2 = {
@@ -651,7 +663,18 @@ export const PB2 = {
 
   darkMode: true,
   profileTitleColor: "#d3d3d3",
-  profileTextColor: "#D3FF06"
+  profileTextColor: "#D3FF06",
+  
+  newRewardBackground:'rgba(0, 0, 0, 0.1)',
+  newTrophyBackground:'rgba(60, 174, 193, 0.4)',
+  newTrophyBackgroundActive:'rgba(60, 174, 193, 1)',
+  newTitleColor:'#0f548b',
+  newTrophyBackgroundWap:'rgba(211, 255, 6, 0.2)',
+  newTrophyBackgroundWapActive:'rgba(211, 255,6, 1)',
+  newTitleColorWap:'#fff',
+  newStepBorderRadius:'10px',
+  newTrophyBackgroundColorWap:'#000',
+  newTrophyBackgroundColor:'#fff',
 };
 
 export const TIGER = {
