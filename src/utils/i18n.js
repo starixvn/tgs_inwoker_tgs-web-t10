@@ -27,6 +27,7 @@ i18n
       "hi-IN",
       "ta-IN",
       "tgl-PH",
+      "ja-JP"
     ],
     fallbackLng: [language || Config.defaultLanguage],
     detection: {
