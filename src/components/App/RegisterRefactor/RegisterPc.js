@@ -28,6 +28,7 @@ const RegisterPc = ({ onHandleClose, onHandleLoginSuccess }) => {
     const { formData, setFormData } = useContext(RegisterContext);
 
     useEffect(() => {
+        handleChangeAreaCode(config.features.PhonePrefix)
         console.log("Register v9.18.1");
     }, []);
 
