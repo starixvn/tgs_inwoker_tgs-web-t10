@@ -565,6 +565,18 @@ export const wapT10 = {
   gamePageButtonBorderBottom: "#878dee",
   homeHeaderBackgroundColor: "#dbf5f0",
   homeHeaderTextColor: " #19bc9b",
+
+  newRewardBackground:'rgba(0,0,0,0.1)',
+  newTrophyBackground:'rgba(83, 178, 184, 0.4)',
+  newTrophyBackgroundActive:'rgba(83, 178, 184, 1)',
+  newTrophyBackgroundWap:'rgba(101, 138, 248, 0.2)',
+  newTrophyBackgroundWapActive:'rgba(101, 138, 248, 1)',
+  newTitleColor:'rgba(88,88,88,1)',
+  newTitleColorWap:'rgba(15,84,139,1)',
+  newStepBorderRadius:'10px',
+  newBorderColor:"rgba(231, 241, 251, 1)",
+  newTrophyBackgroundColorWap:'#fff',
+  newTrophyBackgroundColor:'#fff',
 };
 
 export const PB2 = {
