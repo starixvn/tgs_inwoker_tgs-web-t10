@@ -33,6 +33,11 @@ const RegisterPc = ({ onHandleClose, onHandleLoginSuccess }) => {
 
     useEffect(() => {
         handleChangeAreaCode(config.features.PhonePrefix)
+        handleChangePromotion({
+            target: {
+                value: config.affiliateId ? config.affiliateId : localStorage.getItem("promotionId")
+            }
+        })
         console.log("Register v9.18.1");
     }, []);
 
