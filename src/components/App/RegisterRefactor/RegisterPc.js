@@ -18,13 +18,17 @@ import { RegisterContext } from "../../Common/contexts";
 
 import {
     useStyles, Container, CloseIconContainer, TitleContainer, SubTitleContainer, FormContainer, CustomTextWrapper, CustomText, CustomFormControl, CustomSelect,
-    CustomText2, CustomInvitationContainer, DescriptionContainer, Description, ButtonLogin, ButtonLoginLabel
+    CustomText2, CustomInvitationContainer, DescriptionContainer, Description, ButtonLogin, ButtonLoginLabel, CustomInvitationSelect 
 } from "./styles";
 
 
 const RegisterPc = ({ onHandleClose, onHandleLoginSuccess }) => {
-    const { performNewRegister } = useRegisterForm();
-    const { handleChangeUserName, handleChangePwd, handleChangePwd2, handleChangePhone, handleChangePromotion, handleTncClick, handleChangeAreaCode } = useRegisterHandle();
+    const { performNewRegister, states } = useRegisterForm();
+    const {countdown, prefill, fromCustomDomain, haveAffiliate} = states;
+    const { handleChangeUserName, handleChangePwd, handleChangePwd2, handleChangePhone, 
+            handleChangePromotion, handleTncClick, handleChangeAreaCode, handleChangeUpper,
+            handleChangePromoteType
+        } = useRegisterHandle();
     const { formData, setFormData } = useContext(RegisterContext);
 
     useEffect(() => {
@@ -162,7 +166,7 @@ const RegisterPc = ({ onHandleClose, onHandleLoginSuccess }) => {
                         />
                     </React.Fragment>
                 )}
-                <div class="clear"></div>
+                {/* <div class="clear"></div>
                 <CustomTextWrapper>
                     <CustomInvitationContainer>
                         <CustomText
@@ -172,7 +176,35 @@ const RegisterPc = ({ onHandleClose, onHandleLoginSuccess }) => {
                             variant="outlined"
                         />
                     </CustomInvitationContainer>
-                </CustomTextWrapper>
+                </CustomTextWrapper> */}
+                {!(config.features.Register_HideInvitation && fromCustomDomain) && (
+                    <CustomTextWrapper>
+                        <CustomInvitationContainer>
+                        <CustomText
+                            onChange={
+                            formData.promoteType === "a" ? handleChangePromotion : handleChangeUpper
+                            }
+                            value={formData.promoteType === "a" ? formData.promotionId : formData.upper}
+                            id="code"
+                            placeholder={i18n.t("web.register.promoteCode")}
+                            variant="outlined"
+                            inputProps={{disabled: prefill}}
+                        />
+                        {haveAffiliate && (
+                            <CustomInvitationSelect
+                                disabled={prefill}
+                                value={formData.promoteType}
+                                selected={formData.promoteType}
+                                onChange={handleChangePromoteType}
+                                >
+                                <option value="a">{i18n.t("usertype.agent")}</option>
+                                <option value="p">{i18n.t("usertype.player")}</option>
+                            </CustomInvitationSelect>
+                        )}
+                        </CustomInvitationContainer>
+                    </CustomTextWrapper>
+                    )}
+
 
                 <DescriptionContainer>
                     <Checkbox
